@@ -14,6 +14,18 @@ declare global {
       FRONTEND_URL?: string;
     }
   }
+
+  // Extend Express Request type
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        email: string;
+        company: string;
+        role: string;
+      };
+    }
+  }
 }
 
 export {};
