@@ -77,7 +77,7 @@ router.post('/signup', validateSignup, async (req: Request, res: Response) => {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as any).toString(),
       email: user.email as string,
       company: user.company as string,
       role: user.role as string
@@ -86,7 +86,7 @@ router.post('/signup', validateSignup, async (req: Request, res: Response) => {
     // Set HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: (global as any).process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -102,7 +102,7 @@ router.post('/signup', validateSignup, async (req: Request, res: Response) => {
     });
 
   } catch (error) {
-    console.error('Signup error:', error);
+    (global as any).console.error('Signup error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error during signup'
@@ -157,7 +157,7 @@ router.post('/login', validateLogin, async (req: Request, res: Response) => {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as any).toString(),
       email: user.email as string,
       company: user.company as string,
       role: user.role as string
@@ -166,7 +166,7 @@ router.post('/login', validateLogin, async (req: Request, res: Response) => {
     // Set HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: (global as any).process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -182,7 +182,7 @@ router.post('/login', validateLogin, async (req: Request, res: Response) => {
     });
 
   } catch (error) {
-    console.error('Login error:', error);
+    (global as any).console.error('Login error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error during login'
@@ -217,7 +217,7 @@ router.get('/me', authenticateToken, async (req: Request, res: Response) => {
       }
     });
   } catch (error) {
-    console.error('Get profile error:', error);
+    (global as any).console.error('Get profile error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -269,7 +269,7 @@ router.put('/profile', authenticateToken, [
       }
     });
   } catch (error) {
-    console.error('Update profile error:', error);
+    (global as any).console.error('Update profile error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
