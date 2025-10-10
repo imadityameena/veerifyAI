@@ -11,7 +11,11 @@ import Index from "./pages/Index";
 import Demo from "./pages/Demo";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +34,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
       <Route 
         path="/demo" 
         element={
@@ -44,6 +49,16 @@ const AppRoutes = () => {
           <ProtectedRoute requireAuth={true}>
             <Index />
           </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/admin/dashboard" 
+        element={
+          <ErrorBoundary>
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          </ErrorBoundary>
         } 
       />
       <Route path="*" element={<NotFound />} />

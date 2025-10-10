@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail, Building2 } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, Building2, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Login = () => {
@@ -183,7 +183,7 @@ const Login = () => {
             </form>
 
             {/* Signup Link */}
-            <div className="text-center pt-4">
+            <div className="text-center pt-4 space-y-4">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Don't have an account?{' '}
                 <Link 
@@ -193,6 +193,15 @@ const Login = () => {
                   Sign up
                 </Link>
               </p>
+              <div className="border-t pt-4">
+                <Link 
+                  to="/admin/login" 
+                  className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+                >
+                  <Shield className="w-4 h-4 mr-2" />
+                  Admin Portal
+                </Link>
+              </div>
             </div>
           </CardContent>
         </Card>

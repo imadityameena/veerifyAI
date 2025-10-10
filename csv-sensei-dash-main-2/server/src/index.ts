@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import { router as api } from './routes';
 import { authRoutes } from './routes/auth';
+import { adminRoutes } from './routes/admin';
+import { featureToggleRoutes } from './routes/featureToggles';
+import { publicFeatureToggleRoutes } from './routes/publicFeatureToggles';
 
 const app = express();
 
@@ -26,6 +29,9 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/admin/feature-toggles', featureToggleRoutes);
+app.use('/api/feature-toggles', publicFeatureToggleRoutes);
 app.use('/api', api);
 
 const port = process.env.PORT || 4000;

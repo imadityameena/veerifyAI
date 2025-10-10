@@ -10,6 +10,7 @@ import { ComplianceDashboard } from './ComplianceDashboard';
 import { DoctorRosterDashboard } from './DoctorRosterDashboard';
 import { BillingDashboard } from './BillingDashboard';
 import { InlineChatbot } from './InlineChatbot';
+import FeatureToggleWrapper from './FeatureToggleWrapper';
 
 interface DashboardProps {
   data: any[];
@@ -54,32 +55,38 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // If in compliance mode, render compliance dashboard
   if (complianceMode && opBillingData && doctorRosterData) {
     return (
-      <ComplianceDashboard 
-        opBillingData={opBillingData}
-        doctorRosterData={doctorRosterData}
-        onBack={onBack}
-      />
+      <FeatureToggleWrapper featureName="compliance_ai">
+        <ComplianceDashboard 
+          opBillingData={opBillingData}
+          doctorRosterData={doctorRosterData}
+          onBack={onBack}
+        />
+      </FeatureToggleWrapper>
     );
   }
 
   // If doctor roster mode, render doctor roster dashboard
   if (industry === 'doctor_roster') {
     return (
-      <DoctorRosterDashboard 
-        data={data}
-        onBack={onBack}
-      />
+      <FeatureToggleWrapper featureName="doctor_roster">
+        <DoctorRosterDashboard 
+          data={data}
+          onBack={onBack}
+        />
+      </FeatureToggleWrapper>
     );
   }
 
   // If billing mode, render billing dashboard
   if (industry === 'opbilling') {
     return (
-      <BillingDashboard 
-        data={data}
-        onBack={onBack}
-        doctorRosterData={doctorRosterData}
-      />
+      <FeatureToggleWrapper featureName="op_billing">
+        <BillingDashboard 
+          data={data}
+          onBack={onBack}
+          doctorRosterData={doctorRosterData}
+        />
+      </FeatureToggleWrapper>
     );
   }
 

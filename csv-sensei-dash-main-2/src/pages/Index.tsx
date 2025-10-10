@@ -10,6 +10,7 @@ import { DoctorRosterUpload } from '@/components/DoctorRosterUpload';
 import { BillingUpload } from '@/components/BillingUpload';
 import { ValidationResults } from '@/components/ValidationResults';
 import { Dashboard } from '@/components/Dashboard';
+import FeatureToggleWrapper from '@/components/FeatureToggleWrapper';
 import { validateCSVData } from '@/utils/validationEngine';
 import { validateRowLimit, truncateDataToLimit } from '@/utils/rowLimitValidator';
 import type { ValidationError, ValidationSummary } from '@/utils/validationEngine';
@@ -200,24 +201,30 @@ const Index = () => {
       case 1:
         if (complianceMode) {
           return (
-            <ComplianceFileUpload 
-              onFilesUpload={handleComplianceFilesUpload}
-              onBack={handleBackToIndustrySelection}
-            />
+            <FeatureToggleWrapper featureName="compliance_ai">
+              <ComplianceFileUpload 
+                onFilesUpload={handleComplianceFilesUpload}
+                onBack={handleBackToIndustrySelection}
+              />
+            </FeatureToggleWrapper>
           );
         } else if (selectedIndustry === 'doctor_roster') {
           return (
-            <DoctorRosterUpload 
-              onFileUpload={handleFileUpload}
-              onBack={handleBackToIndustrySelection}
-            />
+            <FeatureToggleWrapper featureName="doctor_roster">
+              <DoctorRosterUpload 
+                onFileUpload={handleFileUpload}
+                onBack={handleBackToIndustrySelection}
+              />
+            </FeatureToggleWrapper>
           );
         } else if (selectedIndustry === 'opbilling') {
           return (
-            <BillingUpload 
-              onFileUpload={handleFileUpload}
-              onBack={handleBackToIndustrySelection}
-            />
+            <FeatureToggleWrapper featureName="op_billing">
+              <BillingUpload 
+                onFileUpload={handleFileUpload}
+                onBack={handleBackToIndustrySelection}
+              />
+            </FeatureToggleWrapper>
           );
         } else {
           return (

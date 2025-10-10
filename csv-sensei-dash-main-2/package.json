@@ -8,6 +8,7 @@
     "server:dev": "tsx watch server/src/index.ts",
     "server:build": "tsc -p server/tsconfig.json",
     "server:start": "node server/dist/index.js",
+    "create-admin": "tsx server/src/scripts/createAdmin.ts",
     "chatbot:dev": "cd chatbot-backend && npm run dev",
     "chatbot:build": "cd chatbot-backend && npm run build",
     "chatbot:start": "cd chatbot-backend && npm start",
