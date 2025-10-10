@@ -62,7 +62,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
 
     // Add user info to request
     req.user = {
-      id: user._id.toString(),
+      id: (user._id as any).toString(),
       email: user.email as string,
       company: user.company as string,
       role: user.role as string

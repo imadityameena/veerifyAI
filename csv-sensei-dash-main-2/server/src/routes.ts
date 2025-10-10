@@ -1,16 +1,16 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { RecordModel } from './models/Record';
 import { authenticateToken } from './middleware/auth';
 
 export const router = Router();
 
-router.get('/health', async (_req, res) => {
+router.get('/health', async (_req: Request, res: Response) => {
   const ok = !!(await RecordModel.db?.readyState);
   res.json({ ok });
 });
 
 // Protected routes - require authentication
-router.get('/records', authenticateToken, async (req, res) => {
+router.get('/records', authenticateToken, async (req: Request, res: Response) => {
   try {
     const userId = req.user!.id;
     const items = await RecordModel.find({ userId }).sort({ createdAt: -1 }).lean();
@@ -27,7 +27,7 @@ router.get('/records', authenticateToken, async (req, res) => {
   }
 });
 
-router.post('/records', authenticateToken, async (req, res) => {
+router.post('/records', authenticateToken, async (req: Request, res: Response) => {
   try {
     const { data } = req.body ?? {};
     if (!data) {
@@ -56,7 +56,7 @@ router.post('/records', authenticateToken, async (req, res) => {
   }
 });
 
-router.delete('/records/:id', authenticateToken, async (req, res) => {
+router.delete('/records/:id', authenticateToken, async (req: Request, res: Response) => {
   try {
     const record = await RecordModel.findOneAndDelete({ 
       _id: req.params.id, 

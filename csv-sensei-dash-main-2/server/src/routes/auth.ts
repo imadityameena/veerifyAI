@@ -77,7 +77,7 @@ router.post('/signup', validateSignup, async (req: Request, res: Response) => {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as any).toString(),
       email: user.email as string,
       company: user.company as string,
       role: user.role as string
@@ -157,7 +157,7 @@ router.post('/login', validateLogin, async (req: Request, res: Response) => {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as any).toString(),
       email: user.email as string,
       company: user.company as string,
       role: user.role as string
