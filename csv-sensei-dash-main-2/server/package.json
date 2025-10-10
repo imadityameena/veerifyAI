@@ -4,6 +4,7 @@
   "description": "Main backend API for CSV Sensei Dashboard",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "npm install",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
