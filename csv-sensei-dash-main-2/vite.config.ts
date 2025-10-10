@@ -7,7 +7,14 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   define: {
     'import.meta.env.VITE_CHATBOT_API_URL': JSON.stringify(
-      mode === 'production' ? '/chatbot-api/chat' : '/chatbot-api/chat'
+      mode === 'production' 
+        ? process.env.VITE_CHATBOT_API_URL || 'https://your-chatbot-backend.onrender.com/api/chat'
+        : '/chatbot-api/chat'
+    ),
+    'import.meta.env.VITE_API_URL': JSON.stringify(
+      mode === 'production'
+        ? process.env.VITE_API_URL || 'https://your-main-backend.onrender.com/api'
+        : 'http://localhost:4000/api'
     ),
   },
   server: {
