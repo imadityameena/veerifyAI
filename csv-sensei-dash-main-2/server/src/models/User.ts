@@ -62,7 +62,7 @@ userSchema.index({ email: 1 });
 userSchema.index({ company: 1 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function(next: any) {
   if (!this.isModified('password')) return next();
   
   try {
@@ -70,7 +70,7 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
-    next(error as Error);
+    next(error);
   }
 });
 

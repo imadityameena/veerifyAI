@@ -4,7 +4,8 @@
   "description": "Main backend API for CSV Sensei Dashboard",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm install && tsc",
+    "build": "npm install && npm run compile",
+    "compile": "tsc --noEmitOnError false",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

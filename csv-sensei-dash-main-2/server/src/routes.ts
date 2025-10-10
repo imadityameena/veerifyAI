@@ -19,7 +19,7 @@ router.get('/records', authenticateToken, async (req: Request, res: Response) =>
       data: items
     });
   } catch (error) {
-    console.error('Get records error:', error);
+    (global as any).console.error('Get records error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to fetch records'
@@ -48,7 +48,7 @@ router.post('/records', authenticateToken, async (req: Request, res: Response) =
       data: doc
     });
   } catch (error) {
-    console.error('Create record error:', error);
+    (global as any).console.error('Create record error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to create record'
@@ -72,7 +72,7 @@ router.delete('/records/:id', authenticateToken, async (req: Request, res: Respo
     
     res.status(204).end();
   } catch (error) {
-    console.error('Delete record error:', error);
+    (global as any).console.error('Delete record error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to delete record'

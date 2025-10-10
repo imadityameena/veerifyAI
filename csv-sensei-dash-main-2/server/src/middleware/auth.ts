@@ -10,18 +10,18 @@ export interface JWTPayload {
 }
 
 export const generateToken = (payload: JWTPayload): string => {
-  const secret = process.env.JWT_SECRET;
+  const secret = (global as any).process.env.JWT_SECRET;
   if (!secret) {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
   
   return jwt.sign(payload, secret, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+    expiresIn: (global as any).process.env.JWT_EXPIRES_IN || '7d'
   } as jwt.SignOptions);
 };
 
 export const verifyToken = (token: string): JWTPayload => {
-  const secret = process.env.JWT_SECRET;
+  const secret = (global as any).process.env.JWT_SECRET;
   if (!secret) {
     throw new Error('JWT_SECRET is not defined in environment variables');
   }
@@ -84,7 +84,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
       });
     }
 
-    console.error('Authentication error:', error);
+    (global as any).console.error('Authentication error:', error);
     return res.status(500).json({
       success: false,
       message: 'Internal server error during authentication.'

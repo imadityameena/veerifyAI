@@ -26,6 +26,10 @@ declare global {
       };
     }
   }
+
+  // Global declarations for Node.js
+  var process: NodeJS.Process;
+  var console: Console;
 }
 
 export {};

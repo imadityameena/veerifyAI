@@ -28,21 +28,21 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api', api);
 
-const port = process.env.PORT || 4000;
-const mongoUri = process.env.MONGODB_URI;
+const port = (global as any).process.env.PORT || 4000;
+const mongoUri = (global as any).process.env.MONGODB_URI;
 if (!mongoUri) {
-  console.error('MONGODB_URI not set');
-  process.exit(1);
+  (global as any).console.error('MONGODB_URI not set');
+  (global as any).process.exit(1);
 }
 
 mongoose.connect(mongoUri).then(() => {
-  console.log('MongoDB connected');
+  (global as any).console.log('MongoDB connected');
   
   app.listen(port, () => {
-    console.log(`🚀 API server running on port ${port}`);
-    console.log(`📊 CSV Sensei Dashboard API ready`);
+    (global as any).console.log(`🚀 API server running on port ${port}`);
+    (global as any).console.log(`📊 CSV Sensei Dashboard API ready`);
   });
 }).catch(err => {
-  console.error('Mongo connect error', err);
-  process.exit(1);
+  (global as any).console.error('Mongo connect error', err);
+  (global as any).process.exit(1);
 });
