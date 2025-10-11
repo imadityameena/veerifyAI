@@ -167,7 +167,7 @@ router.patch('/', [
     }
 
     const { toggles } = req.body;
-    const updatedToggles = [];
+    const updatedToggles: any[] = [];
 
     for (const toggle of toggles) {
       const updatedToggle = await FeatureToggleModel.updateToggle(

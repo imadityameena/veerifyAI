@@ -79,7 +79,7 @@ router.get('/:featureName', async (req: Request, res: Response) => {
         _id: `default-${featureName}`,
         featureName: featureName as 'op_billing' | 'doctor_roster' | 'compliance_ai',
         isEnabled: true,
-        displayName: featureName.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        displayName: featureName.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()),
         description: `${featureName.replace('_', ' ')} feature`,
         lastModifiedBy: 'system',
         createdAt: new Date().toISOString(),

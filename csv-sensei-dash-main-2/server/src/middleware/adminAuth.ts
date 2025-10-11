@@ -18,7 +18,7 @@ export const requireAdmin = async (req: AuthenticatedRequest, res: Response, nex
   try {
     // First authenticate the token
     await new Promise<void>((resolve, reject) => {
-      authenticateToken(req, res, (err) => {
+      authenticateToken(req, res, (err: any) => {
         if (err) reject(err);
         else resolve();
       });
