@@ -58,7 +58,7 @@ const userSchema = new Schema({
   }
 });
 
-// Index for better query performance
+// Index for better query performanceawait
 userSchema.index({ email: 1 });
 userSchema.index({ company: 1 });
 
@@ -67,8 +67,8 @@ userSchema.pre('save', async function(next: any) {
   if (!this.isModified('password')) return next();
   
   try {
-    const salt = await bcrypt.genSalt(12);
-    this.password = await bcrypt.hash(this.password, salt);
+    // const salt =  bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
   } catch (error) {
     next(error);
