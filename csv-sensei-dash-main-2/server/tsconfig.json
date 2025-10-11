@@ -30,7 +30,7 @@
     "typeRoots": ["./node_modules/@types"],
     "allowJs": true,
     "checkJs": false,
-    "types": ["node"]
+    
   },
   "include": [
     "src/**/*",
