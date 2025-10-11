@@ -15,8 +15,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://*.vercel.app',
-  'https://csv-sensei-dash.vercel.app'
+  'https://veerify-ai-frontend.vercel.app/',
+  
 ];
 
 // Add dynamic origin from environment variable
@@ -61,7 +61,7 @@ app.use('/api/admin/feature-toggles', featureToggleRoutes);
 app.use('/api/feature-toggles', publicFeatureToggleRoutes);
 app.use('/api', api);
 
-const port = process.env.PORT || 4000;
+const port = parseInt(process.env.PORT || '4000', 10);
 const mongoUri = process.env.MONGODB_URI;
 
 if (!mongoUri) {

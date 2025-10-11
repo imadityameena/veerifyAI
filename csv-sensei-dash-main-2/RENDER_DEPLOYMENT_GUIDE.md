@@ -55,6 +55,9 @@ JWT_EXPIRES_IN=7d
 PORT=10000
 NODE_ENV=production
 
+# Email Configuration (Optional)
+
+
 # Frontend URL (Update after frontend deployment)
 FRONTEND_URL=https://your-frontend-domain.vercel.app
 ```
