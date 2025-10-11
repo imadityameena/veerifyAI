@@ -123,6 +123,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoggedIn(true);
     // Store user data in localStorage as backup
     localStorage.setItem('user', JSON.stringify(userData));
+    // Stop loading since we have user data
+    setIsLoading(false);
   };
 
   const logout = async () => {

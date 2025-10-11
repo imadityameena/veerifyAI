@@ -37,8 +37,8 @@ const featureToggleSchema = new Schema({
   }
 });
 
-// Index for better query performance
-featureToggleSchema.index({ featureName: 1 });
+// Index for better query performance (featureName already has unique index)
+// featureToggleSchema.index({ featureName: 1 }); // Commented out to avoid duplicate index warning
 
 // Static method to get all feature toggles
 featureToggleSchema.statics.getAllToggles = function() {

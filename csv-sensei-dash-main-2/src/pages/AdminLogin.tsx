@@ -88,6 +88,7 @@ const AdminLogin = () => {
       });
 
       const data = await response.json();
+      console.log('Login response:', data);
 
       if (data.success) {
         // Check if user is admin
@@ -97,12 +98,17 @@ const AdminLogin = () => {
           return;
         }
 
+        console.log('Admin login successful, user data:', data.data.user);
         // Use auth context to login
         login(data.data.user);
         
-        // Navigate to admin dashboard
-        navigate('/admin/dashboard');
+        // Small delay to ensure auth context is updated
+        setTimeout(() => {
+          console.log('Navigating to admin dashboard...');
+          navigate('/admin/dashboard');
+        }, 100);
       } else {
+        console.log('Login failed:', data.message);
         setError(data.message || 'Login failed. Please try again.');
       }
     } catch (error) {
