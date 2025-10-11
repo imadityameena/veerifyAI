@@ -12,6 +12,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+// Validate required environment variables
+if (!process.env.OPENAI_API_KEY) {
+  console.error('❌ OPENAI_API_KEY environment variable is required');
+  process.exit(1);
+}
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
@@ -25,14 +31,39 @@ app.use(helmet({
 }));
 
 // CORS configuration
+const allowedOrigins = [
+  FRONTEND_URL, 
+  'http://localhost:3000', 
+  'http://localhost:5173',
+  'https://*.vercel.app',
+  'https://csv-sensei-dash.vercel.app'
+];
+
+// Add dynamic origin from environment variable
+if (process.env.FRONTEND_URL && !allowedOrigins.includes(process.env.FRONTEND_URL)) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
-  origin: [
-    FRONTEND_URL, 
-    'http://localhost:3000', 
-    'http://localhost:5173',
-    'https://*.vercel.app',
-    'https://csv-sensei-dash.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list or matches wildcard patterns
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (allowedOrigin.includes('*')) {
+        const pattern = allowedOrigin.replace(/\*/g, '.*');
+        return new RegExp(pattern).test(origin);
+      }
+      return allowedOrigin === origin;
+    });
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -83,9 +114,10 @@ process.on('SIGINT', () => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🤖 CSV Sensei Chatbot API running on port ${PORT}`);
   console.log(`🌐 Frontend URL: ${FRONTEND_URL}`);
+  console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`💬 Chat API: http://localhost:${PORT}/api/chat`);
 });

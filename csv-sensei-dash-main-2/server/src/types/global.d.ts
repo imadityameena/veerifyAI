@@ -7,10 +7,6 @@ declare global {
       MONGODB_URI: string;
       JWT_SECRET: string;
       JWT_EXPIRES_IN: string;
-      EMAIL_HOST?: string;
-      EMAIL_PORT?: string;
-      EMAIL_USER?: string;
-      EMAIL_PASS?: string;
       FRONTEND_URL?: string;
     }
   }
