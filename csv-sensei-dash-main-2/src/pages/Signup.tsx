@@ -79,7 +79,8 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const response = await fetch(`${apiUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
