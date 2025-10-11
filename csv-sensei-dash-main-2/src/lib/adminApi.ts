@@ -3,11 +3,27 @@ const getApiUrl = () => {
   return import.meta.env.VITE_API_URL || '/api';
 };
 
-// Helper function to get auth token from cookies
+// Helper function to get auth token from cookies or localStorage
 const getAuthToken = () => {
+  // First try to get from cookies
   const cookies = document.cookie.split(';');
   const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('token='));
-  return tokenCookie ? tokenCookie.split('=')[1] : null;
+  if (tokenCookie) {
+    return tokenCookie.split('=')[1];
+  }
+  
+  // Fallback to localStorage if available
+  try {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      // If we have user data, we can make the request and let the server handle auth
+      return 'localStorage-fallback';
+    }
+  } catch (e) {
+    console.error('Error accessing localStorage:', e);
+  }
+  
+  return null;
 };
 
 // Helper function to make authenticated requests

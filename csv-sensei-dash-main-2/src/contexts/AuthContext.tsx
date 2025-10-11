@@ -53,7 +53,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (data.success) {
           setUser(data.data.user);
           setIsLoggedIn(true);
+          // Update localStorage with fresh user data
+          localStorage.setItem('user', JSON.stringify(data.data.user));
         } else {
+          // Check localStorage as fallback
+          const storedUser = localStorage.getItem('user');
+          if (storedUser) {
+            try {
+              const userData = JSON.parse(storedUser);
+              setUser(userData);
+              setIsLoggedIn(true);
+            } catch (e) {
+              localStorage.removeItem('user');
+              setUser(null);
+              setIsLoggedIn(false);
+            }
+          } else {
+            setUser(null);
+            setIsLoggedIn(false);
+          }
+        }
+      } else {
+        // Check localStorage as fallback
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          try {
+            const userData = JSON.parse(storedUser);
+            setUser(userData);
+            setIsLoggedIn(true);
+          } catch (e) {
+            localStorage.removeItem('user');
+            setUser(null);
+            setIsLoggedIn(false);
+          }
+        } else {
+          setUser(null);
+          setIsLoggedIn(false);
+        }
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      // Check localStorage as fallback
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+          setIsLoggedIn(true);
+        } catch (e) {
+          localStorage.removeItem('user');
           setUser(null);
           setIsLoggedIn(false);
         }
@@ -61,10 +109,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(null);
         setIsLoggedIn(false);
       }
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      setUser(null);
-      setIsLoggedIn(false);
     } finally {
       setIsLoading(false);
     }
@@ -77,6 +121,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = (userData: User) => {
     setUser(userData);
     setIsLoggedIn(true);
+    // Store user data in localStorage as backup
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = async () => {
@@ -91,6 +137,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } finally {
       setUser(null);
       setIsLoggedIn(false);
+      // Clear localStorage
+      localStorage.removeItem('user');
     }
   };
 
