@@ -94,6 +94,14 @@ const Signup = () => {
         })
       });
 
+      // Check if response is ok
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'Server error' }));
+        setError(errorData.message || `Server error: ${response.status}`);
+        setIsLoading(false);
+        return;
+      }
+
       const data = await response.json();
 
       if (data.success) {
