@@ -18,7 +18,8 @@ const allowedOrigins = [
   'http://localhost:8080',
   'https://veerify-ai-frontend.vercel.app',
   'https://veerify-ai-ashy.vercel.app',
-  
+  'https://csv-sensei-dash.vercel.app',
+  'https://*.vercel.app', // Allow all Vercel deployments
 ];
 
 // Add dynamic origin from environment variable
