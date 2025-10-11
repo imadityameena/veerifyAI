@@ -5,6 +5,20 @@ import { body, validationResult } from 'express-validator';
 
 const router = Router();
 
+// Root auth route
+router.get('/', (req: Request, res: Response) => {
+  res.json({
+    message: 'Authentication API',
+    endpoints: {
+      signup: 'POST /api/auth/signup',
+      login: 'POST /api/auth/login',
+      logout: 'POST /api/auth/logout',
+      me: 'GET /api/auth/me',
+      profile: 'PUT /api/auth/profile'
+    }
+  });
+});
+
 // Validation middleware
 const validateSignup = [
   body('email')

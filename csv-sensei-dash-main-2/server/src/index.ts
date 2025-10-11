@@ -15,7 +15,9 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://veerify-ai-frontend.vercel.app/',
+  'http://localhost:8080',
+  'https://veerify-ai-frontend.vercel.app',
+  'https://veerify-ai-ashy.vercel.app',
   
 ];
 
