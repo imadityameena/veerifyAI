@@ -269,22 +269,48 @@ const LandingPage = () => {
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               >
-                <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <div className="flex-1">
-                    <Input
-                      placeholder="Your organization email"
-                      className="h-14 text-lg border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 rounded-xl"
-                    />
-                  </div>
-                  <Button 
-                    onClick={handleRequestDemo}
-                    size="lg" 
-                    className="h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl group"
-                  >
-                    Request a Demo
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Button>
-                </div>
+                 {/* Key Features */}
+                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+                     <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                       <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                     </div>
+                     <div>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm">24/7 Monitoring</p>
+                       <p className="text-xs text-gray-600 dark:text-gray-400">Continuous compliance</p>
+                     </div>
+                   </div>
+                   
+                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                       <Brain className="w-5 h-5 text-green-600 dark:text-green-400" />
+                     </div>
+                     <div>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm">AI-Powered</p>
+                       <p className="text-xs text-gray-600 dark:text-gray-400">Smart detection</p>
+                     </div>
+                   </div>
+                   
+                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                       <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                     </div>
+                     <div>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm">Real-time</p>
+                       <p className="text-xs text-gray-600 dark:text-gray-400">Instant alerts</p>
+                     </div>
+                   </div>
+                 </div>
+
+                 {/* CTA Button */}
+                 <Button 
+                   onClick={handleRequestDemo}
+                   size="lg" 
+                   className="w-full sm:w-auto h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl group shadow-lg hover:shadow-xl transition-all duration-300"
+                 >
+                   Request a Demo
+                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                 </Button>
               </div>
             </div>
 
@@ -906,21 +932,13 @@ const LandingPage = () => {
                  Supports healthcare organizations with intelligent monitoring, powerful integrations, 
                  and comprehensive compliance management tools.
                </p>
-               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+               <div className="flex justify-center">
                  <Button 
                    onClick={handleRequestDemo}
                    size="lg" 
                    className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg font-semibold rounded-xl group"
                  >
                    Get Started Now
-                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                 </Button>
-                 <Button 
-                   variant="outline"
-                   size="lg" 
-                   className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl backdrop-blur-sm group"
-                 >
-                   Learn More
                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                  </Button>
                </div>
