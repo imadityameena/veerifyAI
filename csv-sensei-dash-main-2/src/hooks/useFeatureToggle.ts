@@ -30,8 +30,7 @@ export const useFeatureToggle = (): UseFeatureToggleReturn => {
       setIsLoading(true);
       setError(null);
       
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
-      const response = await fetch(`${apiUrl}/feature-toggles`, {
+      const response = await fetch('/api/feature-toggles', {
         credentials: 'include',
       });
 

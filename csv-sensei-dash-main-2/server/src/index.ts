@@ -18,8 +18,7 @@ const allowedOrigins = [
   'http://localhost:8080',
   'https://veerify-ai-frontend.vercel.app',
   'https://veerify-ai-ashy.vercel.app',
-  'https://csv-sensei-dash.vercel.app',
-  'https://*.vercel.app', // Allow all Vercel deployments
+  
 ];
 
 // Add dynamic origin from environment variable
@@ -48,10 +47,8 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  exposedHeaders: ['Set-Cookie'],
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Middleware

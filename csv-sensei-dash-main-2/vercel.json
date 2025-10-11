@@ -12,16 +12,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://veerifyai-4.onrender.com/api/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
-      "dest": "/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/$1"
     }
   ],
   "env": {

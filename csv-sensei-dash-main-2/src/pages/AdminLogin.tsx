@@ -63,6 +63,11 @@ const AdminLogin = () => {
     return true;
   };
 
+  // Get the API base URL from environment variables
+  const getApiUrl = () => {
+    return import.meta.env.VITE_API_URL || '/api';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -74,8 +79,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
-      const response = await fetch(`${apiUrl}/auth/login`, {
+      const response = await fetch(`${getApiUrl()}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +92,6 @@ const AdminLogin = () => {
       });
 
       const data = await response.json();
-      console.log('Login response:', data);
 
       if (data.success) {
         // Check if user is admin
@@ -98,17 +101,12 @@ const AdminLogin = () => {
           return;
         }
 
-        console.log('Admin login successful, user data:', data.data.user);
         // Use auth context to login
         login(data.data.user);
         
-        // Small delay to ensure auth context is updated
-        setTimeout(() => {
-          console.log('Navigating to admin dashboard...');
-          navigate('/admin/dashboard');
-        }, 100);
+        // Navigate to admin dashboard
+        navigate('/admin/dashboard');
       } else {
-        console.log('Login failed:', data.message);
         setError(data.message || 'Login failed. Please try again.');
       }
     } catch (error) {

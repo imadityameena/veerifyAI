@@ -60,7 +60,6 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useAuth } from '@/contexts/AuthContext';
-import * as adminApi from '@/lib/adminApi';
 
 interface AdminStats {
   totalUsers: number;
@@ -135,10 +134,23 @@ const AdminDashboard = () => {
     }
   }, [user, navigate]);
 
+  // Get the API base URL from environment variables
+  const getApiUrl = () => {
+    return import.meta.env.VITE_API_URL || '/api';
+  };
+
   // Fetch admin statistics
   const fetchStats = async () => {
     try {
-      const data = await adminApi.fetchAdminStats();
+      const response = await fetch(`${getApiUrl()}/admin/stats`, {
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       
       if (data.success) {
         setStats(data.data);
@@ -156,17 +168,25 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     setIsUsersLoading(true);
     try {
-      const params = {
-        page: currentPage,
-        limit: 10,
-        ...(searchTerm && { search: searchTerm }),
-        ...(roleFilter && roleFilter !== 'all' && { role: roleFilter }),
-        ...(statusFilter && statusFilter !== 'all' && { status: statusFilter }),
-        sortBy,
-        sortOrder,
-      };
+    const params = new URLSearchParams({
+      page: currentPage.toString(),
+      limit: '10',
+      ...(searchTerm && { search: searchTerm }),
+      ...(roleFilter && roleFilter !== 'all' && { role: roleFilter }),
+      ...(statusFilter && statusFilter !== 'all' && { status: statusFilter }),
+      sortBy,
+      sortOrder,
+    });
 
-      const data = await adminApi.fetchUsers(params);
+      const response = await fetch(`${getApiUrl()}/admin/users?${params}`, {
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       
       if (data.success) {
         setUsers(data.data.users || []);
@@ -186,7 +206,11 @@ const AdminDashboard = () => {
   // Toggle user status
   const toggleUserStatus = async (userId: string) => {
     try {
-      const data = await adminApi.toggleUserStatus(userId);
+      const response = await fetch(`${getApiUrl()}/admin/users/${userId}/toggle-status`, {
+        method: 'PATCH',
+        credentials: 'include',
+      });
+      const data = await response.json();
       
       if (data.success) {
         fetchUsers(); // Refresh users list
@@ -205,7 +229,11 @@ const AdminDashboard = () => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     
     try {
-      const data = await adminApi.deleteUser(userId);
+      const response = await fetch(`${getApiUrl()}/admin/users/${userId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      const data = await response.json();
       
       if (data.success) {
         fetchUsers(); // Refresh users list
@@ -223,7 +251,15 @@ const AdminDashboard = () => {
   const fetchFeatureToggles = async () => {
     setIsTogglesLoading(true);
     try {
-      const data = await adminApi.fetchFeatureToggles();
+      const response = await fetch(`${getApiUrl()}/admin/feature-toggles`, {
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       
       if (data.success) {
         setFeatureToggles(data.data.toggles);
@@ -241,7 +277,20 @@ const AdminDashboard = () => {
   // Toggle feature status
   const toggleFeature = async (featureName: string, isEnabled: boolean) => {
     try {
-      const data = await adminApi.updateFeatureToggle(featureName, isEnabled);
+      const response = await fetch(`${getApiUrl()}/admin/feature-toggles/${featureName}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ isEnabled })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       
       if (data.success) {
         // Update local state

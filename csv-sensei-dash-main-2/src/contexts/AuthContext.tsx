@@ -37,10 +37,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Get the API base URL from environment variables
+  const getApiUrl = () => {
+    return import.meta.env.VITE_API_URL || '/api';
+  };
+
   const checkAuth = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
-      const response = await fetch(`${apiUrl}/auth/me`, {
+      const response = await fetch(`${getApiUrl()}/auth/me`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -53,55 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (data.success) {
           setUser(data.data.user);
           setIsLoggedIn(true);
-          // Update localStorage with fresh user data
-          localStorage.setItem('user', JSON.stringify(data.data.user));
         } else {
-          // Check localStorage as fallback
-          const storedUser = localStorage.getItem('user');
-          if (storedUser) {
-            try {
-              const userData = JSON.parse(storedUser);
-              setUser(userData);
-              setIsLoggedIn(true);
-            } catch (e) {
-              localStorage.removeItem('user');
-              setUser(null);
-              setIsLoggedIn(false);
-            }
-          } else {
-            setUser(null);
-            setIsLoggedIn(false);
-          }
-        }
-      } else {
-        // Check localStorage as fallback
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          try {
-            const userData = JSON.parse(storedUser);
-            setUser(userData);
-            setIsLoggedIn(true);
-          } catch (e) {
-            localStorage.removeItem('user');
-            setUser(null);
-            setIsLoggedIn(false);
-          }
-        } else {
-          setUser(null);
-          setIsLoggedIn(false);
-        }
-      }
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      // Check localStorage as fallback
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        try {
-          const userData = JSON.parse(storedUser);
-          setUser(userData);
-          setIsLoggedIn(true);
-        } catch (e) {
-          localStorage.removeItem('user');
           setUser(null);
           setIsLoggedIn(false);
         }
@@ -109,6 +65,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(null);
         setIsLoggedIn(false);
       }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      setUser(null);
+      setIsLoggedIn(false);
     } finally {
       setIsLoading(false);
     }
@@ -121,16 +81,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = (userData: User) => {
     setUser(userData);
     setIsLoggedIn(true);
-    // Store user data in localStorage as backup
-    localStorage.setItem('user', JSON.stringify(userData));
-    // Stop loading since we have user data
-    setIsLoading(false);
   };
 
   const logout = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
-      await fetch(`${apiUrl}/auth/logout`, {
+      await fetch(`${getApiUrl()}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -139,8 +94,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } finally {
       setUser(null);
       setIsLoggedIn(false);
-      // Clear localStorage
-      localStorage.removeItem('user');
     }
   };
 
