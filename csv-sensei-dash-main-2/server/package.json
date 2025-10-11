@@ -1,7 +1,7 @@
 {
-  "name": "csv-sensei-main-backend",
+  "name": "veerifyai-backend",
   "version": "1.0.0",
-  "description": "Main backend API for CSV Sensei Dashboard",
+  "description": "Main backend API for VeerifyAI Dashboard",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm install && npm run compile",
@@ -37,7 +37,7 @@
     "dashboard",
     "authentication"
   ],
-  "author": "CSV Sensei Team",
+  "author": "VeerifyAI Team",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

@@ -1,7 +1,7 @@
 {
-  "name": "csv-sensei-chatbot",
+  "name": "veerifyai-chatbot",
   "version": "1.0.0",
-  "description": "AI-powered chatbot backend for CSV Sensei Dashboard",
+  "description": "AI-powered chatbot backend for VeerifyAI Dashboard",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm install && npm run compile",
@@ -40,6 +40,6 @@
     "csv",
     "dashboard"
   ],
-  "author": "CSV Sensei Team",
+  "author": "VeerifyAI Team",
   "license": "MIT"
 }

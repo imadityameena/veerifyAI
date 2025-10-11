@@ -131,10 +131,10 @@ const Signup = () => {
             <Building2 className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            CSV Sensei
+            VeerifyAI
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Business Intelligence Dashboard
+            Healthcare Compliance Platform
           </p>
         </div>
 

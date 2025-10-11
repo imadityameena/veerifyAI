@@ -1,17 +1,17 @@
-# CSV Sensei Dashboard
+# VeerifyAI Dashboard
 
-A next-generation AI-powered business intelligence dashboard that transforms your CSV data into beautiful visualizations with intelligent insights.
+A next-generation AI-powered healthcare compliance and safety platform that transforms healthcare data into actionable insights with intelligent monitoring and predictive analytics.
 
 ## 🚀 Features
 
-- **Multi-Industry Support**: Optimized schemas for Doctor Roster, OP Billing, Compliance AI, and general business data
-- **Smart CSV Validation**: Advanced validation engine with AI-powered suggestions for data quality improvement
-- **Interactive Visualizations**: Beautiful charts and graphs using Recharts library
-- **AI-Generated Insights**: Automatic caption generation for charts highlighting key trends and anomalies
-- **Data Quality Analysis**: Comprehensive validation with error detection, outlier identification, and data completeness scoring
+- **Healthcare Compliance Monitoring**: Continuous monitoring of regulatory requirements and compliance status
+- **Predictive Safety Analytics**: AI-powered risk assessment and early warning systems
+- **Smart Data Validation**: Advanced validation engine with healthcare-specific compliance checks
+- **Interactive Dashboards**: Beautiful visualizations for compliance metrics and safety indicators
+- **AI-Generated Insights**: Automatic analysis of compliance gaps and safety recommendations
+- **Real-time Risk Detection**: Proactive identification of potential compliance violations
 - **Responsive Design**: Works seamlessly across desktop and mobile devices
-- **Dark/Light Mode**: Toggle between themes for optimal viewing experience
-- **Authentication**: Secure login system with company-based access
+- **Secure Authentication**: Enterprise-grade security with role-based access control
 
 ## 🛠️ Tech Stack
 

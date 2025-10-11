@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const CHATBOT_URL = "http://localhost:5000";
 
 async function testChatbot() {
-  console.log("🧪 Testing CSV Sensei Chatbot Backend...\n");
+  console.log("🧪 Testing VeerifyAI Chatbot Backend...\n");
 
   try {
     // Test 1: Health Check

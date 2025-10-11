@@ -15,7 +15,7 @@ const createAdminUser = async () => {
     console.log('Connected to MongoDB');
 
     // Check if admin already exists
-    const existingAdmin = await UserModel.findOne({ email: 'admin@csvsensei.com' });
+    const existingAdmin = await UserModel.findOne({ email: 'admin@veerifyai.com' });
     if (existingAdmin) {
       console.log('Admin user already exists');
       console.log('Admin details:', {
@@ -30,11 +30,11 @@ const createAdminUser = async () => {
 
     // Create admin user
     const adminUser = new UserModel({
-      email: 'admin@csvsensei.com',
+      email: 'admin@veerifyai.com',
       password: 'Admin123!', // This will be hashed automatically
       firstName: 'Admin',
       lastName: 'User',
-      company: 'CSV Sensei',
+      company: 'VeerifyAI',
       role: 'admin',
       isActive: true
     });
@@ -49,7 +49,7 @@ const createAdminUser = async () => {
       isActive: adminUser.isActive
     });
     console.log('\nLogin credentials:');
-    console.log('Email: admin@csvsensei.com');
+    console.log('Email: admin@veerifyai.com');
     console.log('Password: Admin123!');
     console.log('\nYou can access the admin portal at: http://localhost:5173/admin/login');
 

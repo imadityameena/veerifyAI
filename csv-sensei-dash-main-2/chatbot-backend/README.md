@@ -1,13 +1,13 @@
-# CSV Sensei Chatbot Backend
+# VeerifyAI Chatbot Backend
 
-AI-powered chatbot backend for the CSV Sensei Dashboard, providing intelligent assistance for data analysis and business intelligence.
+AI-powered chatbot backend for the VeerifyAI healthcare compliance platform, providing intelligent assistance for compliance monitoring and safety analytics.
 
 ## Features
 
 - 🤖 **OpenAI Integration**: Powered by GPT-4 for intelligent responses
 - 💬 **Conversation Management**: Persistent conversation history
 - 🔒 **Security**: Rate limiting, input validation, and error handling
-- 📊 **Context Awareness**: Understands dashboard context and data types
+- 📊 **Context Awareness**: Understands healthcare compliance context and safety data
 - 🚀 **High Performance**: Optimized for production use
 
 ## Quick Start
@@ -67,13 +67,13 @@ AI-powered chatbot backend for the CSV Sensei Dashboard, providing intelligent a
 ```json
 POST /api/chat/message
 {
-  "message": "What insights can you provide about my billing data?",
+  "message": "What compliance insights can you provide about my healthcare data?",
   "conversationId": "conv_1234567890_abc123",
-  "context": {
-    "industry": "healthcare",
-    "dataType": "billing",
-    "currentDashboard": "billing"
-  }
+    "context": {
+      "industry": "healthcare",
+      "dataType": "compliance",
+      "currentDashboard": "compliance"
+    }
 }
 ```
 
@@ -81,7 +81,7 @@ POST /api/chat/message
 
 ```json
 {
-  "message": "Based on your billing data, I can see several key insights...",
+  "message": "Based on your compliance data, I can see several key safety insights...",
   "conversationId": "conv_1234567890_abc123",
   "timestamp": "2024-01-15T10:30:00.000Z",
   "metadata": {
