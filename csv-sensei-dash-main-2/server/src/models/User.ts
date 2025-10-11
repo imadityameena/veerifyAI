@@ -1,5 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from 'mongoose';
-import * as bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new Schema({
   email: {
