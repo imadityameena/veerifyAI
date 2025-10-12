@@ -172,6 +172,57 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">VeerifyAI</span>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+                Features
+              </a>
+              <a href="#solution" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+                Solution
+              </a>
+              <a href="#benefits" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+                Benefits
+              </a>
+              <a href="#audience" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+                Who We Serve
+              </a>
+              <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+                Contact
+              </a>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex items-center space-x-4">
+              <Button 
+                variant="ghost" 
+                onClick={handleRequestDemo}
+                className="hidden sm:inline-flex text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                Sign In
+              </Button>
+              <Button 
+                onClick={handleRequestDemo}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300"
+              >
+                Get Started
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
     {/* Dark Mode Toggle */}
     <div className="fixed top-6 right-6 z-50">
       <Button
@@ -202,33 +253,33 @@ const LandingPage = () => {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Floating Geometric Shapes */}
-          <div className="absolute top-20 left-10 w-20 h-20 bg-blue-200/30 dark:bg-blue-400/20 rounded-full animate-float"></div>
-          <div className="absolute top-40 right-20 w-16 h-16 bg-purple-200/30 dark:bg-purple-400/20 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-40 left-20 w-24 h-24 bg-indigo-200/30 dark:bg-indigo-400/20 rounded-full animate-float" style={{animationDelay: '4s'}}></div>
-          <div className="absolute bottom-20 right-10 w-12 h-12 bg-pink-200/30 dark:bg-pink-400/20 rounded-full animate-float" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-blue-300/40 to-blue-400/30 dark:bg-blue-400/20 rounded-full animate-float shadow-lg"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-purple-300/40 to-purple-400/30 dark:bg-purple-400/20 rounded-full animate-float shadow-lg" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-40 left-20 w-24 h-24 bg-gradient-to-br from-indigo-300/40 to-indigo-400/30 dark:bg-indigo-400/20 rounded-full animate-float shadow-lg" style={{animationDelay: '4s'}}></div>
+          <div className="absolute bottom-20 right-10 w-12 h-12 bg-gradient-to-br from-pink-300/40 to-pink-400/30 dark:bg-pink-400/20 rounded-full animate-float shadow-lg" style={{animationDelay: '1s'}}></div>
           
-          {/* Moving Lines */}
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-300/50 to-transparent dark:via-blue-400/30 animate-pulse"></div>
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-300/50 to-transparent dark:via-purple-400/30 animate-pulse" style={{animationDelay: '1.5s'}}></div>
+          {/* Enhanced Moving Lines */}
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent dark:via-blue-400/30 animate-pulse"></div>
+          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/60 to-transparent dark:via-purple-400/30 animate-pulse" style={{animationDelay: '1.5s'}}></div>
           
-          {/* Grid Pattern */}
-          <div className="absolute inset-0 opacity-10 dark:opacity-5">
+          {/* Enhanced Grid Pattern */}
+          <div className="absolute inset-0 opacity-15 dark:opacity-5">
             <div className="w-full h-full" style={{
               backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+                linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
               `,
               backgroundSize: '50px 50px',
               animation: 'gridMove 20s linear infinite'
             }}></div>
           </div>
           
-          {/* Interactive Particles */}
+          {/* Enhanced Interactive Particles */}
           <div className="absolute inset-0">
-            {[...Array(15)].map((_, i) => (
+            {[...Array(20)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-2 h-2 bg-blue-400/20 dark:bg-blue-300/30 rounded-full"
+                className="absolute w-2 h-2 bg-gradient-to-br from-blue-500/40 to-blue-600/30 dark:bg-blue-300/30 rounded-full shadow-sm"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -238,9 +289,13 @@ const LandingPage = () => {
               ></div>
             ))}
           </div>
+          
+          {/* Additional Light Theme Elements */}
+          <div className="absolute top-1/3 right-1/4 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 dark:from-blue-400/10 dark:to-purple-400/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/3 left-1/4 w-40 h-40 bg-gradient-to-br from-indigo-200/20 to-pink-200/20 dark:from-indigo-400/10 dark:to-pink-400/10 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
             {/* Left Content */}
             <div className="space-y-8">
@@ -271,32 +326,32 @@ const LandingPage = () => {
               >
                  {/* Key Features */}
                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
-                     <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                       <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                     <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 group-hover:scale-110 transition-all duration-300">
+                       <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:animate-pulse" />
                      </div>
                      <div>
-                       <p className="font-semibold text-gray-900 dark:text-white text-sm">24/7 Monitoring</p>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">24/7 Monitoring</p>
                        <p className="text-xs text-gray-600 dark:text-gray-400">Continuous compliance</p>
                      </div>
                    </div>
                    
-                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
-                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                       <Brain className="w-5 h-5 text-green-600 dark:text-green-400" />
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                     <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-900/50 group-hover:scale-110 transition-all duration-300">
+                       <Brain className="w-5 h-5 text-green-600 dark:text-green-400 group-hover:animate-bounce" />
                      </div>
                      <div>
-                       <p className="font-semibold text-gray-900 dark:text-white text-sm">AI-Powered</p>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">AI-Powered</p>
                        <p className="text-xs text-gray-600 dark:text-gray-400">Smart detection</p>
                      </div>
                    </div>
                    
-                   <div className="flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50">
-                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                       <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-105 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                     <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 group-hover:scale-110 transition-all duration-300">
+                       <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:animate-spin" />
                      </div>
                      <div>
-                       <p className="font-semibold text-gray-900 dark:text-white text-sm">Real-time</p>
+                       <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">Real-time</p>
                        <p className="text-xs text-gray-600 dark:text-gray-400">Instant alerts</p>
                      </div>
                    </div>
@@ -306,7 +361,7 @@ const LandingPage = () => {
                  <Button 
                    onClick={handleRequestDemo}
                    size="lg" 
-                   className="w-full sm:w-auto h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl group shadow-lg hover:shadow-xl transition-all duration-300"
+                   className="w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-lg font-semibold rounded-xl group shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 animate-light-glow"
                  >
                    Request a Demo
                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -322,10 +377,10 @@ const LandingPage = () => {
             >
               <div className="relative">
                 {/* Main Dashboard Card */}
-                <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-white" />
+                <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 hover:scale-105 hover:shadow-3xl transition-all duration-500 cursor-pointer group border border-gray-100 dark:border-gray-600 hover:border-blue-200 dark:hover:border-blue-600">
+                    <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-700 group-hover:scale-110 transition-all duration-300">
+                      <Shield className="w-6 h-6 text-white group-hover:animate-pulse" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white">VeerifyAI Dashboard</h3>
@@ -343,22 +398,22 @@ const LandingPage = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl">
-                        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                          <CheckCircle className="w-4 h-4 text-white" />
+                      <div className="group/status flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 hover:scale-105 transition-all duration-300 cursor-pointer">
+                        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center group-hover/status:bg-green-600 group-hover/status:scale-110 transition-all duration-300">
+                          <CheckCircle className="w-4 h-4 text-white group-hover/status:animate-pulse" />
                         </div>
                          <div>
-                           <p className="text-sm font-medium text-gray-900 dark:text-white">Monitoring</p>
+                           <p className="text-sm font-medium text-gray-900 dark:text-white group-hover/status:text-green-700 dark:group-hover/status:text-green-300 transition-colors duration-300">Monitoring</p>
                            <p className="text-xs text-gray-500 dark:text-gray-400">Active</p>
                          </div>
                        </div>
                        
-                       <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl">
-                         <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                           <AlertTriangle className="w-4 h-4 text-white" />
+                       <div className="group/alerts flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl hover:bg-yellow-100 dark:hover:bg-yellow-900/30 hover:scale-105 transition-all duration-300 cursor-pointer">
+                         <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center group-hover/alerts:bg-yellow-600 group-hover/alerts:scale-110 transition-all duration-300">
+                           <AlertTriangle className="w-4 h-4 text-white group-hover/alerts:animate-bounce" />
                          </div>
                          <div>
-                           <p className="text-sm font-medium text-gray-900 dark:text-white">Alerts</p>
+                           <p className="text-sm font-medium text-gray-900 dark:text-white group-hover/alerts:text-yellow-700 dark:group-hover/alerts:text-yellow-300 transition-colors duration-300">Alerts</p>
                            <p className="text-xs text-gray-500 dark:text-gray-400">Real-time</p>
                          </div>
                       </div>
@@ -371,25 +426,25 @@ const LandingPage = () => {
                 </div>
 
                 {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 bg-white dark:bg-gray-600 rounded-xl shadow-lg p-4 transform -rotate-12 hover:rotate-0 transition-transform duration-300">
+                <div className="absolute -top-4 -right-4 bg-white dark:bg-gray-600 rounded-xl shadow-lg p-4 transform -rotate-12 hover:rotate-0 hover:scale-110 hover:shadow-xl transition-all duration-300 cursor-pointer group/ai">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                      <Brain className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center group-hover/ai:bg-purple-600 group-hover/ai:scale-110 transition-all duration-300">
+                      <Brain className="w-4 h-4 text-white group-hover/ai:animate-pulse" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white">AI Alert</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white group-hover/ai:text-purple-600 dark:group-hover/ai:text-purple-400 transition-colors duration-300">AI Alert</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">Risk detected</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="absolute -bottom-4 -left-4 bg-white dark:bg-gray-600 rounded-xl shadow-lg p-4 transform rotate-12 hover:rotate-0 transition-transform duration-300">
+                <div className="absolute -bottom-4 -left-4 bg-white dark:bg-gray-600 rounded-xl shadow-lg p-4 transform rotate-12 hover:rotate-0 hover:scale-110 hover:shadow-xl transition-all duration-300 cursor-pointer group/growth">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <TrendingUp className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center group-hover/growth:bg-green-600 group-hover/growth:scale-110 transition-all duration-300">
+                      <TrendingUp className="w-4 h-4 text-white group-hover/growth:animate-bounce" />
                     </div>
                      <div>
-                       <p className="text-sm font-semibold text-gray-900 dark:text-white">Growth</p>
+                       <p className="text-sm font-semibold text-gray-900 dark:text-white group-hover/growth:text-green-600 dark:group-hover/growth:text-green-400 transition-colors duration-300">Growth</p>
                        <p className="text-xs text-gray-500 dark:text-gray-400">Tracking</p>
                      </div>
                   </div>
@@ -442,14 +497,14 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="relative opacity-0 translate-x-[50px] transition-all duration-1000 ease-out delay-300 animate-fade-in-up">
-              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-all duration-500 hover:shadow-2xl">
+              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-all duration-500 hover:shadow-2xl border border-gray-100 dark:border-gray-600">
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600 dark:text-gray-300">Compliance Risk Level</span>
                     <Badge variant="destructive" className="animate-pulse">High</Badge>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3 overflow-hidden">
-                    <div className="bg-red-500 h-3 rounded-full w-3/4 transition-all duration-2000 ease-out animate-fade-in-up"></div>
+                  <div className="w-full bg-gradient-to-r from-gray-200 to-gray-300 dark:bg-gray-600 rounded-full h-3 overflow-hidden shadow-inner">
+                    <div className="bg-gradient-to-r from-red-500 to-red-600 h-3 rounded-full w-3/4 transition-all duration-2000 ease-out animate-fade-in-up shadow-lg"></div>
                   </div>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="text-center group">
@@ -470,6 +525,7 @@ const LandingPage = () => {
 
        {/* Our Solution Section */}
        <section 
+         id="solution"
          ref={(el) => (sectionRefs.current[1] = el)}
          className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
        >
@@ -499,10 +555,12 @@ const LandingPage = () => {
                    'animate-delay-600'
                  }`}
                >
-                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 h-full border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl">
+                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 h-full border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer">
                    <div className="flex items-start gap-4 mb-6">
-                     <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition-colors duration-300">
-                       {capability.icon}
+                     <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 group-hover:scale-110 transition-all duration-300">
+                       <div className="group-hover:animate-pulse">
+                         {capability.icon}
+                       </div>
                      </div>
                    </div>
                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
@@ -530,34 +588,34 @@ const LandingPage = () => {
            {/* Statistics Cards */}
            <div className="grid md:grid-cols-2 gap-8">
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000">
-               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
-                 <div className="text-6xl font-bold text-blue-600 dark:text-blue-400 mb-4">24/7</div>
-                 <p className="text-lg text-gray-900 dark:text-white font-semibold">
+               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+                 <div className="text-6xl font-bold text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 group-hover:animate-pulse transition-all duration-300">24/7</div>
+                 <p className="text-lg text-gray-900 dark:text-white font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                    Continuous compliance monitoring capability
                  </p>
                </div>
              </div>
              
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200">
-               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
-                 <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+                 <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                    Instant compliance monitoring at any time
                  </h4>
                  <div className="flex items-center gap-4">
-                   <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center">
-                     <Brain className="w-8 h-8 text-white" />
+                   <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-700 group-hover:scale-110 transition-all duration-300">
+                     <Brain className="w-8 h-8 text-white group-hover:animate-pulse" />
                    </div>
                    <div className="flex-1">
-                     <div className="w-full h-1 bg-gray-200 dark:bg-gray-600 rounded-full mb-2">
-                       <div className="w-4/5 h-1 bg-blue-600 rounded-full"></div>
+                     <div className="w-full h-1 bg-gray-200 dark:bg-gray-600 rounded-full mb-2 group-hover:h-2 transition-all duration-300">
+                       <div className="w-4/5 h-1 bg-blue-600 rounded-full group-hover:w-full group-hover:h-2 transition-all duration-500"></div>
                      </div>
-                     <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+                     <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                        <span>AI Monitoring</span>
                        <span>Real-time</span>
                      </div>
                    </div>
-                   <div className="w-16 h-16 bg-gray-600 rounded-2xl flex items-center justify-center">
-                     <Shield className="w-8 h-8 text-white" />
+                   <div className="w-16 h-16 bg-gray-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-300">
+                     <Shield className="w-8 h-8 text-white group-hover:animate-bounce" />
                    </div>
                  </div>
                </div>
@@ -568,6 +626,7 @@ const LandingPage = () => {
 
        {/* Benefits Section */}
        <section 
+         id="benefits"
          ref={(el) => (sectionRefs.current[2] = el)}
          className="py-20 bg-blue-50 dark:bg-gray-800 relative overflow-hidden transition-colors duration-300"
        >
@@ -605,21 +664,21 @@ const LandingPage = () => {
            {/* Benefits Cards */}
            <div className="grid lg:grid-cols-2 gap-8">
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-800">
-               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col">
+               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer group">
                  <div className="flex-1">
-                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                      No compliance volatility
                    </h3>
-                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                      Generate consistent compliance results without manual intervention or reactive management.
                    </p>
                  </div>
                  <div className="flex items-center gap-4">
-                   <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
-                     <Zap className="w-6 h-6 text-green-600 dark:text-green-400" />
+                   <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-900/50 group-hover:scale-110 transition-all duration-300">
+                     <Zap className="w-6 h-6 text-green-600 dark:text-green-400 group-hover:animate-pulse" />
                    </div>
                    <div>
-                     <p className="font-semibold text-gray-900 dark:text-white">Automated Monitoring</p>
+                     <p className="font-semibold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">Automated Monitoring</p>
                      <p className="text-sm text-gray-500 dark:text-gray-400">24/7 surveillance</p>
                    </div>
                  </div>
@@ -627,24 +686,24 @@ const LandingPage = () => {
              </div>
 
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000">
-               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col">
+               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:scale-105 hover:shadow-xl transition-all duration-300 cursor-pointer group">
                  <div className="flex-1">
                    <div className="flex items-center justify-between mb-6">
-                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Summary</h4>
-                     <div className="text-sm text-gray-500 dark:text-gray-400">6 Months</div>
+                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">Summary</h4>
+                     <div className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-300">6 Months</div>
                    </div>
-                   <div className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                   <div className="text-4xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                      Dashboard
                    </div>
                    <div className="space-y-4">
                      <div className="flex items-center justify-between">
                        <span className="text-sm text-gray-600 dark:text-gray-300">Status</span>
-                       <span className="text-sm font-semibold text-green-600 dark:text-green-400">Active</span>
+                       <span className="text-sm font-semibold text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors duration-300">Active</span>
                      </div>
-                     <div className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-full">
-                       <div className="w-4/5 h-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
+                     <div className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-full group-hover:h-3 transition-all duration-300">
+                       <div className="w-4/5 h-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full group-hover:w-full group-hover:h-3 group-hover:shadow-lg transition-all duration-500"></div>
                      </div>
-                     <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                     <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-300">
                        <span>Monitor</span>
                        <span>Analyze</span>
                        <span>Report</span>
@@ -659,6 +718,7 @@ const LandingPage = () => {
 
        {/* Who We Serve Section */}
        <section 
+         id="audience"
          ref={(el) => (sectionRefs.current[3] = el)}
          className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
        >
@@ -726,41 +786,48 @@ const LandingPage = () => {
 
        {/* AI Innovation Showcase Section */}
        <section 
+         id="features"
          ref={(el) => (sectionRefs.current[4] = el)}
          className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 dark:from-blue-700 dark:via-purple-700 dark:to-indigo-800 text-white relative overflow-hidden transition-colors duration-300"
        >
          {/* Animated Background Elements */}
          <div className="absolute inset-0 overflow-hidden">
            {/* Floating AI Particles */}
-           <div className="absolute top-10 left-1/4 w-8 h-8 bg-white/10 rounded-full animate-pulse"></div>
-           <div className="absolute top-20 right-1/3 w-6 h-6 bg-blue-300/20 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
-           <div className="absolute bottom-20 left-1/3 w-10 h-10 bg-purple-300/20 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-           <div className="absolute bottom-10 right-1/4 w-4 h-4 bg-indigo-300/20 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
+           <div className="absolute top-10 left-1/4 w-8 h-8 bg-white/20 rounded-full animate-pulse shadow-lg"></div>
+           <div className="absolute top-20 right-1/3 w-6 h-6 bg-blue-300/30 rounded-full animate-bounce shadow-md" style={{animationDelay: '1s'}}></div>
+           <div className="absolute bottom-20 left-1/3 w-10 h-10 bg-purple-300/30 rounded-full animate-pulse shadow-lg" style={{animationDelay: '2s'}}></div>
+           <div className="absolute bottom-10 right-1/4 w-4 h-4 bg-indigo-300/30 rounded-full animate-bounce shadow-md" style={{animationDelay: '0.5s'}}></div>
            
-           {/* Moving Gradient Orbs */}
-           <div className="absolute top-1/3 left-0 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-float"></div>
-           <div className="absolute bottom-1/3 right-0 w-40 h-40 bg-gradient-to-r from-purple-400/20 to-indigo-400/20 rounded-full blur-xl animate-float" style={{animationDelay: '3s'}}></div>
+           {/* Enhanced Moving Gradient Orbs */}
+           <div className="absolute top-1/3 left-0 w-32 h-32 bg-gradient-to-r from-blue-400/30 to-purple-400/30 rounded-full blur-xl animate-float shadow-2xl"></div>
+           <div className="absolute bottom-1/3 right-0 w-40 h-40 bg-gradient-to-r from-purple-400/30 to-indigo-400/30 rounded-full blur-xl animate-float shadow-2xl" style={{animationDelay: '3s'}}></div>
            
-           {/* Neural Network Lines */}
-           <div className="absolute inset-0 opacity-20">
+           {/* Enhanced Neural Network Lines */}
+           <div className="absolute inset-0 opacity-30">
              <svg className="w-full h-full" viewBox="0 0 1000 1000">
                <defs>
                  <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
-                   <stop offset="100%" stopColor="rgba(147,197,253,0.1)" />
+                   <stop offset="0%" stopColor="rgba(255,255,255,0.5)" />
+                   <stop offset="50%" stopColor="rgba(147,197,253,0.3)" />
+                   <stop offset="100%" stopColor="rgba(139,92,246,0.2)" />
+                 </linearGradient>
+                 <linearGradient id="neuralGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                   <stop offset="0%" stopColor="rgba(139,92,246,0.4)" />
+                   <stop offset="50%" stopColor="rgba(79,70,229,0.3)" />
+                   <stop offset="100%" stopColor="rgba(255,255,255,0.3)" />
                  </linearGradient>
                </defs>
                <path
                  d="M100,200 Q300,100 500,200 T900,200"
                  stroke="url(#neuralGradient)"
-                 strokeWidth="2"
+                 strokeWidth="3"
                  fill="none"
                  className="animate-pulse"
                />
                <path
                  d="M100,400 Q300,300 500,400 T900,400"
-                 stroke="url(#neuralGradient)"
-                 strokeWidth="2"
+                 stroke="url(#neuralGradient2)"
+                 strokeWidth="3"
                  fill="none"
                  className="animate-pulse"
                  style={{animationDelay: '1s'}}
@@ -768,7 +835,7 @@ const LandingPage = () => {
                <path
                  d="M100,600 Q300,500 500,600 T900,600"
                  stroke="url(#neuralGradient)"
-                 strokeWidth="2"
+                 strokeWidth="3"
                  fill="none"
                  className="animate-pulse"
                  style={{animationDelay: '2s'}}
@@ -776,8 +843,12 @@ const LandingPage = () => {
              </svg>
            </div>
            
-           {/* Interactive Glow Effects */}
-           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-full blur-3xl animate-pulse"></div>
+           {/* Enhanced Interactive Glow Effects */}
+           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+           
+           {/* Additional Light Theme Enhancements */}
+           <div className="absolute top-1/4 right-1/3 w-24 h-24 bg-gradient-to-br from-white/20 to-blue-200/20 rounded-full blur-2xl animate-float"></div>
+           <div className="absolute bottom-1/4 left-1/3 w-20 h-20 bg-gradient-to-br from-white/20 to-purple-200/20 rounded-full blur-2xl animate-float" style={{animationDelay: '2s'}}></div>
          </div>
          
          <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -843,73 +914,50 @@ const LandingPage = () => {
 
            {/* Statistics Grid */}
            <div className="grid md:grid-cols-3 gap-8 mb-20">
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000">
-               <div className="text-6xl font-bold text-white mb-4">AI</div>
-               <p className="text-lg font-semibold">Powered monitoring</p>
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000 group p-6 rounded-xl hover:scale-105 hover:shadow-xl hover:bg-white/10 transition-all duration-300 cursor-pointer">
+               <div className="text-6xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-pulse transition-all duration-300">AI</div>
+               <p className="text-lg font-semibold group-hover:text-blue-200 transition-colors duration-300">Powered monitoring</p>
              </div>
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200">
-               <div className="text-6xl font-bold text-white mb-4">Real-time</div>
-               <p className="text-lg font-semibold">Risk detection</p>
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200 group p-6 rounded-xl hover:scale-105 hover:shadow-xl hover:bg-white/10 transition-all duration-300 cursor-pointer">
+               <div className="text-6xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-bounce transition-all duration-300">Real-time</div>
+               <p className="text-lg font-semibold group-hover:text-blue-200 transition-colors duration-300">Risk detection</p>
              </div>
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1400">
-               <div className="text-6xl font-bold text-white mb-4">Automated</div>
-               <p className="text-lg font-semibold">Reporting system</p>
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1400 group p-6 rounded-xl hover:scale-105 hover:shadow-xl hover:bg-white/10 transition-all duration-300 cursor-pointer">
+               <div className="text-6xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-spin transition-all duration-300">Automated</div>
+               <p className="text-lg font-semibold group-hover:text-blue-200 transition-colors duration-300">Reporting system</p>
              </div>
            </div>
 
-           {/* Pricing Plans Section */}
+           {/* Success Stories Section */}
            <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1600">
              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-               <Target className="w-4 h-4" />
-               <span className="font-medium">CHOOSE PLAN:</span>
+               <Sparkles className="w-4 h-4" />
+               <span className="font-medium">SUCCESS STORIES</span>
              </div>
              
-             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
-                 <h3 className="text-3xl font-bold mb-4">Professional</h3>
-                 <div className="text-2xl font-bold mb-6">$19/month</div>
-                 <ul className="space-y-3 text-left text-blue-100">
-                   <li className="flex items-center gap-3">
-                     <CheckCircle className="w-5 h-5 text-green-400" />
-                     Basic compliance monitoring
-                   </li>
-                   <li className="flex items-center gap-3">
-                     <CheckCircle className="w-5 h-5 text-green-400" />
-                     Monthly reports
-                   </li>
-                   <li className="flex items-center gap-3">
-                     <CheckCircle className="w-5 h-5 text-green-400" />
-                     Email support
-                   </li>
-                 </ul>
-                 <Button className="w-full mt-8 bg-white/20 hover:bg-white/30 text-white border border-white/30">
-                   Get Started
-                 </Button>
+             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+               <div className="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transform hover:scale-105 hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+                 <div className="text-4xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-pulse transition-all duration-300">99.7%</div>
+                 <h3 className="text-xl font-bold mb-4 text-white group-hover:text-blue-200 transition-colors duration-300">Uptime Reliability</h3>
+                 <p className="text-blue-100 leading-relaxed group-hover:text-white transition-colors duration-300">
+                   Continuous monitoring ensures your compliance systems are always operational and secure.
+                 </p>
                </div>
 
-               <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 relative overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                 <div className="relative z-10">
-                   <h3 className="text-3xl font-bold mb-4">Enterprise</h3>
-                   <div className="text-2xl font-bold mb-6">$49/month</div>
-                   <ul className="space-y-3 text-left text-white">
-                     <li className="flex items-center gap-3">
-                       <CheckCircle className="w-5 h-5 text-green-400" />
-                       Advanced AI monitoring
-                     </li>
-                     <li className="flex items-center gap-3">
-                       <CheckCircle className="w-5 h-5 text-green-400" />
-                       Real-time alerts
-                     </li>
-                     <li className="flex items-center gap-3">
-                       <CheckCircle className="w-5 h-5 text-green-400" />
-                       24/7 dedicated support
-                     </li>
-                   </ul>
-                   <Button className="w-full mt-8 bg-white text-blue-600 hover:bg-blue-50 font-semibold">
-                     Get Started
-                   </Button>
-                 </div>
+               <div className="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transform hover:scale-105 hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+                 <div className="text-4xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-bounce transition-all duration-300">24/7</div>
+                 <h3 className="text-xl font-bold mb-4 text-white group-hover:text-green-200 transition-colors duration-300">AI Monitoring</h3>
+                 <p className="text-blue-100 leading-relaxed group-hover:text-white transition-colors duration-300">
+                   Round-the-clock intelligent surveillance that never sleeps, protecting your organization.
+                 </p>
+               </div>
+
+               <div className="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transform hover:scale-105 hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+                 <div className="text-4xl font-bold text-white mb-4 group-hover:scale-110 group-hover:animate-spin transition-all duration-300">10x</div>
+                 <h3 className="text-xl font-bold mb-4 text-white group-hover:text-purple-200 transition-colors duration-300">Faster Detection</h3>
+                 <p className="text-blue-100 leading-relaxed group-hover:text-white transition-colors duration-300">
+                   AI-powered risk identification that's significantly faster than traditional methods.
+                 </p>
                </div>
              </div>
            </div>
@@ -918,6 +966,7 @@ const LandingPage = () => {
 
        {/* Contact Section */}
        <section 
+         id="contact"
          ref={(el) => (sectionRefs.current[5] = el)}
          className="py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden transition-colors duration-300"
        >
@@ -1061,7 +1110,6 @@ const LandingPage = () => {
               <h4 className="text-lg font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>Features</li>
-                <li>Pricing</li>
                 <li>Demo</li>
                 <li>Security</li>
               </ul>
