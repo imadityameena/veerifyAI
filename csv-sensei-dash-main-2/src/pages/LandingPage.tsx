@@ -27,7 +27,7 @@ import {
   Moon
 } from 'lucide-react';
 import herosectionimg from '@/assets/herosectionimg.jpg';
-import logoImage from '@/assets/logo.jpg';
+import { Logo } from '@/components/Logo';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const LandingPage = () => {
@@ -174,54 +174,38 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center p-1 bg-white dark:bg-gray-900 rounded-md shadow-sm">
-              <img
-                src={logoImage}
-                alt="Logo"
-                className="h-8 w-auto object-contain"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
+            <Logo size="lg" showIndicator={false} />
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+              <a href="#features" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
                 Features
               </a>
-              <a href="#solution" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+              <a href="#solution" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
                 Solution
               </a>
-              <a href="#benefits" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+              <a href="#benefits" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
                 Benefits
               </a>
-              <a href="#audience" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
-                Who We Serve
+              <a href="#audience" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
+                About
               </a>
-              <a href="#contact" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium">
+              <a href="#contact" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
                 Contact
               </a>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                onClick={handleRequestDemo}
-                className="hidden sm:inline-flex text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-              >
-                Sign In
-              </Button>
+            {/* CTA Button */}
+            <div className="flex items-center">
               <Button 
                 onClick={handleRequestDemo}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                Get Started
+                Create Account
               </Button>
             </div>
           </div>
@@ -384,12 +368,8 @@ const LandingPage = () => {
                 {/* Main Dashboard Card */}
                 <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 hover:scale-105 hover:shadow-3xl transition-all duration-500 cursor-pointer group border border-gray-100 dark:border-gray-600 hover:border-blue-200 dark:hover:border-blue-600">
                     <div className="flex items-center gap-4 mb-6">
-                    <div className="flex items-center p-1 bg-white dark:bg-gray-700 rounded-md shadow-sm group-hover:scale-110 transition-all duration-300">
-                      <img 
-                        src={logoImage} 
-                        alt="Logo" 
-                        className="h-8 w-auto object-contain group-hover:animate-pulse"
-                      />
+                    <div className="group-hover:scale-110 transition-all duration-300">
+                      <Logo size="lg" showIndicator={false} className="bg-white dark:bg-gray-700" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white">VeerifyAI Dashboard</h3>
