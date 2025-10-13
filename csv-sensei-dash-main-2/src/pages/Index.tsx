@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Logo } from '@/components/Logo';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import logoImage from '@/assets/logo.jpg';
 import { StepIndicator } from '@/components/StepIndicator';
 import { IndustrySelector } from '@/components/IndustrySelector';
 import { FileUpload } from '@/components/FileUpload';
@@ -291,7 +291,16 @@ const Index = () => {
       <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Logo />
+            <div className="flex items-center p-1 bg-white dark:bg-gray-900 rounded-md shadow-sm">
+              <img
+                src={logoImage}
+                alt="Logo"
+                className="h-8 w-auto object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
             <ModeToggle />
           </div>
         </div>

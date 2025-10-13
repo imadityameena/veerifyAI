@@ -27,6 +27,7 @@ import {
   Moon
 } from 'lucide-react';
 import herosectionimg from '@/assets/herosectionimg.jpg';
+import logoImage from '@/assets/logo.jpg';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const LandingPage = () => {
@@ -177,11 +178,15 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">VeerifyAI</span>
+            <div className="flex items-center p-1 bg-white dark:bg-gray-900 rounded-md shadow-sm">
+              <img
+                src={logoImage}
+                alt="Logo"
+                className="h-8 w-auto object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
             </div>
 
             {/* Navigation Links */}
@@ -379,8 +384,12 @@ const LandingPage = () => {
                 {/* Main Dashboard Card */}
                 <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 hover:scale-105 hover:shadow-3xl transition-all duration-500 cursor-pointer group border border-gray-100 dark:border-gray-600 hover:border-blue-200 dark:hover:border-blue-600">
                     <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-700 group-hover:scale-110 transition-all duration-300">
-                      <Shield className="w-6 h-6 text-white group-hover:animate-pulse" />
+                    <div className="flex items-center p-1 bg-white dark:bg-gray-700 rounded-md shadow-sm group-hover:scale-110 transition-all duration-300">
+                      <img 
+                        src={logoImage} 
+                        alt="Logo" 
+                        className="h-8 w-auto object-contain group-hover:animate-pulse"
+                      />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white">VeerifyAI Dashboard</h3>
