@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { ChatController } from '../controllers/chatController';
 import { rateLimit } from 'express-rate-limit';
 
@@ -21,12 +21,12 @@ const chatRateLimit = rateLimit({
 router.use(chatRateLimit);
 
 // Chat endpoints
-router.post('/message', (req, res) => chatController.sendMessage(req, res));
-router.get('/conversation/:conversationId', (req, res) => chatController.getConversation(req, res));
-router.get('/conversations', (req, res) => chatController.getConversations(req, res));
-router.delete('/conversation/:conversationId', (req, res) => chatController.deleteConversation(req, res));
+router.post('/message', (req: Request, res: Response) => chatController.sendMessage(req, res));
+router.get('/conversation/:conversationId', (req: Request, res: Response) => chatController.getConversation(req, res));
+router.get('/conversations', (req: Request, res: Response) => chatController.getConversations(req, res));
+router.delete('/conversation/:conversationId', (req: Request, res: Response) => chatController.deleteConversation(req, res));
 
 // Health check endpoint
-router.get('/health', (req, res) => chatController.healthCheck(req, res));
+router.get('/health', (req: Request, res: Response) => chatController.healthCheck(req, res));
 
 export default router;
