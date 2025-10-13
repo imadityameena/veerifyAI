@@ -62,8 +62,12 @@ const LandingPage = () => {
     navigate('/signup');
   };
 
-  const handleRequestDemo = () => {
+  const handleSignIn = () => {
     navigate('/login');
+  };
+
+  const handleGetStarted = () => {
+    navigate('/signup');
   };
 
   // Animation effects
@@ -199,13 +203,20 @@ const LandingPage = () => {
               </a>
             </div>
 
-            {/* CTA Button */}
-            <div className="flex items-center">
+            {/* CTA Buttons */}
+            <div className="flex items-center space-x-4">
               <Button 
-                onClick={handleRequestDemo}
+                onClick={handleSignIn}
+                variant="outline"
+                className="border-gray-300 hover:border-blue-600 hover:text-blue-600 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+              >
+                Sign In
+              </Button>
+              <Button 
+                onClick={handleGetStarted}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                Create Account
+                Get Started
               </Button>
             </div>
           </div>
@@ -346,15 +357,25 @@ const LandingPage = () => {
                    </div>
                  </div>
 
-                 {/* CTA Button */}
-                 <Button 
-                   onClick={handleRequestDemo}
-                   size="lg" 
-                   className="w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-lg font-semibold rounded-xl group shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 animate-light-glow"
-                 >
-                   Request a Demo
-                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                 </Button>
+                 {/* CTA Buttons */}
+                 <div className="flex flex-col sm:flex-row gap-4">
+                   <Button 
+                     onClick={handleGetStarted}
+                     size="lg" 
+                     className="w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-lg font-semibold rounded-xl group shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 animate-light-glow"
+                   >
+                     Get Started
+                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                   </Button>
+                   <Button 
+                     onClick={handleSignIn}
+                     size="lg" 
+                     variant="outline"
+                     className="w-full sm:w-auto h-14 px-8 border-2 border-gray-300 hover:border-blue-600 hover:text-blue-600 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 text-lg font-semibold rounded-xl transition-all duration-300"
+                   >
+                     Sign In
+                   </Button>
+                 </div>
               </div>
             </div>
 
@@ -970,14 +991,22 @@ const LandingPage = () => {
                  Supports healthcare organizations with intelligent monitoring, powerful integrations, 
                  and comprehensive compliance management tools.
                </p>
-               <div className="flex justify-center">
+               <div className="flex flex-col sm:flex-row justify-center gap-4">
                  <Button 
-                   onClick={handleRequestDemo}
+                   onClick={handleGetStarted}
                    size="lg" 
                    className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg font-semibold rounded-xl group"
                  >
                    Get Started Now
                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                 </Button>
+                 <Button 
+                   onClick={handleSignIn}
+                   size="lg" 
+                   variant="outline"
+                   className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
+                 >
+                   Sign In
                  </Button>
                </div>
              </div>
