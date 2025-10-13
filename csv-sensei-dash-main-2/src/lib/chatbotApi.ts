@@ -53,7 +53,10 @@ class ChatbotAPI {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = `${CHATBOT_API_URL}${endpoint}`;
+    // Ensure proper URL construction by removing trailing slashes and adding proper path
+    const baseUrl = CHATBOT_API_URL.replace(/\/$/, ''); // Remove trailing slash
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = `${baseUrl}${cleanEndpoint}`;
     
     const defaultOptions: RequestInit = {
       headers: {
