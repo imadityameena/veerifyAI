@@ -77,7 +77,8 @@ app.use('/api/admin/feature-toggles', featureToggleRoutes);
 app.use('/api/feature-toggles', publicFeatureToggleRoutes);
 app.use('/api', api);
 
-const port = parseInt(process.env.PORT || '4000', 10);
+const port = parseInt(process.env.PORT || '4001', 10);
+console.log(`Starting server on port: ${port}`);
 const mongoUri = process.env.MONGODB_URI;
 
 if (!mongoUri) {

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Lock, Mail, Building2, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -82,6 +83,11 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
+      {/* Theme Toggle */}
+      <div className="absolute top-6 right-6">
+        <ModeToggle />
+      </div>
+      
       <div className="w-full max-w-md">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">

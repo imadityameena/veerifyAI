@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Play, BarChart3, TrendingUp, PieChart, LogOut, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Demo = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header with User Info and Logout */}
       <div className="absolute top-4 right-4 flex items-center space-x-4">
+        <ModeToggle />
         {isLoggedIn && user && (
           <div className="flex items-center space-x-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl px-4 py-2 border border-gray-200 dark:border-gray-700">
             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />

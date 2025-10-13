@@ -12,10 +12,10 @@ const AdminProtectedRoute: React.FC<AdminProtectedRouteProps> = ({ children }) =
   // Show loading state while authentication is being checked
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">Verifying admin access...</p>
+          <p className="text-slate-600 dark:text-gray-300">Verifying admin access...</p>
         </div>
       </div>
     );

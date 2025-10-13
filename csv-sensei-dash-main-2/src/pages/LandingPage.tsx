@@ -5,14 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Shield, 
-  Brain, 
-  AlertTriangle, 
-  CheckCircle, 
-  Users, 
-  Building2, 
-  FileCheck, 
+import {
+  Shield,
+  Brain,
+  AlertTriangle,
+  CheckCircle,
+  Users,
+  Building2,
+  FileCheck,
   TrendingUp,
   Target,
   Zap,
@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import herosectionimg from '@/assets/herosectionimg.jpg';
 import { Logo } from '@/components/Logo';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -210,6 +211,7 @@ const LandingPage = () => {
 
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
+              <ModeToggle />
               <Button 
                 onClick={handleSignIn}
                 variant="outline"

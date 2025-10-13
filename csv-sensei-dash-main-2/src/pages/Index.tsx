@@ -10,6 +10,7 @@ import { BillingUpload } from '@/components/BillingUpload';
 import { ValidationResults } from '@/components/ValidationResults';
 import { Dashboard } from '@/components/Dashboard';
 import FeatureToggleWrapper from '@/components/FeatureToggleWrapper';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 import { validateCSVData } from '@/utils/validationEngine';
 import { validateRowLimit, truncateDataToLimit } from '@/utils/rowLimitValidator';
 import type { ValidationError, ValidationSummary } from '@/utils/validationEngine';
@@ -264,16 +265,42 @@ const Index = () => {
       case 3:
         if (complianceMode) {
           return (
-            <Dashboard
-              data={csvData}
-              industry={selectedIndustry}
-              aiMappings={aiMappings}
-              onBack={handleBackToUpload}
-              aiCaptionEnabled={true}
-              complianceMode={true}
-              opBillingData={opBillingData}
-              doctorRosterData={doctorRosterData}
-            />
+            <FeatureToggleWrapper featureName="compliance_ai">
+              <Dashboard
+                data={csvData}
+                industry={selectedIndustry}
+                aiMappings={aiMappings}
+                onBack={handleBackToUpload}
+                aiCaptionEnabled={true}
+                complianceMode={true}
+                opBillingData={opBillingData}
+                doctorRosterData={doctorRosterData}
+              />
+            </FeatureToggleWrapper>
+          );
+        } else if (selectedIndustry === 'doctor_roster') {
+          return (
+            <FeatureToggleWrapper featureName="doctor_roster">
+              <Dashboard
+                data={csvData}
+                industry={selectedIndustry}
+                aiMappings={aiMappings}
+                onBack={handleBackToUpload}
+                aiCaptionEnabled={true}
+              />
+            </FeatureToggleWrapper>
+          );
+        } else if (selectedIndustry === 'opbilling') {
+          return (
+            <FeatureToggleWrapper featureName="op_billing">
+              <Dashboard
+                data={csvData}
+                industry={selectedIndustry}
+                aiMappings={aiMappings}
+                onBack={handleBackToUpload}
+                aiCaptionEnabled={true}
+              />
+            </FeatureToggleWrapper>
           );
         } else {
           return (
@@ -298,6 +325,9 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between h-20">
             <Logo size="lg" showIndicator={false} onClick={scrollToTop} />
+            <div className="flex items-center space-x-4">
+              <ModeToggle />
+            </div>
           </div>
         </div>
       </div>
