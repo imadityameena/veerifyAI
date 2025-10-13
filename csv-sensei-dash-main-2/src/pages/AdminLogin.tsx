@@ -124,37 +124,37 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Back to regular login */}
         <div className="mb-6">
           <Link 
             to="/" 
-            className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 transition-colors"
+            className="inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to regular login
           </Link>
         </div>
 
-        <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-2xl border-0 bg-gray-800/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 text-center pb-8">
             <div className="mx-auto w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center mb-4">
               <Shield className="w-6 h-6 text-white" />
             </div>
-            <CardTitle className="text-2xl font-bold text-slate-900">
+            <CardTitle className="text-2xl font-bold text-white">
               Admin Portal
             </CardTitle>
-            <CardDescription className="text-slate-600">
+            <CardDescription className="text-gray-300">
               Sign in to access the administrative dashboard
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
             {error && (
-              <Alert variant="destructive" className="border-red-200 bg-red-50">
+              <Alert variant="destructive" className="border-red-500 bg-red-900/20">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription className="text-red-800">
+                <AlertDescription className="text-red-300">
                   {error}
                 </AlertDescription>
               </Alert>
@@ -162,11 +162,11 @@ const AdminLogin = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+                <Label htmlFor="email" className="text-sm font-medium text-gray-300">
                   Admin Email
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
                     id="email"
                     name="email"
@@ -175,7 +175,7 @@ const AdminLogin = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
-                    className="pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20"
+                    className="pl-10 h-12 border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
                     disabled={isLoading}
                     autoComplete="email"
                   />
@@ -183,11 +183,11 @@ const AdminLogin = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+                <Label htmlFor="password" className="text-sm font-medium text-gray-300">
                   Password
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
                     id="password"
                     name="password"
@@ -196,14 +196,14 @@ const AdminLogin = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
-                    className="pl-10 pr-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20"
+                    className="pl-10 pr-10 h-12 border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
                     disabled={isLoading}
                     autoComplete="current-password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 h-4 w-4 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 top-3 h-4 w-4 text-gray-400 hover:text-white transition-colors"
                     disabled={isLoading}
                   >
                     {showPassword ? (
@@ -232,7 +232,7 @@ const AdminLogin = () => {
             </form>
 
             <div className="text-center">
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-gray-400">
                 Secure admin access with enterprise-grade authentication
               </p>
             </div>
@@ -241,7 +241,7 @@ const AdminLogin = () => {
 
         {/* Security notice */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-gray-400">
             🔒 This portal is protected by advanced security measures
           </p>
         </div>

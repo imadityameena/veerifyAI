@@ -71,7 +71,7 @@ const AppRoutes = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <UIThemeProvider defaultTheme="light" storageKey="bi-agentic-theme">
+    <UIThemeProvider defaultTheme="dark" storageKey="bi-agentic-theme">
       <ThemeProvider>
         <AuthProvider>
           <TooltipProvider>

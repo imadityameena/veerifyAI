@@ -5,12 +5,14 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
   showIndicator?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 export const Logo: React.FC<LogoProps> = ({ 
   size = 'md', 
   showIndicator = true, 
-  className = '' 
+  className = '',
+  onClick
 }) => {
   const sizeClasses = {
     sm: 'h-12 w-12',
@@ -20,7 +22,10 @@ export const Logo: React.FC<LogoProps> = ({
 
   return (
     <div className={`flex items-center ${className}`}>
-      <div className="relative">
+      <div 
+        className={`relative ${onClick ? 'cursor-pointer hover:opacity-80 transition-opacity duration-200' : ''}`}
+        onClick={onClick}
+      >
         <img
           src={logoImage}
           alt="Logo"
