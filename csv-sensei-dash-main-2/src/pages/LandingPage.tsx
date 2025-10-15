@@ -365,7 +365,7 @@ const LandingPage = () => {
               >
                  {/* Key Features */}
                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg hover:shadow-lg transition-all duration-300 cursor-pointer">
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg transition-all duration-300 cursor-pointer">
                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50  transition-all duration-300">
                        <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:" />
                      </div>
@@ -375,7 +375,7 @@ const LandingPage = () => {
                      </div>
                    </div>
                    
-                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg hover:shadow-lg transition-all duration-300 cursor-pointer">
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg transition-all duration-300 cursor-pointer">
                      <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-900/50  transition-all duration-300">
                        <Brain className="w-5 h-5 text-green-600 dark:text-green-400 group-hover:" />
                      </div>
@@ -385,7 +385,7 @@ const LandingPage = () => {
                      </div>
                    </div>
                    
-                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg hover:shadow-lg transition-all duration-300 cursor-pointer">
+                   <div className="group flex items-center gap-3 p-4 bg-white/50 dark:bg-gray-800/50  rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-800/70 hover:shadow-lg transition-all duration-300 cursor-pointer">
                      <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50  transition-all duration-300">
                        <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:" />
                      </div>
@@ -538,7 +538,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="relative opacity-0 translate-x-[50px] transition-all duration-1000 ease-out delay-300 animate-fade-in-up">
-              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 transform hover:shadow-lg transition-all duration-500 hover:shadow-2xl border border-gray-100 dark:border-gray-600">
+              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 transform hover:shadow-2xl transition-all duration-500 border border-gray-300 dark:border-gray-500">
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600 dark:text-gray-300">Compliance Risk Level</span>
@@ -596,7 +596,7 @@ const LandingPage = () => {
                    'animate-delay-600'
                  }`}
                >
-                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 h-full border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl hover:shadow-lg cursor-pointer">
+                 <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 h-full border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl cursor-pointer flex flex-col">
                    <div className="flex items-start gap-4 mb-6">
                      <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50  transition-all duration-300">
                        <div className="group-hover:">
@@ -607,7 +607,7 @@ const LandingPage = () => {
                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                      {capability.title}
                    </h3>
-                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300 flex-grow">
                      {capability.description}
                    </p>
                  </div>
@@ -629,20 +629,20 @@ const LandingPage = () => {
            {/* Statistics Cards */}
            <div className="grid md:grid-cols-2 gap-8">
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000">
-               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-lg transition-all duration-300 cursor-pointer group">
+               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 cursor-pointer group h-full flex flex-col">
                  <div className="text-6xl font-bold text-blue-600 dark:text-blue-400 mb-4  group-hover: transition-all duration-300">24/7</div>
-                 <p className="text-lg text-gray-900 dark:text-white font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                 <p className="text-lg text-gray-900 dark:text-white font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 flex-grow">
                    Continuous compliance monitoring capability
                  </p>
                </div>
              </div>
              
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200">
-               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-lg transition-all duration-300 cursor-pointer group">
+               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 cursor-pointer group h-full flex flex-col">
                  <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                    Instant compliance monitoring at any time
                  </h4>
-                 <div className="flex items-center gap-4">
+                 <div className="flex items-center gap-4 flex-grow">
                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-700  transition-all duration-300">
                      <Brain className="w-8 h-8 text-white group-hover:" />
                    </div>
@@ -705,12 +705,12 @@ const LandingPage = () => {
            {/* Benefits Cards */}
            <div className="grid lg:grid-cols-2 gap-8">
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-800">
-               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
-                 <div className="flex-1">
+               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                 <div className="flex-1 flex flex-col">
                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                      No compliance volatility
                    </h3>
-                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300 flex-grow">
                      Generate consistent compliance results without manual intervention or reactive management.
                    </p>
                  </div>
@@ -727,8 +727,8 @@ const LandingPage = () => {
              </div>
 
              <div className="opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000">
-               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group">
-                 <div className="flex-1">
+               <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 border border-gray-100 dark:border-gray-600 h-full flex flex-col hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                 <div className="flex-1 flex flex-col">
                    <div className="flex items-center justify-between mb-6">
                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">Summary</h4>
                      <div className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-300">6 Months</div>
@@ -736,7 +736,7 @@ const LandingPage = () => {
                    <div className="text-4xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                      Dashboard
                    </div>
-                   <div className="space-y-4">
+                   <div className="space-y-4 flex-grow">
                      <div className="flex items-center justify-between">
                        <span className="text-sm text-gray-600 dark:text-gray-300">Status</span>
                        <span className="text-sm font-semibold text-green-600 dark:text-green-400 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors duration-300">Active</span>
@@ -906,15 +906,15 @@ const LandingPage = () => {
 
            {/* Statistics Grid */}
            <div className="grid md:grid-cols-3 gap-8 mb-20">
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000 group p-6 rounded-xl hover:shadow-lg hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1000 group p-6 rounded-xl hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
                <div className="text-6xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">AI</div>
                <p className="text-lg font-semibold text-gray-700 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">Powered monitoring</p>
              </div>
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200 group p-6 rounded-xl hover:shadow-lg hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1200 group p-6 rounded-xl hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
                <div className="text-6xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">Real-time</div>
                <p className="text-lg font-semibold text-gray-700 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">Risk detection</p>
              </div>
-             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1400 group p-6 rounded-xl hover:shadow-lg hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
+             <div className="text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-1400 group p-6 rounded-xl hover:shadow-xl hover:bg-purple-50 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer">
                <div className="text-6xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">Automated</div>
                <p className="text-lg font-semibold text-gray-700 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">Reporting system</p>
              </div>
@@ -928,26 +928,26 @@ const LandingPage = () => {
              </div>
              
              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:shadow-lg hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col">
                  <div className="text-4xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">99.7%</div>
                  <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">Uptime Reliability</h3>
-                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300">
+                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300 flex-grow">
                    Continuous monitoring ensures your compliance systems are always operational and secure.
                  </p>
                </div>
 
-               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:shadow-lg hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col">
                  <div className="text-4xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">24/7</div>
                  <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">AI Monitoring</h3>
-                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300">
+                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300 flex-grow">
                    Round-the-clock intelligent surveillance that never sleeps, protecting your organization.
                  </p>
                </div>
 
-               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:shadow-lg hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer">
+               <div className="group bg-purple-50 dark:bg-white/10  border border-purple-200 dark:border-white/20 rounded-2xl p-8 transform hover:bg-purple-100 dark:hover:bg-white/20 hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col">
                  <div className="text-4xl font-bold text-purple-600 dark:text-white mb-4  group-hover: transition-all duration-300">10x</div>
                  <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-200 transition-colors duration-300">Faster Detection</h3>
-                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300">
+                 <p className="text-gray-600 dark:text-purple-100 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-white transition-colors duration-300 flex-grow">
                    AI-powered risk identification that's significantly faster than traditional methods.
                  </p>
                </div>
@@ -1069,7 +1069,7 @@ const LandingPage = () => {
                        <Button 
                          type="submit" 
                          size="lg" 
-                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl transform hover:shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/25 group"
+                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl transform hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 group"
                        >
                          Send Message
                          <Mail className="ml-2 w-5 h-5 group-hover:" />
