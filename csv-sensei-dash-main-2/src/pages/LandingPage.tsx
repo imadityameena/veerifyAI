@@ -34,6 +34,7 @@ const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeSection, setActiveSection] = useState('home');
   const heroRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   
@@ -76,12 +77,50 @@ const LandingPage = () => {
     }
   };
 
+  const handleNavClick = (sectionId: string) => {
+    if (sectionId === 'home') {
+      scrollToHero();
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+  };
+
   // Animation effects
   useEffect(() => {
     setIsVisible(true);
     
     const handleScroll = () => {
       setScrollY(window.scrollY);
+      
+      // Determine active section based on scroll position
+      const sections = [
+        { id: 'home', element: heroRef.current },
+        { id: 'solution', element: document.getElementById('solution') },
+        { id: 'benefits', element: document.getElementById('benefits') },
+        { id: 'audience', element: document.getElementById('audience') },
+        { id: 'contact', element: document.getElementById('contact') }
+      ];
+
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.element) {
+          const rect = section.element.getBoundingClientRect();
+          const elementTop = rect.top + window.scrollY;
+          
+          if (scrollPosition >= elementTop) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -188,25 +227,75 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Logo size="lg" showIndicator={false} onClick={scrollToHero} />
+            <Logo size="lg" showIndicator={false} onClick={() => handleNavClick('home')} />
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
-                Features
-              </a>
-              <a href="#solution" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
+              <button 
+                onClick={() => handleNavClick('home')}
+                className={`relative text-sm font-semibold transition-colors duration-300 uppercase tracking-wide pb-1 ${
+                  activeSection === 'home' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                }`}
+              >
+                Home
+                {activeSection === 'home' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300"></div>
+                )}
+              </button>
+              <button 
+                onClick={() => handleNavClick('solution')}
+                className={`relative text-sm font-semibold transition-colors duration-300 uppercase tracking-wide pb-1 ${
+                  activeSection === 'solution' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                }`}
+              >
                 Solution
-              </a>
-              <a href="#benefits" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
+                {activeSection === 'solution' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300"></div>
+                )}
+              </button>
+              <button 
+                onClick={() => handleNavClick('benefits')}
+                className={`relative text-sm font-semibold transition-colors duration-300 uppercase tracking-wide pb-1 ${
+                  activeSection === 'benefits' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                }`}
+              >
                 Benefits
-              </a>
-              <a href="#audience" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
+                {activeSection === 'benefits' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300"></div>
+                )}
+              </button>
+              <button 
+                onClick={() => handleNavClick('audience')}
+                className={`relative text-sm font-semibold transition-colors duration-300 uppercase tracking-wide pb-1 ${
+                  activeSection === 'audience' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                }`}
+              >
                 About
-              </a>
-              <a href="#contact" className="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 uppercase tracking-wide">
+                {activeSection === 'audience' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300"></div>
+                )}
+              </button>
+              <button 
+                onClick={() => handleNavClick('contact')}
+                className={`relative text-sm font-semibold transition-colors duration-300 uppercase tracking-wide pb-1 ${
+                  activeSection === 'contact' 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+                }`}
+              >
                 Contact
-              </a>
+                {activeSection === 'contact' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300"></div>
+                )}
+              </button>
             </div>
 
             {/* CTA Buttons */}
@@ -316,14 +405,6 @@ const LandingPage = () => {
                    >
                      Get Started
                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                   </Button>
-                   <Button 
-                     onClick={handleSignIn}
-                     size="lg" 
-                     variant="outline"
-                     className="w-full sm:w-auto h-14 px-8 border-2 border-gray-300 hover:border-blue-600 hover:text-blue-600 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 text-lg font-semibold rounded-xl transition-all duration-300"
-                   >
-                     Sign In
                    </Button>
                  </div>
               </div>
