@@ -14,6 +14,7 @@ import { validateRowLimit, truncateDataToLimit } from '@/utils/rowLimitValidator
 import type { ValidationError, ValidationSummary } from '@/utils/validationEngine';
 import Papa from 'papaparse';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const steps = ['Upload', 'Validate', 'Analyze', 'Visualize'];
 
@@ -41,6 +42,33 @@ const Index = () => {
   const [doctorRosterData, setDoctorRosterData] = useState<any[]>([]);
   
   const { toast } = useToast();
+  const { user } = useAuth();
+
+  // Function to track usage
+  const trackUsage = async (schemaType: string, fileName: string, fileSize: number, rowCount: number) => {
+    if (!user) return; // Only track for authenticated users
+    
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      await fetch(`${apiUrl}/records`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          data: [], // Empty data since we're just tracking usage
+          schemaType,
+          fileName,
+          fileSize,
+          rowCount
+        })
+      });
+    } catch (error) {
+      console.error('Failed to track usage:', error);
+      // Don't show error to user, just log it
+    }
+  };
 
   const handleIndustryChange = (industry: string) => {
     setSelectedIndustry(industry);
@@ -85,8 +113,11 @@ const Index = () => {
         const headers = Object.keys(filteredData[0] || {});
         setCsvHeaders(headers);
         
-        // For single-file uploads (doctor_roster, opbilling), skip validation and go directly to dashboard
+        // Track usage for successful file processing
         if (selectedIndustry === 'doctor_roster' || selectedIndustry === 'opbilling') {
+          // Track usage for single-file uploads
+          const schemaType = selectedIndustry === 'doctor_roster' ? 'doctor_roster' : 'op_billing';
+          trackUsage(schemaType, file.name, file.size, filteredData.length);
           setCurrentStep(3); // Go directly to dashboard
         } else {
           // Perform enhanced validation for other industries
@@ -102,6 +133,11 @@ const Index = () => {
 
   const handleContinueToAnalysis = () => {
     if (validationResults?.isValid) {
+      // Track usage for successful validation
+      if (uploadedFile && selectedIndustry) {
+        const schemaType = selectedIndustry === 'compliance' ? 'compliance_ai' : 'other';
+        trackUsage(schemaType, uploadedFile.name, uploadedFile.size, csvData.length);
+      }
       setCurrentStep(3);
     }
   };
@@ -149,6 +185,12 @@ const Index = () => {
             
             setOpBillingData(filteredBillingData);
             setDoctorRosterData(filteredRosterData);
+            
+            // Track usage for compliance analysis
+            trackUsage('compliance_ai', `${opBillingFile.name}, ${doctorRosterFile.name}`, 
+              opBillingFile.size + doctorRosterFile.size, 
+              filteredBillingData.length + filteredRosterData.length);
+            
             setCurrentStep(3); // Go directly to compliance dashboard
             
             toast({
