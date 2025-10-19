@@ -456,8 +456,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
       `Total Violations,${reportData.summary.violations}`,
       `Risk Score,${reportData.summary.riskScore}`,
       `Data Quality Score,${reportData.summary.dataQualityScore}%`,
-      `Average Amount,$${reportData.summary.averageAmount?.toFixed(2) || 'N/A'}`,
-      `Total Revenue,$${reportData.summary.totalRevenue?.toLocaleString() || 'N/A'}`,
+      `Average Amount,₹${reportData.summary.averageAmount?.toFixed(2) || 'N/A'}`,
+      `Total Revenue,₹${reportData.summary.totalRevenue?.toLocaleString() || 'N/A'}`,
       '',
       'Top Violations by Rule',
       'Rule,Count,Severity',
@@ -700,7 +700,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-600 mb-2">
-                    ${complianceResult.summaries.averageAmount?.toLocaleString() || '0'}
+                    ₹{complianceResult.summaries.averageAmount?.toLocaleString() || '0'}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Avg Revenue/Visit</div>
                 </div>
@@ -985,7 +985,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                     <span className="font-medium">Avg Revenue/Doctor</span>
                     <span className="text-lg font-bold text-purple-600">
-                      ${Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
+                      ₹{Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
@@ -1025,8 +1025,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                           <div className="text-sm text-gray-500">{doctor.count} patients</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold text-green-600">${doctor.total.toLocaleString()}</div>
-                          <div className="text-sm text-gray-500">${(doctor.total / doctor.count).toFixed(0)} avg</div>
+                          <div className="font-bold text-green-600">₹{doctor.total.toLocaleString()}</div>
+                          <div className="text-sm text-gray-500">₹{(doctor.total / doctor.count).toFixed(0)} avg</div>
                         </div>
                       </div>
                     ))}
@@ -1071,7 +1071,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
                       <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
-                        <div className="font-bold text-green-600">${proc.total.toLocaleString()}</div>
+                        <div className="font-bold text-green-600">₹{proc.total.toLocaleString()}</div>
                       </div>
                     ))}
                   </div>
@@ -1103,7 +1103,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
                       <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
-                        <div className="font-bold text-purple-600">${(proc.total / proc.count).toFixed(0)}</div>
+                        <div className="font-bold text-purple-600">₹{(proc.total / proc.count).toFixed(0)}</div>
                       </div>
                     ))}
                   </div>
@@ -1129,8 +1129,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                           <div className="text-sm text-gray-500">{payer.count} transactions</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold text-green-600">${payer.total.toLocaleString()}</div>
-                          <div className="text-sm text-gray-500">${(payer.total / payer.count).toFixed(0)} avg</div>
+                          <div className="font-bold text-green-600">₹{payer.total.toLocaleString()}</div>
+                          <div className="text-sm text-gray-500">₹{(payer.total / payer.count).toFixed(0)} avg</div>
                         </div>
                       </div>
                     ))}
@@ -1208,7 +1208,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         </div>
                         <div className="text-right">
                           <div className="font-bold text-green-600">{patient.count}</div>
-                          <div className="text-sm text-gray-500">${patient.total.toFixed(0)} spent</div>
+                          <div className="text-sm text-gray-500">₹{patient.total.toFixed(0)} spent</div>
                         </div>
                       </div>
                     ))}
@@ -1342,7 +1342,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         type="number" 
                         dataKey="revenue" 
                         name="Revenue" 
-                        tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`}
+                        tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`}
                       />
                       <YAxis 
                         type="number" 
@@ -1353,7 +1353,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       <ChartTooltip 
                         content={<ChartTooltipContent />}
                         formatter={(value, name) => {
-                          if (name === 'revenue') return [`$${Number(value).toLocaleString()}`, 'Revenue'];
+                          if (name === 'revenue') return [`₹${Number(value).toLocaleString()}`, 'Revenue'];
                           if (name === 'violations') return [String(value), 'Violations'];
                           return [String(value), name];
                         }}

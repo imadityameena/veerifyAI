@@ -465,11 +465,11 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
     const csvContent = [
       'Metric,Value',
       `Total Bills,${reportData.summary.totalBills}`,
-      `Total Revenue,$${reportData.summary.totalRevenue.toLocaleString()}`,
-      `Average Amount,$${reportData.summary.averageAmount.toFixed(2)}`,
+      `Total Revenue,₹${reportData.summary.totalRevenue.toLocaleString()}`,
+      `Average Amount,₹${reportData.summary.averageAmount.toFixed(2)}`,
       `Paid Bills,${reportData.summary.paidBills}`,
       `Pending Bills,${reportData.summary.pendingBills}`,
-      `Outstanding Amount,$${reportData.summary.outstandingAmount.toLocaleString()}`,
+      `Outstanding Amount,₹${reportData.summary.outstandingAmount.toLocaleString()}`,
       `Consent Rate,${(reportData.summary.consentRate * 100).toFixed(1)}%`,
       '',
       'Department Revenue',
@@ -515,7 +515,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                 OP Billing Dashboard
               </h1>
               <p className="text-gray-600 dark:text-gray-300 mt-1">
-                {data.length} billing records • ${insights?.totalAmount?.toLocaleString() || 0} total revenue
+                {data.length} billing records • ₹{insights?.totalAmount?.toLocaleString() || 0} total revenue
               </p>
             </div>
             <Button onClick={onBack} variant="outline" className="flex items-center space-x-2">
@@ -566,7 +566,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                 const entries = Object.entries(insights?.specialtyAgg || {}).sort((a, b) => (b[1] as any).revenue - (a[1] as any).revenue);
                 const top = entries[0];
                 return (
-                  <div className="text-2xl font-bold text-blue-600">{top ? `${top[0]}: $${(top[1] as any).revenue.toLocaleString()}` : 'N/A'}</div>
+                  <div className="text-2xl font-bold text-blue-600">{top ? `${top[0]}: ₹${(top[1] as any).revenue.toLocaleString()}` : 'N/A'}</div>
                 );
               })()}
               <p className="text-xs text-gray-500">Highest grossing specialty</p>
@@ -581,7 +581,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                 const entries = Object.entries(insights?.specialtyAgg || {}).map(([k, v]: any) => [k, v.revenue / Math.max(1, v.visits)]).sort((a: any, b: any) => b[1] - a[1]);
                 const top = entries[0];
                 return (
-                  <div className="text-2xl font-bold text-green-600">{top ? `${top[0]}: $${Number(top[1]).toFixed(2)}` : 'N/A'}</div>
+                  <div className="text-2xl font-bold text-green-600">{top ? `${top[0]}: ₹${Number(top[1]).toFixed(2)}` : 'N/A'}</div>
                 );
               })()}
               <p className="text-xs text-gray-500">Best average per visit</p>
@@ -634,7 +634,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardTitle className="text-sm text-gray-600 dark:text-gray-300">Total Revenue</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-600">${insights?.totalAmount?.toLocaleString() || 0}</div>
+              <div className="text-3xl font-bold text-green-600">₹{insights?.totalAmount?.toLocaleString() || 0}</div>
               <p className="text-xs text-gray-500">From {insights?.totalBills || 0} bills</p>
             </CardContent>
           </Card>
@@ -644,7 +644,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardTitle className="text-sm text-gray-600 dark:text-gray-300">Average Bill</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-600">${insights?.averageAmount?.toFixed(2) || 0}</div>
+              <div className="text-3xl font-bold text-blue-600">₹{insights?.averageAmount?.toFixed(2) || 0}</div>
               <p className="text-xs text-gray-500">Per transaction</p>
             </CardContent>
           </Card>
@@ -664,7 +664,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardTitle className="text-sm text-gray-600 dark:text-gray-300">Outstanding</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-red-600">${insights?.outstandingAmount?.toLocaleString() || 0}</div>
+              <div className="text-3xl font-bold text-red-600">₹{insights?.outstandingAmount?.toLocaleString() || 0}</div>
               <p className="text-xs text-gray-500">Pending payments</p>
             </CardContent>
           </Card>
@@ -705,9 +705,9 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2 text-sm text-green-700 dark:text-green-300">
-                  <li>• Total revenue: ${insights?.totalAmount?.toLocaleString() || 0}</li>
-                  <li>• Average bill value: ${insights?.averageAmount?.toFixed(2) || 0}</li>
-                  <li>• Outstanding amount: ${insights?.outstandingAmount?.toLocaleString() || 0}</li>
+                  <li>• Total revenue: ₹{insights?.totalAmount?.toLocaleString() || 0}</li>
+                  <li>• Average bill value: ₹{insights?.averageAmount?.toFixed(2) || 0}</li>
+                  <li>• Outstanding amount: ₹{insights?.outstandingAmount?.toLocaleString() || 0}</li>
                   <li>• Payment completion rate: {((insights?.paidBills || 0) / (insights?.totalBills || 1) * 100).toFixed(1)}%</li>
                 </ul>
               </CardContent>
@@ -877,14 +877,14 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                       dataKey="y"
                       name="Revenue"
                       domain={[(dataMin: number) => Math.max(0, Math.floor(dataMin * 0.9)), (dataMax: number) => Math.ceil(dataMax * 1.05)]}
-                      tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
+                      tickFormatter={(v: number) => `₹${(v / 1000).toFixed(0)}k`}
                       label={{ value: 'Revenue', angle: -90, position: 'insideLeft' }}
                     />
                     <ZAxis type="number" dataKey="z" range={[80, 240]} />
                     <ChartTooltip
                       content={<ChartTooltipContent />}
                       formatter={(value: any, name: any, props: any) => {
-                        if (name === 'y') return [`$${Number(value).toLocaleString()}`, 'Revenue'];
+                        if (name === 'y') return [`₹${Number(value).toLocaleString()}`, 'Revenue'];
                         if (name === 'x') return [String(value), 'Patients'];
                         return [String(value), name];
                       }}
@@ -901,7 +901,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               {selectedDoctor && (
                 <div className="mt-4 text-sm text-gray-800 dark:text-gray-200">
                   <div className="font-semibold">{selectedDoctor?.doctorName}</div>
-                  <div>Patients: {Math.round(Number(selectedDoctor?.x || 0))}, Revenue: ${Number(selectedDoctor?.y || 0).toLocaleString()}</div>
+                  <div>Patients: {Math.round(Number(selectedDoctor?.x || 0))}, Revenue: ₹{Number(selectedDoctor?.y || 0).toLocaleString()}</div>
                 </div>
               )}
             </CardContent>
@@ -947,7 +947,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                                   color: intensity > 128 ? 'white' : 'black'
                                 }}
                               >
-                                ${val.toLocaleString()}
+                                ₹{val.toLocaleString()}
                               </td>
                             );
                           })}
@@ -1017,7 +1017,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={rows} layout="vertical" margin={{ left: 32, right: 24, top: 8, bottom: 8 }}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis type="number" tickFormatter={(v: number) => `$${(v/1000).toFixed(0)}k`} />
+                        <XAxis type="number" tickFormatter={(v: number) => `₹${(v/1000).toFixed(0)}k`} />
                         <YAxis type="category" dataKey="code" width={80} />
                         <ChartTooltip content={<ChartTooltipContent />} />
                         <Bar dataKey="revenue" fill="#f59e0b" radius={[0, 4, 4, 0]} />
@@ -1118,7 +1118,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                         </Badge>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                        ${parseAmount(getFieldValue(row, ['Amount', 'Total_Amount', 'TotalAmount', 'Amount_Billed', 'Bill_Amount', 'Gross_Amount'])).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        ₹{parseAmount(getFieldValue(row, ['Amount', 'Total_Amount', 'TotalAmount', 'Amount_Billed', 'Bill_Amount', 'Gross_Amount'])).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <Badge variant={getFieldValue(row, ['Consent_Flag', 'consent_flag', 'Consent', 'consent']) === 'Y' ? 'default' : 'secondary'}>
