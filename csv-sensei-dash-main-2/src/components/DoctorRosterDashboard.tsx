@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Calendar, Clock, MapPin, Phone, Mail, AlertTriangle, TrendingUp, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, Clock, MapPin, Phone, Mail, AlertTriangle, TrendingUp, BarChart3, Download, FileText, BarChart3 as BarChart3Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -184,6 +184,191 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
       label: "Forecasted Shifts",
       color: "#8b5cf6",
     },
+  };
+
+  // Export functions
+  const exportRosterData = () => {
+    if (!data || data.length === 0) return;
+    
+    const headers = Object.keys(data[0] || {});
+    const csvContent = [
+      headers.join(','),
+      ...data.map(row => 
+        headers.map(h => `"${row[h] || ''}"`).join(',')
+      )
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'doctor_roster_data.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportDoctorPerformance = () => {
+    if (!data || data.length === 0) return;
+    
+    // Group by doctor and calculate performance metrics
+    const doctorStats = data.reduce((acc, row) => {
+      const doctorName = getFieldValue(row, ['Doctor_Name', 'doctor_name', 'DoctorName', 'Name', 'name']);
+      const doctorId = getFieldValue(row, ['Doctor_ID', 'doctor_id', 'DoctorId', 'ID', 'id']);
+      const specialty = getFieldValue(row, ['Specialty', 'specialty', 'Specialization', 'specialization', 'Speciality', 'speciality']);
+      const shiftStart = getFieldValue(row, ['Shift_Start', 'shift_start', 'Start_Time', 'start_time']);
+      const shiftEnd = getFieldValue(row, ['Shift_End', 'shift_end', 'End_Time', 'end_time']);
+      const onCall = getFieldValue(row, ['On_Call', 'on_call', 'OnCall', 'onCall', 'Oncall', 'oncall']);
+      
+      const key = `${doctorName} (${doctorId})`;
+      if (key && key !== 'N/A (N/A)') {
+        if (!acc[key]) {
+          acc[key] = { 
+            doctorName, 
+            doctorId, 
+            specialty: specialty || 'Unknown', 
+            shifts: 0, 
+            onCallShifts: 0,
+            shiftTypes: new Set()
+          };
+        }
+        acc[key].shifts += 1;
+        if (onCall === 'Y' || onCall === 'Yes' || onCall === '1' || onCall === 'true') {
+          acc[key].onCallShifts += 1;
+        }
+        if (shiftStart && shiftEnd) {
+          acc[key].shiftTypes.add(`${shiftStart}-${shiftEnd}`);
+        }
+      }
+      return acc;
+    }, {});
+
+    const csvContent = [
+      'Doctor Name,Doctor ID,Specialty,Total Shifts,On-Call Shifts,On-Call Percentage,Shift Types',
+      ...Object.values(doctorStats).map((stats: any) => {
+        const onCallPercentage = stats.shifts > 0 ? ((stats.onCallShifts / stats.shifts) * 100).toFixed(1) : 0;
+        const shiftTypesStr = Array.from(stats.shiftTypes).join('; ');
+        return `"${stats.doctorName}","${stats.doctorId}","${stats.specialty}",${stats.shifts},${stats.onCallShifts},${onCallPercentage}%,"${shiftTypesStr}"`;
+      })
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'doctor_performance.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportShiftAnalysis = () => {
+    if (!data || data.length === 0) return;
+    
+    // Analyze shift patterns
+    const shiftAnalysis = data.reduce((acc, row) => {
+      const shiftStart = getFieldValue(row, ['Shift_Start', 'shift_start', 'Start_Time', 'start_time']);
+      const shiftEnd = getFieldValue(row, ['Shift_End', 'shift_end', 'End_Time', 'end_time']);
+      const specialty = getFieldValue(row, ['Specialty', 'specialty', 'Specialization', 'specialization', 'Speciality', 'speciality']);
+      const onCall = getFieldValue(row, ['On_Call', 'on_call', 'OnCall', 'onCall', 'Oncall', 'oncall']);
+      
+      if (shiftStart && shiftEnd) {
+        const shiftKey = `${shiftStart}-${shiftEnd}`;
+        if (!acc[shiftKey]) {
+          acc[shiftKey] = { 
+            shiftTime: shiftKey, 
+            count: 0, 
+            specialties: new Set(), 
+            onCallCount: 0 
+          };
+        }
+        acc[shiftKey].count += 1;
+        if (specialty) acc[shiftKey].specialties.add(specialty);
+        if (onCall === 'Y' || onCall === 'Yes' || onCall === '1' || onCall === 'true') {
+          acc[shiftKey].onCallCount += 1;
+        }
+      }
+      return acc;
+    }, {});
+
+    const csvContent = [
+      'Shift Time,Total Shifts,On-Call Shifts,On-Call Percentage,Specialties',
+      ...Object.values(shiftAnalysis).map((analysis: any) => {
+        const onCallPercentage = analysis.count > 0 ? ((analysis.onCallCount / analysis.count) * 100).toFixed(1) : 0;
+        const specialtiesStr = Array.from(analysis.specialties).join('; ');
+        return `"${analysis.shiftTime}",${analysis.count},${analysis.onCallCount},${onCallPercentage}%,"${specialtiesStr}"`;
+      })
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'shift_analysis.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportDepartmentReport = () => {
+    if (!data || data.length === 0) return;
+    
+    const reportData = {
+      summary: {
+        totalDoctors: insights?.totalDoctors || 0,
+        totalShifts: insights?.totalShifts || 0,
+        departments: insights?.departments || 0,
+        specializations: insights?.specializations || 0,
+        onCallPercentage: insights?.onCallPercentage || 0
+      },
+      departmentBreakdown: insights?.departmentDistribution || {},
+      shiftDistribution: insights?.shiftDistribution || {},
+      topDoctors: (() => {
+        const doctorStats = data.reduce((acc, row) => {
+          const doctorName = getFieldValue(row, ['Doctor_Name', 'doctor_name', 'DoctorName', 'Name', 'name']);
+          const doctorId = getFieldValue(row, ['Doctor_ID', 'doctor_id', 'DoctorId', 'ID', 'id']);
+          const specialty = getFieldValue(row, ['Specialty', 'specialty', 'Specialization', 'specialization', 'Speciality', 'speciality']);
+          const key = `${doctorName} (${doctorId})`;
+          if (key && key !== 'N/A (N/A)') {
+            if (!acc[key]) {
+              acc[key] = { doctorName, doctorId, specialty: specialty || 'Unknown', shifts: 0 };
+            }
+            acc[key].shifts += 1;
+          }
+          return acc;
+        }, {});
+        
+        return Object.values(doctorStats)
+          .sort((a: any, b: any) => b.shifts - a.shifts)
+          .slice(0, 10);
+      })()
+    };
+    
+    const csvContent = [
+      'Metric,Value',
+      `Total Doctors,${reportData.summary.totalDoctors}`,
+      `Total Shifts,${reportData.summary.totalShifts}`,
+      `Departments,${reportData.summary.departments}`,
+      `Specializations,${reportData.summary.specializations}`,
+      `On-Call Percentage,${reportData.summary.onCallPercentage.toFixed(1)}%`,
+      '',
+      'Department Distribution',
+      'Department,Shifts',
+      ...Object.entries(reportData.departmentBreakdown).map(([dept, count]) => `${dept},${count}`),
+      '',
+      'Shift Distribution',
+      'Shift Time,Count',
+      ...Object.entries(reportData.shiftDistribution).map(([shift, count]) => `${shift},${count}`),
+      '',
+      'Top Doctors by Shift Count',
+      'Doctor Name,Doctor ID,Specialty,Shifts',
+      ...reportData.topDoctors.map((doctor: any) => `"${doctor.doctorName}","${doctor.doctorId}","${doctor.specialty}",${doctor.shifts}`)
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'department_report.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   return (
@@ -737,6 +922,112 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
             </div>
           </CardContent>
         </Card>
+
+        {/* Export Options */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
+            <Download className="w-6 h-6 mr-3 text-blue-500" />
+            Export Reports & Data
+          </h2>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Roster Data Card */}
+            <Card className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50/50 to-white dark:from-blue-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
+                    <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Roster Data</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download complete doctor roster data
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportRosterData} 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Doctor Performance Card */}
+            <Card className="group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-green-500 bg-gradient-to-br from-green-50/50 to-white dark:from-green-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-200 dark:group-hover:bg-green-800/50 transition-colors duration-300">
+                    <Users className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Doctor Performance</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download doctor performance and shift analysis
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportDoctorPerformance} 
+                  className="w-full bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-green-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Shift Analysis Card */}
+            <Card className="group hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-orange-500 bg-gradient-to-br from-orange-50/50 to-white dark:from-orange-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-200 dark:group-hover:bg-orange-800/50 transition-colors duration-300">
+                    <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Shift Analysis</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download detailed shift patterns and timing analysis
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportShiftAnalysis} 
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white shadow-lg hover:shadow-orange-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Department Report Card */}
+            <Card className="group hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-500 bg-gradient-to-br from-purple-50/50 to-white dark:from-purple-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors duration-300">
+                    <BarChart3Icon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Department Report</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download comprehensive department and roster summary
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportDepartmentReport} 
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

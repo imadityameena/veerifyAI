@@ -456,8 +456,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
       `Total Violations,${reportData.summary.violations}`,
       `Risk Score,${reportData.summary.riskScore}`,
       `Data Quality Score,${reportData.summary.dataQualityScore}%`,
-      `Average Amount,$${reportData.summary.averageAmount?.toFixed(2) || 'N/A'}`,
-      `Total Revenue,$${reportData.summary.totalRevenue?.toLocaleString() || 'N/A'}`,
+      `Average Amount,₹${reportData.summary.averageAmount?.toFixed(2) || 'N/A'}`,
+      `Total Revenue,₹${reportData.summary.totalRevenue?.toLocaleString() || 'N/A'}`,
       '',
       'Top Violations by Rule',
       'Rule,Count,Severity',
@@ -700,7 +700,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-600 mb-2">
-                    ${complianceResult.summaries.averageAmount?.toLocaleString() || '0'}
+                    ₹{complianceResult.summaries.averageAmount?.toLocaleString() || '0'}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Avg Revenue/Visit</div>
                 </div>
@@ -985,7 +985,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                     <span className="font-medium">Avg Revenue/Doctor</span>
                     <span className="text-lg font-bold text-purple-600">
-                      ${Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
+                      ₹{Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
@@ -1025,8 +1025,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                           <div className="text-sm text-gray-500">{doctor.count} patients</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold text-green-600">${doctor.total.toLocaleString()}</div>
-                          <div className="text-sm text-gray-500">${(doctor.total / doctor.count).toFixed(0)} avg</div>
+                          <div className="font-bold text-green-600">₹{doctor.total.toLocaleString()}</div>
+                          <div className="text-sm text-gray-500">₹{(doctor.total / doctor.count).toFixed(0)} avg</div>
                         </div>
                       </div>
                     ))}
@@ -1071,7 +1071,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
                       <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
-                        <div className="font-bold text-green-600">${proc.total.toLocaleString()}</div>
+                        <div className="font-bold text-green-600">₹{proc.total.toLocaleString()}</div>
                       </div>
                     ))}
                   </div>
@@ -1103,7 +1103,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
                       <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
-                        <div className="font-bold text-purple-600">${(proc.total / proc.count).toFixed(0)}</div>
+                        <div className="font-bold text-purple-600">₹{(proc.total / proc.count).toFixed(0)}</div>
                       </div>
                     ))}
                   </div>
@@ -1129,8 +1129,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                           <div className="text-sm text-gray-500">{payer.count} transactions</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold text-green-600">${payer.total.toLocaleString()}</div>
-                          <div className="text-sm text-gray-500">${(payer.total / payer.count).toFixed(0)} avg</div>
+                          <div className="font-bold text-green-600">₹{payer.total.toLocaleString()}</div>
+                          <div className="text-sm text-gray-500">₹{(payer.total / payer.count).toFixed(0)} avg</div>
                         </div>
                       </div>
                     ))}
@@ -1208,7 +1208,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         </div>
                         <div className="text-right">
                           <div className="font-bold text-green-600">{patient.count}</div>
-                          <div className="text-sm text-gray-500">${patient.total.toFixed(0)} spent</div>
+                          <div className="text-sm text-gray-500">₹{patient.total.toFixed(0)} spent</div>
                         </div>
                       </div>
                     ))}
@@ -1342,7 +1342,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         type="number" 
                         dataKey="revenue" 
                         name="Revenue" 
-                        tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`}
+                        tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`}
                       />
                       <YAxis 
                         type="number" 
@@ -1353,7 +1353,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       <ChartTooltip 
                         content={<ChartTooltipContent />}
                         formatter={(value, name) => {
-                          if (name === 'revenue') return [`$${Number(value).toLocaleString()}`, 'Revenue'];
+                          if (name === 'revenue') return [`₹${Number(value).toLocaleString()}`, 'Revenue'];
                           if (name === 'violations') return [String(value), 'Violations'];
                           return [String(value), name];
                         }}
@@ -1539,80 +1539,104 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
         {/* Export Options */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-            <Download className="w-6 h-6 mr-2 text-blue-500" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
+            <Download className="w-6 h-6 mr-3 text-blue-500" />
             Export Reports & Data
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <FileText className="w-5 h-5 mr-2 text-blue-500" />
-                  Compliance Report
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Compliance Report Card */}
+            <Card className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50/50 to-white dark:from-blue-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
+                    <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Compliance Report</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Download comprehensive compliance analysis report
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button onClick={exportComplianceReport} className="w-full">
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportComplianceReport} 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  Download Compliance Report
+                  Download 
                 </Button>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Users className="w-5 h-5 mr-2 text-green-500" />
-                  Doctor Performance
+            {/* Doctor Performance Card */}
+            <Card className="group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-green-500 bg-gradient-to-br from-green-50/50 to-white dark:from-green-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-200 dark:group-hover:bg-green-800/50 transition-colors duration-300">
+                    <Users className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Doctor Performance</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Download doctor performance and compliance data
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button onClick={exportDoctorPerformance} className="w-full">
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportDoctorPerformance} 
+                  className="w-full bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-green-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  Download Doctor Performance
+                  Download 
                 </Button>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <AlertTriangle className="w-5 h-5 mr-2 text-orange-500" />
-                  Violations Report
+            {/* Violations Report Card */}
+            <Card className="group hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-orange-500 bg-gradient-to-br from-orange-50/50 to-white dark:from-orange-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-200 dark:group-hover:bg-orange-800/50 transition-colors duration-300">
+                    <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Violations Report</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Download detailed violations and quality issues
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button onClick={exportViolationsCSV} className="w-full">
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportViolationsCSV} 
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white shadow-lg hover:shadow-orange-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  Download Violations Report
+                  Download 
                 </Button>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <BarChart3 className="w-5 h-5 mr-2 text-purple-500" />
-                  Analysis Data
+            {/* Analysis Data Card */}
+            <Card className="group hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-500 bg-gradient-to-br from-purple-50/50 to-white dark:from-purple-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors duration-300">
+                    <BarChart3 className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Analysis Data</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Download raw analysis data for further processing
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button onClick={exportAnalysisViewCSV} className="w-full">
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportAnalysisViewCSV} 
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  Download Analysis Data
+                  Download 
                 </Button>
               </CardContent>
             </Card>

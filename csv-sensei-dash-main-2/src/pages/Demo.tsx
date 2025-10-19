@@ -20,7 +20,6 @@ import {
   Moon
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { ModeToggle } from '@/components/ui/mode-toggle';
 
 const Demo = () => {
   const navigate = useNavigate();
@@ -39,7 +38,6 @@ const Demo = () => {
     <div className="min-h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Header with User Info and Logout */}
       <div className="absolute top-4 right-4 flex items-center space-x-3 z-10">
-        <ModeToggle />
         {isLoggedIn && user && (
           <div className="flex items-center space-x-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700">
             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
