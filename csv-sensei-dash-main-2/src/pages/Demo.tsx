@@ -73,12 +73,13 @@ const Demo = () => {
 
             {/* Main Title */}
             <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              Smart Data Analytics
+            Smart Compliance Intelligence
+
             </h1>
 
             {/* Description */}
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl leading-relaxed">
-              Upload your CSV files and get instant AI-powered insights, beautiful visualizations, and actionable recommendations.
+            Upload your hospital compliance data and instantly identify rule violations, license expiries, and documentation gaps — powered by AI for safer, audit-ready operations.
             </p>
 
             {/* Key Features Grid */}
@@ -93,7 +94,7 @@ const Demo = () => {
                   </h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Smart pattern recognition
+                  AI-powered data analysis
                 </p>
               </div>
 
@@ -103,11 +104,11 @@ const Demo = () => {
                     <BarChart3 className="w-5 h-5 text-green-600 dark:text-green-400" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Visualizations
+                  Compliance Insights Dashboard
                   </h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Interactive charts & graphs
+                  Interactive compliance dashboard
                 </p>
               </div>
 
@@ -121,7 +122,7 @@ const Demo = () => {
                   </h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Real-time data analysis
+                  Lightning-fast data processing
                 </p>
               </div>
 
@@ -150,14 +151,16 @@ const Demo = () => {
                   <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
                     <Upload className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-gray-700 dark:text-gray-300 font-medium">Upload CSV</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Upload Compliance File
+                  </span>
                 </div>
                 <ArrowRight className="w-5 h-5 text-gray-400" />
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
                     <Brain className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-gray-700 dark:text-gray-300 font-medium">AI Analysis</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">AI Compliance Validation
+                  </span>
                 </div>
                 <ArrowRight className="w-5 h-5 text-gray-400" />
                 <div className="flex items-center space-x-4">
@@ -177,7 +180,8 @@ const Demo = () => {
                 className="w-full px-12 py-6 text-lg font-semibold bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-xl flex items-center justify-center space-x-4"
               >
                 <Play className="w-5 h-5" />
-                <span>Start Analytics Demo</span>
+                <span> Start Compliance Demo
+                </span>
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
@@ -190,10 +194,10 @@ const Demo = () => {
         {/* Right Sidebar */}
         <div className="w-96 bg-white dark:bg-gray-900 p-6 pt-24">
           <div className="space-y-6">
-            {/* Live Demo Section */}
+            {/* Compliance Rule Engine Demo Section */}
             <div className="text-center">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                Live Demo
+              Compliance Rule Engine Demo
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
                 See analytics in action
@@ -206,10 +210,11 @@ const Demo = () => {
                     <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
                       <BarChart3 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Interactive Charts</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">Compliance Scorecards
+                    </h4>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Real-time data visualization with interactive controls.
+                    Performance tracking with detailed metrics.
                   </p>
                 </div>
 
@@ -218,10 +223,11 @@ const Demo = () => {
                     <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
                       <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Trend Analysis</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">Compliance Risk Trends
+                    </h4>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    AI-powered trend detection and forecasting.
+                    AI-powered risk pattern analysis.
                   </p>
                 </div>
 
@@ -230,10 +236,10 @@ const Demo = () => {
                     <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
                       <PieChart className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Data Insights</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">Regulatory & Safety Insights</h4>
                   </div>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Comprehensive data breakdown and insights.
+                    Regulatory insights and safety protocols.
                   </p>
                 </div>
               </div>
