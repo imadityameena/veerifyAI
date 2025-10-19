@@ -33,7 +33,9 @@ import {
   Stethoscope,
   Brain,
   BarChart3,
-  PieChart as PieChartIcon
+  PieChart as PieChartIcon,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -172,6 +174,8 @@ const AdminDashboard = () => {
   });
   const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [createUserError, setCreateUserError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Check if user is admin
   useEffect(() => {
@@ -661,7 +665,7 @@ const AdminDashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600 dark:text-blue-400" />
           <p className="text-gray-600 dark:text-gray-300">Loading admin dashboard...</p>
@@ -671,7 +675,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       {/* Header */}
       <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -937,7 +941,7 @@ const AdminDashboard = () => {
                         };
 
                         return (
-                          <div key={schema.schemaType} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                          <div key={schema.schemaType} className="bg-[#F0F8FF] dark:bg-gray-700 rounded-lg p-4">
                             <div className="flex items-center space-x-2 mb-2">
                               {getSchemaIcon()}
                               <span className="font-medium text-gray-900 dark:text-white">
@@ -995,7 +999,7 @@ const AdminDashboard = () => {
                       <h4 className="font-medium text-gray-900 dark:text-white">Top Active Users</h4>
                       <div className="space-y-2 max-h-60 overflow-y-auto">
                         {usageStats.userStats.slice(0, 5).map((user, index) => (
-                          <div key={user.userId} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                          <div key={user.userId} className="flex items-center justify-between p-3 bg-[#F0F8FF] dark:bg-gray-700 rounded-lg">
                             <div className="flex items-center space-x-3">
                               <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                                 <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
@@ -1026,7 +1030,7 @@ const AdminDashboard = () => {
 
                     {/* Usage Summary */}
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                      <div className="bg-[#F0F8FF] dark:bg-blue-900/20 rounded-lg p-4">
                         <div className="flex items-center space-x-2 mb-2">
                           <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                           <span className="text-sm font-medium text-blue-800 dark:text-blue-300">Total Usage</span>
@@ -1083,8 +1087,10 @@ const AdminDashboard = () => {
                 />
               </div>
               <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by role" />
+                <SelectTrigger className="w-[180px] bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white">
+                  <SelectValue placeholder="Filter by role">
+                    {roleFilter === 'all' ? 'All Roles' : roleFilter === 'admin' ? 'Admin' : 'User'}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Roles</SelectItem>
@@ -1093,8 +1099,10 @@ const AdminDashboard = () => {
                 </SelectContent>
               </Select>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by status" />
+                <SelectTrigger className="w-[180px] bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white">
+                  <SelectValue placeholder="Filter by status">
+                    {statusFilter === 'all' ? 'All Status' : statusFilter === 'active' ? 'Active' : 'Inactive'}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Status</SelectItem>
@@ -1108,7 +1116,7 @@ const AdminDashboard = () => {
             <div className="border border-gray-200 dark:border-gray-600 rounded-lg">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-gray-50 dark:bg-gray-700">
+                  <TableRow className="bg-[#F0F8FF] dark:bg-gray-700">
                     <TableHead className="text-gray-600 dark:text-gray-300">User</TableHead>
                     <TableHead className="text-gray-600 dark:text-gray-300">Company</TableHead>
                     <TableHead className="text-gray-600 dark:text-gray-300">Role</TableHead>
@@ -1332,7 +1340,7 @@ const AdminDashboard = () => {
                   disabled={isCreatingUser}
                   className={`flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                     createUserForm.role === 'user'
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                      ? 'border-blue-500 bg-[#F0F8FF] dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                       : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                   } ${isCreatingUser ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
@@ -1356,7 +1364,7 @@ const AdminDashboard = () => {
                   disabled={isCreatingUser}
                   className={`flex-1 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                     createUserForm.role === 'admin'
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                      ? 'border-blue-500 bg-[#F0F8FF] dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
                       : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                   } ${isCreatingUser ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
@@ -1380,30 +1388,50 @@ const AdminDashboard = () => {
               <Label htmlFor="password" className="text-gray-700 dark:text-gray-300">
                 Password *
               </Label>
-              <Input
-                id="password"
-                type="password"
-                value={createUserForm.password}
-                onChange={(e) => handleCreateUserInputChange('password', e.target.value)}
-                className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white"
-                placeholder="Enter password (min 6 chars, 1 uppercase, 1 lowercase, 1 number)"
-                disabled={isCreatingUser}
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={createUserForm.password}
+                  onChange={(e) => handleCreateUserInputChange('password', e.target.value)}
+                  className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
+                  placeholder="Enter password (min 6 chars, 1 uppercase, 1 lowercase, 1 number)"
+                  disabled={isCreatingUser}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  disabled={isCreatingUser}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-gray-700 dark:text-gray-300">
                 Confirm Password *
               </Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                value={createUserForm.confirmPassword}
-                onChange={(e) => handleCreateUserInputChange('confirmPassword', e.target.value)}
-                className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white"
-                placeholder="Confirm password"
-                disabled={isCreatingUser}
-              />
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={createUserForm.confirmPassword}
+                  onChange={(e) => handleCreateUserInputChange('confirmPassword', e.target.value)}
+                  className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
+                  placeholder="Confirm password"
+                  disabled={isCreatingUser}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  disabled={isCreatingUser}
+                >
+                  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">

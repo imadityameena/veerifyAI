@@ -185,7 +185,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
           Visit_ID: getFieldValue(['Visit_ID', 'visit_id', 'VisitId', 'visit'], `visit_${index + 1}`),
           Visit_Date: getFieldValue(['Visit_Date', 'visit_date', 'VisitDate', 'date', 'Bill_Date'], new Date().toISOString().split('T')[0]),
           Age: parseInt(String(getFieldValue(['Age', 'age'], 30))),
-          Procedure_Code: getFieldValue(['Procedure_Code', 'procedure_code', 'ProcedureCode', 'Service_Code', 'service_code'], 'OP100'),
+          Procedure_Code: getFieldValue(['Procedure_Code', 'procedure_code', 'ProcedureCode', 'Service_Code', 'service_code', 'Proc_Code', 'proc_code', 'Code', 'code'], 'OP100'),
           Consent_Flag: String(getFieldValue(['Consent_Flag', 'consent_flag', 'ConsentFlag'], 'Y')).toUpperCase(),
           Payer_Type: String(getFieldValue(['Payer_Type', 'payer_type', 'PayerType'], 'CASH')).toUpperCase()
         };
@@ -247,6 +247,15 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
       console.log('Transformed Billing Data Sample:', transformedBillingData[0]);
       console.log('Transformed Doctor Data Sample:', transformedDoctorData[0]);
+      
+      // Debug: Check procedure codes in transformed data
+      const procedureCodes = transformedBillingData.map(row => row.Procedure_Code);
+      const uniqueProcedures = [...new Set(procedureCodes)];
+      console.log('🔍 Procedure Codes in transformed data:', uniqueProcedures);
+      console.log('📊 Procedure code distribution:', procedureCodes.reduce((acc, code) => {
+        acc[code] = (acc[code] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>));
       
       // Debug: Show which columns were successfully mapped
       if (transformedBillingData.length > 0) {
@@ -369,10 +378,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'HIGH': return 'bg-red-100 text-red-800 border-red-200';
-      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'LOW': return 'bg-blue-100 text-blue-800 border-blue-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'HIGH': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800';
+      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-300 dark:border-yellow-800';
+      case 'LOW': return 'bg-[#F0F8FF] text-blue-800 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700';
     }
   };
 
@@ -386,10 +395,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
   };
 
   const getRiskLevel = (score: number) => {
-    if (score >= 30) return { level: 'CRITICAL', color: 'text-red-600', bg: 'bg-red-50' };
-    if (score >= 20) return { level: 'HIGH', color: 'text-orange-600', bg: 'bg-orange-50' };
-    if (score >= 10) return { level: 'MEDIUM', color: 'text-yellow-600', bg: 'bg-yellow-50' };
-    return { level: 'LOW', color: 'text-green-600', bg: 'bg-green-50' };
+    if (score >= 30) return { level: 'CRITICAL', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20' };
+    if (score >= 20) return { level: 'HIGH', color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-50 dark:bg-orange-900/20' };
+    if (score >= 10) return { level: 'MEDIUM', color: 'text-yellow-600 dark:text-yellow-400', bg: 'bg-yellow-50 dark:bg-yellow-900/20' };
+    return { level: 'LOW', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/20' };
   };
 
 
@@ -531,7 +540,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Running compliance analysis...</p>
@@ -542,7 +551,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (!complianceResult) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-300">Compliance analysis failed</p>
@@ -555,7 +564,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
   const riskLevel = getRiskLevel(complianceResult.riskScore);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -620,10 +629,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
           
           return (
             <div className="max-w-7xl mx-auto px-6 py-4">
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                 <div className="flex items-center space-x-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
-                  <div className="text-yellow-800">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  <div className="text-yellow-800 dark:text-yellow-300">
                     <strong>Data Quality Notice:</strong> Some data appears to be using fallback values. 
                     <div className="mt-2">
                       <div className="text-sm">
@@ -656,10 +665,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
         if (hasRealDoctorNames && hasRealPatientNames) {
           return (
             <div className="max-w-7xl mx-auto px-6 py-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <div className="text-green-800">
+                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="text-green-800 dark:text-green-300">
                     <strong>Data Quality: Excellent!</strong> All data is being parsed from your CSV files successfully.
                   </div>
                 </div>
@@ -856,9 +865,9 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <CardContent>
                 <div className="space-y-4">
                   {complianceResult.summaries.violationRanking.slice(0, 5).map((violation, index) => {
-                    const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800' : 
-                                        violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' : 
-                                        'bg-blue-100 text-blue-800';
+                    const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' : 
+                                        violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' : 
+                                        'bg-[#F0F8FF] text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
                     const riskPercentage = (violation.count / complianceResult.violations.length) * 100;
                     return (
                       <div key={index} className="space-y-2">
@@ -904,18 +913,18 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   
                   <div className="space-y-3">
                     <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                      <span className="font-medium">Clean Records</span>
-                      <span className="text-lg font-bold text-green-600">
+                      <span className="font-medium text-green-800 dark:text-green-300">Clean Records</span>
+                      <span className="text-lg font-bold text-green-600 dark:text-green-400">
                         {complianceResult.analysisView.length - complianceResult.violations.length}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                      <span className="font-medium">Violations Found</span>
-                      <span className="text-lg font-bold text-red-600">{complianceResult.violations.length}</span>
+                      <span className="font-medium text-red-800 dark:text-red-300">Violations Found</span>
+                      <span className="text-lg font-bold text-red-600 dark:text-red-400">{complianceResult.violations.length}</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <span className="font-medium">Risk Score</span>
-                      <span className="text-lg font-bold text-blue-600">{complianceResult.riskScore}</span>
+                    <div className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-blue-900/20 rounded-lg">
+                      <span className="font-medium text-blue-800 dark:text-blue-300">Risk Score</span>
+                      <span className="text-lg font-bold text-blue-600 dark:text-blue-400">{complianceResult.riskScore}</span>
                     </div>
                   </div>
                 </div>
@@ -973,24 +982,24 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <span className="font-medium">Total Doctors</span>
-                    <span className="text-lg font-bold text-blue-600">{doctorRosterData.length}</span>
+                    <span className="font-medium text-blue-800 dark:text-blue-300">Total Doctors</span>
+                    <span className="text-lg font-bold text-blue-600 dark:text-blue-400">{doctorRosterData.length}</span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <span className="font-medium">Active Doctors</span>
-                    <span className="text-lg font-bold text-green-600">
+                    <span className="font-medium text-green-800 dark:text-green-300">Active Doctors</span>
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400">
                       {new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                    <span className="font-medium">Avg Revenue/Doctor</span>
-                    <span className="text-lg font-bold text-purple-600">
+                    <span className="font-medium text-purple-800 dark:text-purple-300">Avg Revenue/Doctor</span>
+                    <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
                       ₹{Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                    <span className="font-medium">Utilization Rate</span>
-                    <span className="text-lg font-bold text-orange-600">
+                    <span className="font-medium text-orange-800 dark:text-orange-300">Utilization Rate</span>
+                    <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
                       {Math.round((new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size / doctorRosterData.length) * 100)}%
                     </span>
                   </div>
@@ -1019,7 +1028,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Doctor_Name', 'Total_Amount', 5).map((doctor, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{doctor.key}</div>
                           <div className="text-sm text-gray-500">{doctor.count} patients</div>
@@ -1042,7 +1051,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Doctor_Name', 'Patient_ID', 5).map((doctor, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{doctor.key}</div>
                           <div className="text-sm text-gray-500">Unique patients</div>
@@ -1069,7 +1078,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-green-600">₹{proc.total.toLocaleString()}</div>
                       </div>
@@ -1085,7 +1094,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-blue-600">{proc.count}</div>
                       </div>
@@ -1101,7 +1110,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-purple-600">₹{(proc.total / proc.count).toFixed(0)}</div>
                       </div>
@@ -1123,7 +1132,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Payer_Type', 'Total_Amount', 5).map((payer, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{payer.key}</div>
                           <div className="text-sm text-gray-500">{payer.count} transactions</div>
@@ -1148,7 +1157,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       const total = Object.values(complianceResult.summaries.payerDistribution || {}).reduce((a, b) => a + b, 0);
                       const percentage = total > 0 ? ((count as number) / total * 100).toFixed(1) : 0;
                       return (
-                        <div key={payer} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div key={payer} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                           <div className="font-medium">{payer}</div>
                           <div className="text-right">
                             <div className="font-bold text-blue-600">{count}</div>
@@ -1184,7 +1193,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         else ageGroups['65+']++;
                       });
                       return Object.entries(ageGroups).map(([group, count]) => (
-                        <div key={group} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div key={group} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                           <div className="font-medium">{group} years</div>
                           <div className="font-bold text-blue-600">{count}</div>
                         </div>
@@ -1201,7 +1210,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Patient_Name', 'Total_Amount', 5).map((patient, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{patient.key}</div>
                           <div className="text-sm text-gray-500">Total visits</div>
@@ -1267,8 +1276,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     const count = complianceResult.violations.filter(v => v.severity === severity).length;
                     const percentage = complianceResult.violations.length > 0 ? 
                       ((count / complianceResult.violations.length) * 100).toFixed(1) : 0;
-                    const color = severity === 'HIGH' ? 'text-red-600' : 
-                                 severity === 'MEDIUM' ? 'text-yellow-600' : 'text-blue-600';
+                    const color = severity === 'HIGH' ? 'text-red-600 dark:text-red-400' : 
+                                 severity === 'MEDIUM' ? 'text-yellow-600 dark:text-yellow-400' : 'text-blue-600 dark:text-blue-400';
                     return (
                       <div key={severity} className="flex justify-between items-center">
                         <span className={`font-medium ${color}`}>{severity}</span>
@@ -1432,10 +1441,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                               }
                             }
                             
-                            return [];
-                          }
-                          
-                          return result;
+                        return [];
+                      }
+                      
+                      return result;
                         })()}
                         fill="#3b82f6"
                       />
@@ -1458,64 +1467,75 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <ChartContainer config={{}} className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={(() => {
+                      // Simple and reliable compliance calculation
                       const procedureStats = new Map();
                       
-                      // Process analysis view data
+                      // Count procedures and their violations directly from analysis view
                       if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
-                        complianceResult.analysisView.forEach(row => {
-                          const proc = row.Procedure_Code || 'Unknown';
+                        complianceResult.analysisView.forEach((row, index) => {
+                          const proc = row.Procedure_Code || 'OP100';
                           if (!procedureStats.has(proc)) {
-                            procedureStats.set(proc, { procedure: proc, total: 0, violations: 0 });
+                            procedureStats.set(proc, { 
+                              procedure: proc, 
+                              total: 0, 
+                              violations: 0
+                            });
                           }
                           procedureStats.get(proc).total++;
                         });
-                      }
-                      
-                      // Count violations per procedure
-                      if (complianceResult.violations && complianceResult.violations.length > 0) {
-                        complianceResult.violations.forEach(violation => {
-                          if (violation.dataset === 'op_billing' && violation.row > 0) {
-                            const row = complianceResult.analysisView[violation.row - 1];
-                            if (row) {
-                              const proc = row.Procedure_Code;
-                              if (proc && procedureStats.has(proc)) {
+                        
+                        // Count violations per procedure using a more reliable method
+                        if (complianceResult.violations && complianceResult.violations.length > 0) {
+                          // Create a set of row indices that have violations
+                          const violationRows = new Set();
+                          complianceResult.violations.forEach(violation => {
+                            if (violation.dataset === 'op_billing' && violation.row > 0) {
+                              violationRows.add(violation.row - 1); // Convert to 0-based index
+                            }
+                          });
+                          
+                          // Count violations per procedure
+                          complianceResult.analysisView.forEach((row, index) => {
+                            if (violationRows.has(index)) {
+                              const proc = row.Procedure_Code || 'OP100';
+                              if (procedureStats.has(proc)) {
                                 procedureStats.get(proc).violations++;
                               }
                             }
-                          }
-                        });
+                          });
+                        }
                       }
                       
+                      // Generate chart data with accurate compliance calculation
                       const result = Array.from(procedureStats.values())
-                        .map(stats => ({
-                          procedure: stats.procedure,
-                          compliance: Math.max(0, ((stats.total - stats.violations) / stats.total) * 100),
-                          total: stats.total,
-                          violations: stats.violations
-                        }))
-                        .sort((a, b) => b.compliance - a.compliance)
-                        .slice(0, 8);
-                      
-                      // If no data, provide sample data for demonstration
-                      if (result.length === 0) {
-                        // Try to create data from analysis view if available
-                        if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
-                          const procedureCounts = new Map();
-                          complianceResult.analysisView.forEach(row => {
-                            const proc = row.Procedure_Code || 'OP100';
-                            procedureCounts.set(proc, (procedureCounts.get(proc) || 0) + 1);
-                          });
+                        .map(stats => {
+                          const compliant = Math.max(0, stats.total - stats.violations);
+                          const compliance = stats.total > 0 ? Math.round((compliant / stats.total) * 100) : 0;
                           
-                          if (procedureCounts.size > 0) {
-                            return Array.from(procedureCounts.entries()).map(([procedure, total]) => ({
-                              procedure,
-                              compliance: Math.max(85, 100 - Math.floor(Math.random() * 15)),
-                              total,
-                              violations: Math.floor(Math.random() * 3)
-                            }));
-                          }
-                        }
-                        
+                          return {
+                            procedure: stats.procedure,
+                            compliance: compliance,
+                            total: stats.total,
+                            violations: stats.violations,
+                            compliant: compliant
+                          };
+                        })
+                        .filter(stats => stats.total > 0) // Only show procedures that exist in data
+                        .sort((a, b) => b.compliance - a.compliance);
+                      
+                      // Enhanced debug logging
+                      console.log('🔍 Procedure Compliance Chart Data:');
+                      console.log('  Analysis view records:', complianceResult.analysisView?.length || 0);
+                      console.log('  Total violations:', complianceResult.violations?.length || 0);
+                      console.log('  Procedure breakdown:');
+                      Array.from(procedureStats.entries()).forEach(([proc, stats]) => {
+                        console.log(`    ${proc}: ${stats.total} total, ${stats.violations} violations, ${stats.total - stats.violations} compliant`);
+                      });
+                      console.log('  Final chart data:', result);
+                      
+                      // If no data found, return empty array to show no data message
+                      if (result.length === 0) {
+                        console.log('⚠️ No procedure data found in analysis view');
                         return [];
                       }
                       
@@ -1526,7 +1546,16 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       <YAxis domain={[0, 100]} />
                       <ChartTooltip 
                         content={<ChartTooltipContent />}
-                        formatter={(value, name) => [`${Number(value).toFixed(1)}%`, 'Compliance Rate']}
+                        formatter={(value, name, props) => {
+                          if (name === 'compliance') {
+                            const data = props.payload;
+                            return [
+                              `${Number(value).toFixed(1)}%`,
+                              `Compliance Rate (${data.compliant}/${data.total} records)`
+                            ];
+                          }
+                          return [value, name];
+                        }}
                       />
                       <Bar dataKey="compliance" fill="#10b981" radius={[4, 4, 0, 0]} />
                     </BarChart>
@@ -1549,7 +1578,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
             <Card className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50/50 to-white dark:from-blue-900/20 dark:to-gray-800">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-lg">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
+                  <div className="w-10 h-10 bg-[#F0F8FF] dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
                     <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <span className="text-gray-900 dark:text-white">Compliance Report</span>

@@ -124,7 +124,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex">
       {/* Theme Toggle */}
       <div className="absolute top-6 right-6 z-10">
         <ModeToggle />

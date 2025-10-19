@@ -37,7 +37,7 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen bg-slate-50 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center p-4">
           <div className="max-w-md w-full">
             <Alert variant="destructive" className="mb-4">
               <AlertCircle className="h-4 w-4" />

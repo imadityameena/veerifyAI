@@ -205,7 +205,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* AI Success Banner */}
         {aiMappings && (
@@ -266,7 +266,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <Card key={index} className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800">
                 <CardContent className="p-6">
                   <div className="flex items-start">
-                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                    <div className="w-8 h-8 bg-[#F0F8FF] dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
                       <Activity className="w-4 h-4 text-blue-600" />
                     </div>
                     <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">

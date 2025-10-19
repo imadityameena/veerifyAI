@@ -11,7 +11,7 @@ export interface Violation {
 export interface ComplianceResult {
   violations: Violation[];
   riskScore: number;
-  analysisView: any[];
+  analysisView: unknown[]; // Fixed: avoid 'any', use 'unknown' for better type safety
   summaries: {
     averageAmount?: number;
     payerDistribution?: Record<string, number>;
@@ -38,7 +38,7 @@ const procToSpecialty: Record<string, string> = {
   OP300: 'Cardiology'
 };
 
-function toDate(value: any): Date | null {
+function toDate(value: unknown): Date | null {
   if (!value) return null;
   const d = new Date(String(value));
   return isNaN(d.getTime()) ? null : d;
@@ -48,7 +48,7 @@ function pushIf(cond: boolean, v: Violation, out: Violation[]) {
   if (cond) out.push(v);
 }
 
-export function runCompliance(opBilling: any[], doctorRoster: any[]): ComplianceResult {
+export function runCompliance(opBilling: Record<string, unknown>[], doctorRoster: Record<string, unknown>[]): ComplianceResult {
   const violations: Violation[] = [];
 
   // Header checks
@@ -61,7 +61,7 @@ export function runCompliance(opBilling: any[], doctorRoster: any[]): Compliance
   missingDoctor.forEach(c => violations.push({ dataset: 'doctor_roster', row: 0, rule: 'R4', severity: 'HIGH', reason: `Missing required column: ${c}` }));
 
   // Doctor map
-  const doctorById = new Map<string, any>();
+  const doctorById = new Map<string, Record<string, unknown>>();
   doctorRoster.forEach(dr => {
     if (dr && dr.Doctor_ID) doctorById.set(String(dr.Doctor_ID), dr);
   });
@@ -70,7 +70,7 @@ export function runCompliance(opBilling: any[], doctorRoster: any[]): Compliance
   const visitToPatient = new Map<string, string>();
 
   // Compute analysis view
-  const analysisView: any[] = [];
+  const analysisView: Record<string, unknown>[] = [];
   const payerDistribution: Record<string, number> = {};
   let amountSum = 0;
   let amountCount = 0;
@@ -187,10 +187,10 @@ export function runCompliance(opBilling: any[], doctorRoster: any[]): Compliance
   };
 }
 
-export function toCSV(rows: any[]): string {
+export function toCSV(rows: Record<string, unknown>[]): string {
   if (!rows || rows.length === 0) return '';
   const headers = Array.from(new Set(rows.flatMap(r => Object.keys(r))));
-  const escape = (v: any) => {
+  const escape = (v: unknown) => {
     if (v === null || v === undefined) return '';
     const s = String(v).replace(/"/g, '""');
     return s.includes(',') || s.includes('\n') ? `"${s}"` : s;
@@ -203,7 +203,7 @@ export function toCSV(rows: any[]): string {
 }
 
 export function violationsToCSV(violations: Violation[]): string {
-  return toCSV(violations);
+  return toCSV(violations as unknown as Record<string, unknown>[]);
 }
 
 

@@ -35,7 +35,7 @@ const Demo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 transition-colors duration-300">
       {/* Header with User Info and Logout */}
       <div className="absolute top-4 right-4 flex items-center space-x-3 z-10">
         {isLoggedIn && user && (
@@ -84,7 +84,7 @@ const Demo = () => {
 
             {/* Key Features Grid */}
             <div className="grid grid-cols-2 gap-6 mb-8">
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-4 mb-3">
                   <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
                     <Brain className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -98,7 +98,7 @@ const Demo = () => {
                 </p>
               </div>
 
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-4 mb-3">
                   <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
                     <BarChart3 className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -112,7 +112,7 @@ const Demo = () => {
                 </p>
               </div>
 
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-4 mb-3">
                   <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
                     <Zap className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -126,7 +126,7 @@ const Demo = () => {
                 </p>
               </div>
 
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-4 mb-3">
                   <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
                     <Shield className="w-5 h-5 text-orange-600 dark:text-orange-400" />
@@ -205,7 +205,7 @@ const Demo = () => {
 
               {/* Demo Feature Cards */}
               <div className="space-y-4">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
+                <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
                   <div className="flex items-center space-x-3 mb-3">
                     <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
                       <BarChart3 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -218,7 +218,7 @@ const Demo = () => {
                   </p>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
+                <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
                   <div className="flex items-center space-x-3 mb-3">
                     <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
                       <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
@@ -231,7 +231,7 @@ const Demo = () => {
                   </p>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
+                <div className="bg-[#F0F8FF] dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 min-h-[120px]">
                   <div className="flex items-center space-x-3 mb-3">
                     <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
                       <PieChart className="w-4 h-4 text-purple-600 dark:text-purple-400" />
