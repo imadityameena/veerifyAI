@@ -505,7 +505,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -1037,8 +1037,8 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardTitle className="text-sm text-gray-600 dark:text-gray-300">Consent Signed Rate</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-emerald-600">{((insights?.consentRate || 0) * 100).toFixed(1)}%</div>
-              <p className="text-xs text-gray-500">Percentage of visits with Consent_Flag = 'Y'</p>
+              <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{((insights?.consentRate || 0) * 100).toFixed(1)}%</div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Percentage of visits with Consent_Flag = 'Y'</p>
             </CardContent>
           </Card>
           <Card>
@@ -1130,7 +1130,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                 </tbody>
               </table>
               {data.length > 10 && (
-                <div className="px-6 py-3 bg-[#F0F8FF] dark:bg-gray-700 text-center text-sm text-gray-500 dark:text-gray-300">
+                <div className="px-6 py-3 bg-[#F0F8FF] dark:bg-gray-800 text-center text-sm text-gray-500 dark:text-gray-300">
                   Showing 10 of {data.length} records
                 </div>
               )}

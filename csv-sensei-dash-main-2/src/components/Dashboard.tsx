@@ -205,7 +205,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* AI Success Banner */}
         {aiMappings && (

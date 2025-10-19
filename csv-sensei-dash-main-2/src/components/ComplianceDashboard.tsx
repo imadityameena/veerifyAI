@@ -369,10 +369,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'HIGH': return 'bg-red-100 text-red-800 border-red-200';
-      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'LOW': return 'bg-[#F0F8FF] text-blue-800 border-blue-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'HIGH': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800';
+      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-300 dark:border-yellow-800';
+      case 'LOW': return 'bg-[#F0F8FF] text-blue-800 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700';
     }
   };
 
@@ -386,10 +386,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
   };
 
   const getRiskLevel = (score: number) => {
-    if (score >= 30) return { level: 'CRITICAL', color: 'text-red-600', bg: 'bg-red-50' };
-    if (score >= 20) return { level: 'HIGH', color: 'text-orange-600', bg: 'bg-orange-50' };
-    if (score >= 10) return { level: 'MEDIUM', color: 'text-yellow-600', bg: 'bg-yellow-50' };
-    return { level: 'LOW', color: 'text-green-600', bg: 'bg-green-50' };
+    if (score >= 30) return { level: 'CRITICAL', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20' };
+    if (score >= 20) return { level: 'HIGH', color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-50 dark:bg-orange-900/20' };
+    if (score >= 10) return { level: 'MEDIUM', color: 'text-yellow-600 dark:text-yellow-400', bg: 'bg-yellow-50 dark:bg-yellow-900/20' };
+    return { level: 'LOW', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/20' };
   };
 
 
@@ -531,7 +531,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Running compliance analysis...</p>
@@ -542,7 +542,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (!complianceResult) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-300">Compliance analysis failed</p>
@@ -555,7 +555,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
   const riskLevel = getRiskLevel(complianceResult.riskScore);
 
   return (
-    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -620,10 +620,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
           
           return (
             <div className="max-w-7xl mx-auto px-6 py-4">
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                 <div className="flex items-center space-x-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
-                  <div className="text-yellow-800">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  <div className="text-yellow-800 dark:text-yellow-300">
                     <strong>Data Quality Notice:</strong> Some data appears to be using fallback values. 
                     <div className="mt-2">
                       <div className="text-sm">
@@ -656,10 +656,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
         if (hasRealDoctorNames && hasRealPatientNames) {
           return (
             <div className="max-w-7xl mx-auto px-6 py-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                 <div className="flex items-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <div className="text-green-800">
+                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="text-green-800 dark:text-green-300">
                     <strong>Data Quality: Excellent!</strong> All data is being parsed from your CSV files successfully.
                   </div>
                 </div>
@@ -856,9 +856,9 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <CardContent>
                 <div className="space-y-4">
                   {complianceResult.summaries.violationRanking.slice(0, 5).map((violation, index) => {
-                    const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800' : 
-                                        violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' : 
-                                        'bg-[#F0F8FF] text-blue-800';
+                    const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' : 
+                                        violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' : 
+                                        'bg-[#F0F8FF] text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
                     const riskPercentage = (violation.count / complianceResult.violations.length) * 100;
                     return (
                       <div key={index} className="space-y-2">
@@ -904,18 +904,18 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   
                   <div className="space-y-3">
                     <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                      <span className="font-medium">Clean Records</span>
-                      <span className="text-lg font-bold text-green-600">
+                      <span className="font-medium text-green-800 dark:text-green-300">Clean Records</span>
+                      <span className="text-lg font-bold text-green-600 dark:text-green-400">
                         {complianceResult.analysisView.length - complianceResult.violations.length}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                      <span className="font-medium">Violations Found</span>
-                      <span className="text-lg font-bold text-red-600">{complianceResult.violations.length}</span>
+                      <span className="font-medium text-red-800 dark:text-red-300">Violations Found</span>
+                      <span className="text-lg font-bold text-red-600 dark:text-red-400">{complianceResult.violations.length}</span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-blue-900/20 rounded-lg">
-                      <span className="font-medium">Risk Score</span>
-                      <span className="text-lg font-bold text-blue-600">{complianceResult.riskScore}</span>
+                      <span className="font-medium text-blue-800 dark:text-blue-300">Risk Score</span>
+                      <span className="text-lg font-bold text-blue-600 dark:text-blue-400">{complianceResult.riskScore}</span>
                     </div>
                   </div>
                 </div>
@@ -973,24 +973,24 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                    <span className="font-medium">Total Doctors</span>
-                    <span className="text-lg font-bold text-blue-600">{doctorRosterData.length}</span>
+                    <span className="font-medium text-blue-800 dark:text-blue-300">Total Doctors</span>
+                    <span className="text-lg font-bold text-blue-600 dark:text-blue-400">{doctorRosterData.length}</span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <span className="font-medium">Active Doctors</span>
-                    <span className="text-lg font-bold text-green-600">
+                    <span className="font-medium text-green-800 dark:text-green-300">Active Doctors</span>
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400">
                       {new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                    <span className="font-medium">Avg Revenue/Doctor</span>
-                    <span className="text-lg font-bold text-purple-600">
+                    <span className="font-medium text-purple-800 dark:text-purple-300">Avg Revenue/Doctor</span>
+                    <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
                       ₹{Math.round((complianceResult.summaries.averageAmount * complianceResult.analysisView.length) / doctorRosterData.length).toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                    <span className="font-medium">Utilization Rate</span>
-                    <span className="text-lg font-bold text-orange-600">
+                    <span className="font-medium text-orange-800 dark:text-orange-300">Utilization Rate</span>
+                    <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
                       {Math.round((new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size / doctorRosterData.length) * 100)}%
                     </span>
                   </div>
@@ -1267,8 +1267,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     const count = complianceResult.violations.filter(v => v.severity === severity).length;
                     const percentage = complianceResult.violations.length > 0 ? 
                       ((count / complianceResult.violations.length) * 100).toFixed(1) : 0;
-                    const color = severity === 'HIGH' ? 'text-red-600' : 
-                                 severity === 'MEDIUM' ? 'text-yellow-600' : 'text-blue-600';
+                    const color = severity === 'HIGH' ? 'text-red-600 dark:text-red-400' : 
+                                 severity === 'MEDIUM' ? 'text-yellow-600 dark:text-yellow-400' : 'text-blue-600 dark:text-blue-400';
                     return (
                       <div key={severity} className="flex justify-between items-center">
                         <span className={`font-medium ${color}`}>{severity}</span>
