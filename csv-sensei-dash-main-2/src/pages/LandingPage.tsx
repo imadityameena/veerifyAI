@@ -221,7 +221,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen" style={{backgroundColor: '#F0F8FF'}}>
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6">
@@ -323,7 +323,8 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section 
         ref={heroRef}
-        className="relative min-h-screen bg-slate-50 dark:bg-gray-900 overflow-hidden"
+        className="relative min-h-screen overflow-hidden"
+        style={{backgroundColor: '#F0F8FF'}}
       >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -495,18 +496,13 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 ">
-          <div className="w-6 h-10 border-2 border-gray-300 dark:border-gray-600 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 "></div>
-          </div>
-        </div>
       </section>
 
        {/* The Challenge Section */}
        <section 
          ref={(el) => (sectionRefs.current[0] = el)}
-         className="py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden transition-colors duration-300"
+         className="py-20 relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -568,7 +564,8 @@ const LandingPage = () => {
        <section 
          id="solution"
          ref={(el) => (sectionRefs.current[1] = el)}
-         className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
+         className="py-20 relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
          <div className="max-w-7xl mx-auto px-6">
            {/* Header */}
@@ -669,7 +666,8 @@ const LandingPage = () => {
        <section 
          id="benefits"
          ref={(el) => (sectionRefs.current[2] = el)}
-         className="py-20 bg-blue-50 dark:bg-gray-800 relative overflow-hidden transition-colors duration-300"
+         className="py-20 relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
          <div className="max-w-7xl mx-auto px-6">
            {/* Mission Section */}
@@ -761,7 +759,8 @@ const LandingPage = () => {
        <section 
          id="audience"
          ref={(el) => (sectionRefs.current[3] = el)}
-         className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden transition-colors duration-300"
+         className="py-20 relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16 opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up">
@@ -829,7 +828,8 @@ const LandingPage = () => {
        <section 
          id="features"
          ref={(el) => (sectionRefs.current[4] = el)}
-         className="py-20 bg-white dark:bg-gray-900 text-gray-900 dark:text-white relative overflow-hidden transition-colors duration-300"
+         className="py-20 text-gray-900 dark:text-white relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
          {/* Animated Background Elements */}
          <div className="absolute inset-0 overflow-hidden">
@@ -960,7 +960,8 @@ const LandingPage = () => {
        <section 
          id="contact"
          ref={(el) => (sectionRefs.current[5] = el)}
-         className="py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden transition-colors duration-300"
+         className="py-20 relative overflow-hidden transition-colors duration-300"
+         style={{backgroundColor: '#F0F8FF'}}
        >
          <div className="max-w-7xl mx-auto px-6">
            {/* CTA Banner */}
