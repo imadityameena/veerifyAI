@@ -36,7 +36,7 @@ const Demo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300">
       {/* Header with User Info and Logout */}
       <div className="absolute top-4 right-4 flex items-center space-x-3 z-10">
         <ModeToggle />
