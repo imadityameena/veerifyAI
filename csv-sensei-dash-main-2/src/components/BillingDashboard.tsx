@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Receipt, DollarSign, Users, Calendar, TrendingUp, BarChart3, PieChart } from 'lucide-react';
+import { ArrowLeft, Receipt, DollarSign, Users, Calendar, TrendingUp, BarChart3, PieChart, Download, FileText, BarChart3 as BarChart3Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -298,6 +298,210 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
       label: "Count",
       color: "#10b981",
     },
+  };
+
+  // Export functions
+  const exportBillingData = () => {
+    if (!data || data.length === 0) return;
+    
+    const headers = Object.keys(data[0] || {});
+    const csvContent = [
+      headers.join(','),
+      ...data.map(row => 
+        headers.map(h => `"${row[h] || ''}"`).join(',')
+      )
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'billing_data.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportRevenueAnalysis = () => {
+    if (!data || data.length === 0) return;
+    
+    // Revenue analysis by department and specialty
+    const revenueAnalysis = data.reduce((acc, row) => {
+      const doctorId = getFieldValue(row, ['Doctor_ID', 'doctor_id', 'DoctorId', 'ID', 'id']);
+      const doctorName = getFieldValue(row, ['Doctor_Name', 'doctor_name', 'DoctorName', 'Name', 'name'], String(doctorId || 'Unknown'));
+      const specialty = doctorRosterData ? 
+        (doctorRosterData.find(dr => getFieldValue(dr, ['Doctor_ID', 'doctor_id', 'DoctorId', 'ID', 'id']) === doctorId) ? 
+          getFieldValue(doctorRosterData.find(dr => getFieldValue(dr, ['Doctor_ID', 'doctor_id', 'DoctorId', 'ID', 'id']) === doctorId), ['Specialty', 'specialty', 'Specialization', 'specialization', 'Speciality', 'speciality']) : 'Unknown') : 
+        'Unknown';
+      const amount = parseAmount(getFieldValue(row, ['Amount', 'Total_Amount', 'TotalAmount', 'Amount_Billed', 'Bill_Amount', 'Gross_Amount']));
+      const payerType = getFieldValue(row, ['Payer_Type', 'Payer', 'PayerType'], 'Unknown');
+      const procedureCode = getFieldValue(row, ['Procedure_Code', 'Service_Code', 'Procedure', 'Proc_Code'], 'Unknown');
+      const visitDate = getFieldValue(row, ['Bill_Date', 'Visit_Date', 'Date', 'Transaction_Date']);
+      
+      const key = `${doctorName} (${doctorId})`;
+      if (!acc[key]) {
+        acc[key] = { 
+          doctorName, 
+          doctorId, 
+          specialty, 
+          totalRevenue: 0, 
+          patientCount: new Set(), 
+          procedures: new Set(),
+          payerTypes: new Set(),
+          visits: 0
+        };
+      }
+      acc[key].totalRevenue += amount;
+      acc[key].visits += 1;
+      if (getFieldValue(row, ['Patient_ID', 'patient_id', 'PatientId'])) {
+        acc[key].patientCount.add(getFieldValue(row, ['Patient_ID', 'patient_id', 'PatientId']));
+      }
+      acc[key].procedures.add(procedureCode);
+      acc[key].payerTypes.add(payerType);
+      
+      return acc;
+    }, {});
+
+    const csvContent = [
+      'Doctor Name,Doctor ID,Specialty,Total Revenue,Unique Patients,Total Visits,Avg Revenue per Visit,Procedures,Payer Types',
+      ...Object.values(revenueAnalysis).map((analysis: any) => {
+        const avgRevenue = analysis.visits > 0 ? (analysis.totalRevenue / analysis.visits).toFixed(2) : 0;
+        const proceduresStr = Array.from(analysis.procedures).join('; ');
+        const payerTypesStr = Array.from(analysis.payerTypes).join('; ');
+        return `"${analysis.doctorName}","${analysis.doctorId}","${analysis.specialty}",${analysis.totalRevenue},${analysis.patientCount.size},${analysis.visits},${avgRevenue},"${proceduresStr}","${payerTypesStr}"`;
+      })
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'revenue_analysis.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportPaymentStatus = () => {
+    if (!data || data.length === 0) return;
+    
+    // Payment status analysis
+    const paymentAnalysis = data.reduce((acc, row) => {
+      const status = getFieldValue(row, ['Payment_Status', 'PaymentStatus', 'Status', 'Payment_Status_Desc'], 'Unknown') || 'Unknown';
+      const amount = parseAmount(getFieldValue(row, ['Amount', 'Total_Amount', 'TotalAmount', 'Amount_Billed', 'Bill_Amount', 'Gross_Amount']));
+      const payerType = getFieldValue(row, ['Payer_Type', 'Payer', 'PayerType'], 'Unknown');
+      const visitDate = getFieldValue(row, ['Bill_Date', 'Visit_Date', 'Date', 'Transaction_Date']);
+      const patientName = getFieldValue(row, ['Patient_Name', 'patient_name', 'PatientName', 'Name', 'name'], 'Unknown');
+      const doctorName = getFieldValue(row, ['Doctor_Name', 'doctor_name', 'DoctorName', 'Name', 'name'], 'Unknown');
+      
+      if (!acc[status]) {
+        acc[status] = { 
+          status, 
+          count: 0, 
+          totalAmount: 0, 
+          payerDistribution: {},
+          details: []
+        };
+      }
+      acc[status].count += 1;
+      acc[status].totalAmount += amount;
+      acc[status].payerDistribution[payerType] = (acc[status].payerDistribution[payerType] || 0) + 1;
+      acc[status].details.push({
+        patientName,
+        doctorName,
+        amount,
+        payerType,
+        visitDate
+      });
+      
+      return acc;
+    }, {});
+
+    const csvContent = [
+      'Payment Status,Count,Total Amount,Average Amount',
+      ...Object.values(paymentAnalysis).map((analysis: any) => {
+        const avgAmount = analysis.count > 0 ? (analysis.totalAmount / analysis.count).toFixed(2) : 0;
+        return `${analysis.status},${analysis.count},${analysis.totalAmount},${avgAmount}`;
+      }),
+      '',
+      'Payment Status Details',
+      'Status,Patient Name,Doctor Name,Amount,Payer Type,Visit Date',
+      ...Object.values(paymentAnalysis).flatMap((analysis: any) => 
+        analysis.details.map((detail: any) => 
+          `"${analysis.status}","${detail.patientName}","${detail.doctorName}",${detail.amount},"${detail.payerType}","${detail.visitDate}"`
+        )
+      )
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'payment_status_analysis.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportBillingReport = () => {
+    if (!data || data.length === 0) return;
+    
+    const reportData = {
+      summary: {
+        totalBills: insights?.totalBills || 0,
+        totalRevenue: insights?.totalAmount || 0,
+        averageAmount: insights?.averageAmount || 0,
+        paidBills: insights?.paidBills || 0,
+        pendingBills: insights?.pendingBills || 0,
+        outstandingAmount: insights?.outstandingAmount || 0,
+        consentRate: insights?.consentRate || 0
+      },
+      departmentBreakdown: insights?.departmentRevenue || {},
+      payerDistribution: insights?.payerDistribution || {},
+      serviceRevenue: insights?.serviceRevenue || {},
+      topProcedures: Object.entries(insights?.serviceRevenue || {})
+        .sort((a, b) => (b[1] as any).revenue - (a[1] as any).revenue)
+        .slice(0, 10),
+      consentAnomalies: insights?.consentAnomalies || []
+    };
+    
+    const csvContent = [
+      'Metric,Value',
+      `Total Bills,${reportData.summary.totalBills}`,
+      `Total Revenue,$${reportData.summary.totalRevenue.toLocaleString()}`,
+      `Average Amount,$${reportData.summary.averageAmount.toFixed(2)}`,
+      `Paid Bills,${reportData.summary.paidBills}`,
+      `Pending Bills,${reportData.summary.pendingBills}`,
+      `Outstanding Amount,$${reportData.summary.outstandingAmount.toLocaleString()}`,
+      `Consent Rate,${(reportData.summary.consentRate * 100).toFixed(1)}%`,
+      '',
+      'Department Revenue',
+      'Department,Revenue,Count',
+      ...Object.entries(reportData.departmentBreakdown).map(([dept, data]: [string, any]) => 
+        `"${dept}",${data.revenue},${data.count}`
+      ),
+      '',
+      'Payer Distribution',
+      'Payer Type,Count',
+      ...Object.entries(reportData.payerDistribution).map(([payer, count]) => `"${payer}",${count}`),
+      '',
+      'Top Procedures by Revenue',
+      'Procedure Code,Revenue,Count',
+      ...reportData.topProcedures.map(([code, data]: [string, any]) => 
+        `"${code}",${data.revenue},${data.count}`
+      ),
+      '',
+      'Consent Anomalies',
+      'Doctor Name,Consent Rate',
+      ...reportData.consentAnomalies.map((anomaly: any) => 
+        `"${anomaly.name}",${(anomaly.rate * 100).toFixed(1)}%`
+      )
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'billing_report.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   return (
@@ -933,6 +1137,112 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
             </div>
           </CardContent>
         </Card>
+
+        {/* Export Options */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
+            <Download className="w-6 h-6 mr-3 text-blue-500" />
+            Export Reports & Data
+          </h2>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            {/* Billing Data Card */}
+            <Card className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50/50 to-white dark:from-blue-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
+                    <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Billing Data</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download complete billing transaction data
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportBillingData} 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Revenue Analysis Card */}
+            <Card className="group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-green-500 bg-gradient-to-br from-green-50/50 to-white dark:from-green-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-green-200 dark:group-hover:bg-green-800/50 transition-colors duration-300">
+                    <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Revenue Analysis</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download detailed revenue analysis by doctor and specialty
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportRevenueAnalysis} 
+                  className="w-full bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-green-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Payment Status Card */}
+            <Card className="group hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-orange-500 bg-gradient-to-br from-orange-50/50 to-white dark:from-orange-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-200 dark:group-hover:bg-orange-800/50 transition-colors duration-300">
+                    <Receipt className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Payment Status</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download payment status analysis and outstanding amounts
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportPaymentStatus} 
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white shadow-lg hover:shadow-orange-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Billing Report Card */}
+            <Card className="group hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-500 bg-gradient-to-br from-purple-50/50 to-white dark:from-purple-900/20 dark:to-gray-800">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center text-lg">
+                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors duration-300">
+                    <BarChart3Icon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white">Billing Report</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Download comprehensive billing summary and analytics
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  onClick={exportBillingReport} 
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download 
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
