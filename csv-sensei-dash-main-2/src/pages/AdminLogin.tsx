@@ -125,7 +125,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex" style={{backgroundColor: '#F0F8FF'}}>
+    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex">
       {/* Theme Toggle */}
       <div className="absolute top-6 right-6 z-10">
         <ModeToggle />

@@ -13,7 +13,7 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#F0F8FF'}}>
+    <div className="min-h-screen flex items-center justify-center bg-[#F0F8FF] dark:bg-gray-900">
       {/* Theme Toggle */}
       <div className="absolute top-6 right-6">
         <ModeToggle />

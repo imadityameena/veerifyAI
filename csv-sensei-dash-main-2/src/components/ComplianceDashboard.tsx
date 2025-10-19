@@ -371,7 +371,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
     switch (severity) {
       case 'HIGH': return 'bg-red-100 text-red-800 border-red-200';
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'LOW': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'LOW': return 'bg-[#F0F8FF] text-blue-800 border-blue-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
@@ -531,7 +531,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#F0F8FF'}}>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Running compliance analysis...</p>
@@ -542,7 +542,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
   if (!complianceResult) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#F0F8FF'}}>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <XCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-300">Compliance analysis failed</p>
@@ -555,7 +555,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
   const riskLevel = getRiskLevel(complianceResult.riskScore);
 
   return (
-    <div className="min-h-screen" style={{backgroundColor: '#F0F8FF'}}>
+    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -858,7 +858,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   {complianceResult.summaries.violationRanking.slice(0, 5).map((violation, index) => {
                     const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800' : 
                                         violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' : 
-                                        'bg-blue-100 text-blue-800';
+                                        'bg-[#F0F8FF] text-blue-800';
                     const riskPercentage = (violation.count / complianceResult.violations.length) * 100;
                     return (
                       <div key={index} className="space-y-2">
@@ -913,7 +913,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       <span className="font-medium">Violations Found</span>
                       <span className="text-lg font-bold text-red-600">{complianceResult.violations.length}</span>
                     </div>
-                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-blue-900/20 rounded-lg">
                       <span className="font-medium">Risk Score</span>
                       <span className="text-lg font-bold text-blue-600">{complianceResult.riskScore}</span>
                     </div>
@@ -1019,7 +1019,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Doctor_Name', 'Total_Amount', 5).map((doctor, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{doctor.key}</div>
                           <div className="text-sm text-gray-500">{doctor.count} patients</div>
@@ -1042,7 +1042,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Doctor_Name', 'Patient_ID', 5).map((doctor, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{doctor.key}</div>
                           <div className="text-sm text-gray-500">Unique patients</div>
@@ -1069,7 +1069,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-green-600">₹{proc.total.toLocaleString()}</div>
                       </div>
@@ -1085,7 +1085,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-blue-600">{proc.count}</div>
                       </div>
@@ -1101,7 +1101,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Procedure_Code', 'Total_Amount', 3).map((proc, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div className="font-medium">{proc.key}</div>
                         <div className="font-bold text-purple-600">₹{(proc.total / proc.count).toFixed(0)}</div>
                       </div>
@@ -1123,7 +1123,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Payer_Type', 'Total_Amount', 5).map((payer, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{payer.key}</div>
                           <div className="text-sm text-gray-500">{payer.count} transactions</div>
@@ -1148,7 +1148,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       const total = Object.values(complianceResult.summaries.payerDistribution || {}).reduce((a, b) => a + b, 0);
                       const percentage = total > 0 ? ((count as number) / total * 100).toFixed(1) : 0;
                       return (
-                        <div key={payer} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div key={payer} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                           <div className="font-medium">{payer}</div>
                           <div className="text-right">
                             <div className="font-bold text-blue-600">{count}</div>
@@ -1184,7 +1184,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                         else ageGroups['65+']++;
                       });
                       return Object.entries(ageGroups).map(([group, count]) => (
-                        <div key={group} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div key={group} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                           <div className="font-medium">{group} years</div>
                           <div className="font-bold text-blue-600">{count}</div>
                         </div>
@@ -1201,7 +1201,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <CardContent>
                   <div className="space-y-3">
                     {topNBySum(complianceResult.analysisView, 'Patient_Name', 'Total_Amount', 5).map((patient, index) => (
-                      <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div key={index} className="flex justify-between items-center p-3 bg-[#F0F8FF] dark:bg-gray-800 rounded-lg">
                         <div>
                           <div className="font-medium">{patient.key}</div>
                           <div className="text-sm text-gray-500">Total visits</div>
@@ -1549,7 +1549,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
             <Card className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50/50 to-white dark:from-blue-900/20 dark:to-gray-800">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-lg">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
+                  <div className="w-10 h-10 bg-[#F0F8FF] dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
                     <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <span className="text-gray-900 dark:text-white">Compliance Report</span>

@@ -353,7 +353,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300" style={{backgroundColor: '#F0F8FF'}}>
+    <div className="min-h-screen bg-[#F0F8FF] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         {currentStep < 3 && (
