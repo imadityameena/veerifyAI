@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm, ValidationError } from '@formspree/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,27 +39,8 @@ const LandingPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   
-  const [formData, setFormData] = useState({
-    name: '',
-    organization: '',
-    email: '',
-    message: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // After form submission, redirect to signup
-    navigate('/signup');
-  };
+  // Formspree form state
+  const [state, handleSubmit] = useForm("mblzball"); // Replace with your actual Formspree form ID
 
   const handleSignIn = () => {
     navigate('/login');
@@ -997,79 +979,116 @@ const LandingPage = () => {
              <div className="max-w-4xl mx-auto">
                <Card className="bg-white dark:bg-gray-800 shadow-2xl border border-gray-200 dark:border-gray-600 opacity-0 translate-y-10 transition-all duration-1000 ease-out animate-fade-in-up animate-delay-500 ">
                  <CardContent className="p-10">
-                   <form onSubmit={handleSubmit} className="space-y-6">
-                     <div className="grid md:grid-cols-2 gap-6">
-                       <div className="opacity-0 translate-x-[-20px] transition-all duration-700 ease-out animate-fade-in-up animate-delay-700">
-                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                           Name *
-                         </label>
-                         <Input
-                           id="name"
-                           name="name"
-                           type="text"
-                           required
-                           placeholder="Enter your full name"
-                           value={formData.name}
-                           onChange={handleInputChange}
-                           className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
-                         />
+                   {state.succeeded ? (
+                     <div className="text-center py-8">
+                       <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                         <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                        </div>
-                       <div className="opacity-0 translate-x-[20px] transition-all duration-700 ease-out animate-fade-in-up animate-delay-800">
-                         <label htmlFor="organization" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                           Organization *
-                         </label>
-                         <Input
-                           id="organization"
-                           name="organization"
-                           type="text"
-                           required
-                           placeholder="Your healthcare organization"
-                           value={formData.organization}
-                           onChange={handleInputChange}
-                           className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
-                         />
-                       </div>
-                     </div>
-                     <div className="opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-900">
-                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                         Email *
-                       </label>
-                       <Input
-                         id="email"
-                         name="email"
-                         type="email"
-                         required
-                         placeholder="your.email@organization.com"
-                         value={formData.email}
-                         onChange={handleInputChange}
-                         className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
-                       />
-                     </div>
-                     <div className="opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-1000">
-                       <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                         Message
-                       </label>
-                       <Textarea
-                         id="message"
-                         name="message"
-                         rows={4}
-                         value={formData.message}
-                         onChange={handleInputChange}
-                         placeholder="Tell us about your compliance challenges and how we can help..."
-                         className="w-full bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm resize-none"
-                       />
-                     </div>
-                     <div className="text-center opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-1100">
+                       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                         Thank You!
+                       </h3>
+                       <p className="text-gray-600 dark:text-gray-300 mb-6">
+                         Your message has been sent successfully. We'll get back to you soon!
+                       </p>
                        <Button 
-                         type="submit" 
-                         size="lg" 
-                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl transform hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 group"
+                         onClick={() => navigate('/signup')}
+                         className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl"
                        >
-                         Send Message
-                         <Mail className="ml-2 w-5 h-5 group-hover:" />
+                         Get Started
                        </Button>
                      </div>
-                   </form>
+                   ) : (
+                     <form onSubmit={handleSubmit} className="space-y-6">
+                       <div className="grid md:grid-cols-2 gap-6">
+                         <div className="opacity-0 translate-x-[-20px] transition-all duration-700 ease-out animate-fade-in-up animate-delay-700">
+                           <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                             Name *
+                           </label>
+                           <Input
+                             id="name"
+                             name="name"
+                             type="text"
+                             required
+                             placeholder="Enter your full name"
+                             className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
+                           />
+                           <ValidationError 
+                             prefix="Name" 
+                             field="name"
+                             errors={state.errors}
+                             className="text-red-500 text-sm mt-1"
+                           />
+                         </div>
+                         <div className="opacity-0 translate-x-[20px] transition-all duration-700 ease-out animate-fade-in-up animate-delay-800">
+                           <label htmlFor="organization" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                             Organization *
+                           </label>
+                           <Input
+                             id="organization"
+                             name="organization"
+                             type="text"
+                             required
+                             placeholder="Your healthcare organization"
+                             className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
+                           />
+                           <ValidationError 
+                             prefix="Organization" 
+                             field="organization"
+                             errors={state.errors}
+                             className="text-red-500 text-sm mt-1"
+                           />
+                         </div>
+                       </div>
+                       <div className="opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-900">
+                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                           Email *
+                         </label>
+                         <Input
+                           id="email"
+                           name="email"
+                           type="email"
+                           required
+                           placeholder="your.email@organization.com"
+                           className="w-full h-12 bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm"
+                         />
+                         <ValidationError 
+                           prefix="Email" 
+                           field="email"
+                           errors={state.errors}
+                           className="text-red-500 text-sm mt-1"
+                         />
+                       </div>
+                       <div className="opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-1000">
+                         <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                           Message
+                         </label>
+                         <Textarea
+                           id="message"
+                           name="message"
+                           rows={4}
+                           placeholder="Tell us about your compliance challenges and how we can help..."
+                           className="w-full bg-white dark:bg-white border-2 border-gray-200 dark:border-gray-300 text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-200 rounded-xl transition-all duration-300 shadow-sm resize-none"
+                         />
+                         <ValidationError 
+                           prefix="Message" 
+                           field="message"
+                           errors={state.errors}
+                           className="text-red-500 text-sm mt-1"
+                         />
+                       </div>
+                       <div className="text-center opacity-0 translate-y-10 transition-all duration-700 ease-out animate-fade-in-up animate-delay-1100">
+                         <Button 
+                           type="submit" 
+                           size="lg" 
+                           disabled={state.submitting}
+                           className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl transform hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                         >
+                           {state.submitting ? 'Sending...' : 'Send Message'}
+                           <Mail className="ml-2 w-5 h-5 group-hover:" />
+                         </Button>
+                       </div>
+                     </form>
+                   )}
                  </CardContent>
                </Card>
              </div>

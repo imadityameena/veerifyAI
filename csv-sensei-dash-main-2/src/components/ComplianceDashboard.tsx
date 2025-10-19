@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie, LineChart, Line, AreaChart, Area, ScatterChart, Scatter, ZAxis } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie, LineChart, Line, AreaChart, Area, ScatterChart, Scatter, ZAxis, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { runCompliance, Violation, ComplianceResult } from '@/utils/compliance';
 import { topNBySum, groupBy, average, detectAnomalies } from '@/utils/analytics';
 import { InlineChatbot } from './InlineChatbot';
@@ -495,27 +495,27 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
     
     const doctorStats = new Map();
     complianceResult.analysisView.forEach(row => {
-      const doctorId = row.Doctor_ID;
+      const doctorId = (row as any).Doctor_ID;
       if (!doctorStats.has(doctorId)) {
         doctorStats.set(doctorId, { 
           doctorId, 
-          doctorName: row.Doctor_Name, 
+          doctorName: (row as any).Doctor_Name, 
           revenue: 0, 
           patients: new Set(), 
           violations: 0 
         });
       }
       const stats = doctorStats.get(doctorId);
-      stats.revenue += parseFloat(String(row.Total_Amount)) || 0;
-      stats.patients.add(row.Patient_ID);
+      stats.revenue += parseFloat(String((row as any).Total_Amount)) || 0;
+      stats.patients.add((row as any).Patient_ID);
     });
     
     // Count violations per doctor
     complianceResult.violations.forEach(violation => {
       if (violation.dataset === 'op_billing' && violation.row > 0) {
         const row = complianceResult.analysisView[violation.row - 1];
-        if (row && doctorStats.has(row.Doctor_ID)) {
-          doctorStats.get(row.Doctor_ID).violations++;
+        if (row && doctorStats.has((row as any).Doctor_ID)) {
+          doctorStats.get((row as any).Doctor_ID).violations++;
         }
       }
     });
@@ -988,7 +988,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                     <span className="font-medium text-green-800 dark:text-green-300">Active Doctors</span>
                     <span className="text-lg font-bold text-green-600 dark:text-green-400">
-                      {new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size}
+                      {new Set(complianceResult.analysisView.map(r => (r as any).Doctor_ID)).size}
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
@@ -1000,7 +1000,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                   <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
                     <span className="font-medium text-orange-800 dark:text-orange-300">Utilization Rate</span>
                     <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
-                      {Math.round((new Set(complianceResult.analysisView.map(r => r.Doctor_ID)).size / doctorRosterData.length) * 100)}%
+                      {Math.round((new Set(complianceResult.analysisView.map(r => (r as any).Doctor_ID)).size / doctorRosterData.length) * 100)}%
                     </span>
                   </div>
                 </div>
@@ -1185,7 +1185,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                     {(() => {
                       const ageGroups = { '0-18': 0, '19-35': 0, '36-50': 0, '51-65': 0, '65+': 0 };
                       complianceResult.analysisView.forEach(row => {
-                        const age = parseInt(row.Age) || 0;
+                        const age = parseInt((row as any).Age) || 0;
                         if (age <= 18) ageGroups['0-18']++;
                         else if (age <= 35) ageGroups['19-35']++;
                         else if (age <= 50) ageGroups['36-50']++;
@@ -1374,10 +1374,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                           // Process analysis view data
                           if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
                             complianceResult.analysisView.forEach(row => {
-                              const doctorId = row.Doctor_ID;
-                              const doctorName = row.Doctor_Name || 'Unknown';
-                              const amount = parseFloat(String(row.Total_Amount || 0));
-                              const patientId = row.Patient_ID;
+                              const doctorId = (row as any).Doctor_ID;
+                              const doctorName = (row as any).Doctor_Name || 'Unknown';
+                              const amount = parseFloat(String((row as any).Total_Amount || 0));
+                              const patientId = (row as any).Patient_ID;
                               
                               if (doctorId) {
                                 if (!doctorStats.has(doctorId)) {
@@ -1401,7 +1401,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                               if (violation.dataset === 'op_billing' && violation.row > 0) {
                                 const row = complianceResult.analysisView[violation.row - 1];
                                 if (row) {
-                                  const doctorId = row.Doctor_ID;
+                                  const doctorId = (row as any).Doctor_ID;
                                   if (doctorId && doctorStats.has(doctorId)) {
                                     doctorStats.get(doctorId).violations++;
                                   }
@@ -1423,8 +1423,8 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                             if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
                               const uniqueDoctors = new Set();
                               complianceResult.analysisView.forEach(row => {
-                                if (row.Doctor_ID && row.Doctor_Name) {
-                                  uniqueDoctors.add(`${row.Doctor_ID}|${row.Doctor_Name}`);
+                                if ((row as any).Doctor_ID && (row as any).Doctor_Name) {
+                                  uniqueDoctors.add(`${(row as any).Doctor_ID}|${(row as any).Doctor_Name}`);
                                 }
                               });
                               
@@ -1454,113 +1454,163 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Procedure Compliance Analysis */}
+            {/* Multi-Dimensional Compliance Radar */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Activity className="w-5 h-5 mr-2 text-green-600" />
-                  Procedure Compliance Analysis
+                  Multi-Dimensional Compliance Analysis
                 </CardTitle>
-                <CardDescription>Compliance rates by procedure type</CardDescription>
+                <CardDescription>Comprehensive compliance metrics across multiple dimensions</CardDescription>
               </CardHeader>
               <CardContent>
                 <ChartContainer config={{}} className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={(() => {
-                      // Simple and reliable compliance calculation
-                      const procedureStats = new Map();
+                    <RadarChart data={(() => {
+                      // Calculate comprehensive compliance metrics
+                      const totalRecords = complianceResult.analysisView?.length || 0;
+                      const totalViolations = complianceResult.violations?.length || 0;
                       
-                      // Count procedures and their violations directly from analysis view
-                      if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
-                        complianceResult.analysisView.forEach((row, index) => {
-                          const proc = row.Procedure_Code || 'OP100';
-                          if (!procedureStats.has(proc)) {
-                            procedureStats.set(proc, { 
-                              procedure: proc, 
-                              total: 0, 
-                              violations: 0
-                            });
-                          }
-                          procedureStats.get(proc).total++;
-                        });
-                        
-                        // Count violations per procedure using a more reliable method
-                        if (complianceResult.violations && complianceResult.violations.length > 0) {
-                          // Create a set of row indices that have violations
-                          const violationRows = new Set();
-                          complianceResult.violations.forEach(violation => {
-                            if (violation.dataset === 'op_billing' && violation.row > 0) {
-                              violationRows.add(violation.row - 1); // Convert to 0-based index
-                            }
-                          });
-                          
-                          // Count violations per procedure
-                          complianceResult.analysisView.forEach((row, index) => {
-                            if (violationRows.has(index)) {
-                              const proc = row.Procedure_Code || 'OP100';
-                              if (procedureStats.has(proc)) {
-                                procedureStats.get(proc).violations++;
-                              }
-                            }
-                          });
+                      // Data Quality Score
+                      const dataQuality = totalRecords > 0 ? Math.max(0, 100 - Math.round((totalViolations / totalRecords) * 100)) : 100;
+                      
+                      // Consent Compliance Rate
+                      const consentRecords = complianceResult.analysisView?.filter(row => (row as any).Consent_Flag !== undefined) || [];
+                      const consentYes = consentRecords.filter(row => (row as any).Consent_Flag === 'Y').length;
+                      const consentRate = consentRecords.length > 0 ? Math.round((consentYes / consentRecords.length) * 100) : 100;
+                      
+                      // Payment Compliance Rate
+                      const paymentRecords = complianceResult.analysisView?.filter(row => (row as any).Payment_Status !== undefined) || [];
+                      const paidRecords = paymentRecords.filter(row => 
+                        String((row as any).Payment_Status).toLowerCase().includes('paid') || 
+                        String((row as any).Payment_Status).toLowerCase().includes('completed')
+                      ).length;
+                      const paymentRate = paymentRecords.length > 0 ? Math.round((paidRecords / paymentRecords.length) * 100) : 100;
+                      
+                      // Procedure Adherence Rate (based on procedure code compliance)
+                      const procedureRecords = complianceResult.analysisView?.filter(row => (row as any).Procedure_Code !== undefined) || [];
+                      const validProcedures = procedureRecords.filter(row => 
+                        String((row as any).Procedure_Code).match(/^OP\d{3}$/) || 
+                        String((row as any).Procedure_Code).length > 0
+                      ).length;
+                      const procedureRate = procedureRecords.length > 0 ? Math.round((validProcedures / procedureRecords.length) * 100) : 100;
+                      
+                      // Doctor Credential Compliance
+                      const doctorRecords = complianceResult.analysisView?.filter(row => (row as any).Doctor_ID !== undefined) || [];
+                      const validDoctors = doctorRecords.filter(row => 
+                        String((row as any).Doctor_ID).length > 0 && 
+                        !String((row as any).Doctor_ID).startsWith('Doctor ')
+                      ).length;
+                      const doctorRate = doctorRecords.length > 0 ? Math.round((validDoctors / doctorRecords.length) * 100) : 100;
+                      
+                      // Patient Data Integrity
+                      const patientRecords = complianceResult.analysisView?.filter(row => (row as any).Patient_ID !== undefined) || [];
+                      const validPatients = patientRecords.filter(row => 
+                        String((row as any).Patient_ID).length > 0 && 
+                        !String((row as any).Patient_ID).startsWith('Patient ')
+                      ).length;
+                      const patientRate = patientRecords.length > 0 ? Math.round((validPatients / patientRecords.length) * 100) : 100;
+                      
+                      // Financial Accuracy
+                      const financialRecords = complianceResult.analysisView?.filter(row => (row as any).Total_Amount !== undefined) || [];
+                      const validAmounts = financialRecords.filter(row => {
+                        const amount = parseFloat(String((row as any).Total_Amount));
+                        return !isNaN(amount) && amount > 0;
+                      }).length;
+                      const financialRate = financialRecords.length > 0 ? Math.round((validAmounts / financialRecords.length) * 100) : 100;
+                      
+                      const radarData = [
+                        {
+                          metric: 'Data Quality',
+                          score: dataQuality,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Consent Rate',
+                          score: consentRate,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Payment Compliance',
+                          score: paymentRate,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Procedure Adherence',
+                          score: procedureRate,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Doctor Credentials',
+                          score: doctorRate,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Patient Data',
+                          score: patientRate,
+                          fullMark: 100
+                        },
+                        {
+                          metric: 'Financial Accuracy',
+                          score: financialRate,
+                          fullMark: 100
                         }
-                      }
+                      ];
                       
-                      // Generate chart data with accurate compliance calculation
-                      const result = Array.from(procedureStats.values())
-                        .map(stats => {
-                          const compliant = Math.max(0, stats.total - stats.violations);
-                          const compliance = stats.total > 0 ? Math.round((compliant / stats.total) * 100) : 0;
-                          
-                          return {
-                            procedure: stats.procedure,
-                            compliance: compliance,
-                            total: stats.total,
-                            violations: stats.violations,
-                            compliant: compliant
-                          };
-                        })
-                        .filter(stats => stats.total > 0) // Only show procedures that exist in data
-                        .sort((a, b) => b.compliance - a.compliance);
+                      console.log('🔍 Multi-Dimensional Compliance Radar Data:', radarData);
                       
-                      // Enhanced debug logging
-                      console.log('🔍 Procedure Compliance Chart Data:');
-                      console.log('  Analysis view records:', complianceResult.analysisView?.length || 0);
-                      console.log('  Total violations:', complianceResult.violations?.length || 0);
-                      console.log('  Procedure breakdown:');
-                      Array.from(procedureStats.entries()).forEach(([proc, stats]) => {
-                        console.log(`    ${proc}: ${stats.total} total, ${stats.violations} violations, ${stats.total - stats.violations} compliant`);
-                      });
-                      console.log('  Final chart data:', result);
-                      
-                      // If no data found, return empty array to show no data message
-                      if (result.length === 0) {
-                        console.log('⚠️ No procedure data found in analysis view');
-                        return [];
-                      }
-                      
-                      return result;
+                      return radarData;
                     })()}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="procedure" />
-                      <YAxis domain={[0, 100]} />
+                      <PolarGrid stroke="#e5e7eb" />
+                      <PolarAngleAxis dataKey="metric" tick={{ fontSize: 12 }} />
+                      <PolarRadiusAxis 
+                        domain={[0, 100]} 
+                        tick={{ fontSize: 10 }}
+                        tickFormatter={(value) => `${value}%`}
+                      />
+                      <Radar
+                        name="Compliance Score"
+                        dataKey="score"
+                        stroke="#10b981"
+                        fill="#10b981"
+                        fillOpacity={0.3}
+                        strokeWidth={2}
+                      />
                       <ChartTooltip 
                         content={<ChartTooltipContent />}
-                        formatter={(value, name, props) => {
-                          if (name === 'compliance') {
-                            const data = props.payload;
-                            return [
-                              `${Number(value).toFixed(1)}%`,
-                              `Compliance Rate (${data.compliant}/${data.total} records)`
-                            ];
-                          }
-                          return [value, name];
-                        }}
+                        formatter={(value, name) => [`${Number(value).toFixed(1)}%`, 'Compliance Score']}
                       />
-                      <Bar dataKey="compliance" fill="#10b981" radius={[4, 4, 0, 0]} />
-                    </BarChart>
+                    </RadarChart>
                   </ResponsiveContainer>
                 </ChartContainer>
+                
+                {/* Additional insights below the chart */}
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                  <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <div className="font-semibold text-green-700 dark:text-green-300">
+                      {Math.max(0, 100 - Math.round((complianceResult.violations.length / complianceResult.analysisView.length) * 100))}%
+                    </div>
+                    <div className="text-xs text-green-600 dark:text-green-400">Overall Quality</div>
+                  </div>
+                  <div className="text-center p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="font-semibold text-blue-700 dark:text-blue-300">
+                      {complianceResult.analysisView.length - complianceResult.violations.length}
+                    </div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400">Clean Records</div>
+                  </div>
+                  <div className="text-center p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                    <div className="font-semibold text-purple-700 dark:text-purple-300">
+                      {complianceResult.violations.length}
+                    </div>
+                    <div className="text-xs text-purple-600 dark:text-purple-400">Issues Found</div>
+                  </div>
+                  <div className="text-center p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                    <div className="font-semibold text-orange-700 dark:text-orange-300">
+                      {complianceResult.riskScore}
+                    </div>
+                    <div className="text-xs text-orange-600 dark:text-orange-400">Risk Score</div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
