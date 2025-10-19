@@ -79,11 +79,10 @@ app.use('/api', api);
 
 const port = parseInt(process.env.PORT || '4001', 10);
 console.log(`Starting server on port: ${port}`);
-const mongoUri = process.env.MONGODB_URI;
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/csv-sensei-dash';
 
-if (!mongoUri) {
-  console.error('❌ MONGODB_URI environment variable is required');
-  process.exit(1);
+if (!process.env.MONGODB_URI) {
+  console.log('⚠️ MONGODB_URI not set, using default local MongoDB');
 }
 
 // MongoDB connection with retry logic
@@ -93,7 +92,8 @@ const connectDB = async () => {
     console.log('✅ MongoDB connected successfully');
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+    console.log('⚠️ Continuing without database connection (using fallback data)');
+    // Don't exit the process, continue with fallback data
   }
 };
 

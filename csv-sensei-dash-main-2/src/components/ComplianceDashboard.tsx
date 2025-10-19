@@ -185,7 +185,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
           Visit_ID: getFieldValue(['Visit_ID', 'visit_id', 'VisitId', 'visit'], `visit_${index + 1}`),
           Visit_Date: getFieldValue(['Visit_Date', 'visit_date', 'VisitDate', 'date', 'Bill_Date'], new Date().toISOString().split('T')[0]),
           Age: parseInt(String(getFieldValue(['Age', 'age'], 30))),
-          Procedure_Code: getFieldValue(['Procedure_Code', 'procedure_code', 'ProcedureCode', 'Service_Code', 'service_code'], 'OP100'),
+          Procedure_Code: getFieldValue(['Procedure_Code', 'procedure_code', 'ProcedureCode', 'Service_Code', 'service_code', 'Proc_Code', 'proc_code', 'Code', 'code'], 'OP100'),
           Consent_Flag: String(getFieldValue(['Consent_Flag', 'consent_flag', 'ConsentFlag'], 'Y')).toUpperCase(),
           Payer_Type: String(getFieldValue(['Payer_Type', 'payer_type', 'PayerType'], 'CASH')).toUpperCase()
         };
@@ -247,6 +247,15 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
 
       console.log('Transformed Billing Data Sample:', transformedBillingData[0]);
       console.log('Transformed Doctor Data Sample:', transformedDoctorData[0]);
+      
+      // Debug: Check procedure codes in transformed data
+      const procedureCodes = transformedBillingData.map(row => row.Procedure_Code);
+      const uniqueProcedures = [...new Set(procedureCodes)];
+      console.log('🔍 Procedure Codes in transformed data:', uniqueProcedures);
+      console.log('📊 Procedure code distribution:', procedureCodes.reduce((acc, code) => {
+        acc[code] = (acc[code] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>));
       
       // Debug: Show which columns were successfully mapped
       if (transformedBillingData.length > 0) {
@@ -1432,10 +1441,10 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                               }
                             }
                             
-                            return [];
-                          }
-                          
-                          return result;
+                        return [];
+                      }
+                      
+                      return result;
                         })()}
                         fill="#3b82f6"
                       />
@@ -1458,64 +1467,75 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                 <ChartContainer config={{}} className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={(() => {
+                      // Simple and reliable compliance calculation
                       const procedureStats = new Map();
                       
-                      // Process analysis view data
+                      // Count procedures and their violations directly from analysis view
                       if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
-                        complianceResult.analysisView.forEach(row => {
-                          const proc = row.Procedure_Code || 'Unknown';
+                        complianceResult.analysisView.forEach((row, index) => {
+                          const proc = row.Procedure_Code || 'OP100';
                           if (!procedureStats.has(proc)) {
-                            procedureStats.set(proc, { procedure: proc, total: 0, violations: 0 });
+                            procedureStats.set(proc, { 
+                              procedure: proc, 
+                              total: 0, 
+                              violations: 0
+                            });
                           }
                           procedureStats.get(proc).total++;
                         });
-                      }
-                      
-                      // Count violations per procedure
-                      if (complianceResult.violations && complianceResult.violations.length > 0) {
-                        complianceResult.violations.forEach(violation => {
-                          if (violation.dataset === 'op_billing' && violation.row > 0) {
-                            const row = complianceResult.analysisView[violation.row - 1];
-                            if (row) {
-                              const proc = row.Procedure_Code;
-                              if (proc && procedureStats.has(proc)) {
+                        
+                        // Count violations per procedure using a more reliable method
+                        if (complianceResult.violations && complianceResult.violations.length > 0) {
+                          // Create a set of row indices that have violations
+                          const violationRows = new Set();
+                          complianceResult.violations.forEach(violation => {
+                            if (violation.dataset === 'op_billing' && violation.row > 0) {
+                              violationRows.add(violation.row - 1); // Convert to 0-based index
+                            }
+                          });
+                          
+                          // Count violations per procedure
+                          complianceResult.analysisView.forEach((row, index) => {
+                            if (violationRows.has(index)) {
+                              const proc = row.Procedure_Code || 'OP100';
+                              if (procedureStats.has(proc)) {
                                 procedureStats.get(proc).violations++;
                               }
                             }
-                          }
-                        });
+                          });
+                        }
                       }
                       
+                      // Generate chart data with accurate compliance calculation
                       const result = Array.from(procedureStats.values())
-                        .map(stats => ({
-                          procedure: stats.procedure,
-                          compliance: Math.max(0, ((stats.total - stats.violations) / stats.total) * 100),
-                          total: stats.total,
-                          violations: stats.violations
-                        }))
-                        .sort((a, b) => b.compliance - a.compliance)
-                        .slice(0, 8);
-                      
-                      // If no data, provide sample data for demonstration
-                      if (result.length === 0) {
-                        // Try to create data from analysis view if available
-                        if (complianceResult.analysisView && complianceResult.analysisView.length > 0) {
-                          const procedureCounts = new Map();
-                          complianceResult.analysisView.forEach(row => {
-                            const proc = row.Procedure_Code || 'OP100';
-                            procedureCounts.set(proc, (procedureCounts.get(proc) || 0) + 1);
-                          });
+                        .map(stats => {
+                          const compliant = Math.max(0, stats.total - stats.violations);
+                          const compliance = stats.total > 0 ? Math.round((compliant / stats.total) * 100) : 0;
                           
-                          if (procedureCounts.size > 0) {
-                            return Array.from(procedureCounts.entries()).map(([procedure, total]) => ({
-                              procedure,
-                              compliance: Math.max(85, 100 - Math.floor(Math.random() * 15)),
-                              total,
-                              violations: Math.floor(Math.random() * 3)
-                            }));
-                          }
-                        }
-                        
+                          return {
+                            procedure: stats.procedure,
+                            compliance: compliance,
+                            total: stats.total,
+                            violations: stats.violations,
+                            compliant: compliant
+                          };
+                        })
+                        .filter(stats => stats.total > 0) // Only show procedures that exist in data
+                        .sort((a, b) => b.compliance - a.compliance);
+                      
+                      // Enhanced debug logging
+                      console.log('🔍 Procedure Compliance Chart Data:');
+                      console.log('  Analysis view records:', complianceResult.analysisView?.length || 0);
+                      console.log('  Total violations:', complianceResult.violations?.length || 0);
+                      console.log('  Procedure breakdown:');
+                      Array.from(procedureStats.entries()).forEach(([proc, stats]) => {
+                        console.log(`    ${proc}: ${stats.total} total, ${stats.violations} violations, ${stats.total - stats.violations} compliant`);
+                      });
+                      console.log('  Final chart data:', result);
+                      
+                      // If no data found, return empty array to show no data message
+                      if (result.length === 0) {
+                        console.log('⚠️ No procedure data found in analysis view');
                         return [];
                       }
                       
@@ -1526,7 +1546,16 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       <YAxis domain={[0, 100]} />
                       <ChartTooltip 
                         content={<ChartTooltipContent />}
-                        formatter={(value, name) => [`${Number(value).toFixed(1)}%`, 'Compliance Rate']}
+                        formatter={(value, name, props) => {
+                          if (name === 'compliance') {
+                            const data = props.payload;
+                            return [
+                              `${Number(value).toFixed(1)}%`,
+                              `Compliance Rate (${data.compliant}/${data.total} records)`
+                            ];
+                          }
+                          return [value, name];
+                        }}
                       />
                       <Bar dataKey="compliance" fill="#10b981" radius={[4, 4, 0, 0]} />
                     </BarChart>

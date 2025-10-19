@@ -33,7 +33,9 @@ import {
   Stethoscope,
   Brain,
   BarChart3,
-  PieChart as PieChartIcon
+  PieChart as PieChartIcon,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -172,6 +174,8 @@ const AdminDashboard = () => {
   });
   const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [createUserError, setCreateUserError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Check if user is admin
   useEffect(() => {
@@ -1380,30 +1384,50 @@ const AdminDashboard = () => {
               <Label htmlFor="password" className="text-gray-700 dark:text-gray-300">
                 Password *
               </Label>
-              <Input
-                id="password"
-                type="password"
-                value={createUserForm.password}
-                onChange={(e) => handleCreateUserInputChange('password', e.target.value)}
-                className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white"
-                placeholder="Enter password (min 6 chars, 1 uppercase, 1 lowercase, 1 number)"
-                disabled={isCreatingUser}
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={createUserForm.password}
+                  onChange={(e) => handleCreateUserInputChange('password', e.target.value)}
+                  className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
+                  placeholder="Enter password (min 6 chars, 1 uppercase, 1 lowercase, 1 number)"
+                  disabled={isCreatingUser}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  disabled={isCreatingUser}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-gray-700 dark:text-gray-300">
                 Confirm Password *
               </Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                value={createUserForm.confirmPassword}
-                onChange={(e) => handleCreateUserInputChange('confirmPassword', e.target.value)}
-                className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white"
-                placeholder="Confirm password"
-                disabled={isCreatingUser}
-              />
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={createUserForm.confirmPassword}
+                  onChange={(e) => handleCreateUserInputChange('confirmPassword', e.target.value)}
+                  className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white pr-10"
+                  placeholder="Confirm password"
+                  disabled={isCreatingUser}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  disabled={isCreatingUser}
+                >
+                  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">

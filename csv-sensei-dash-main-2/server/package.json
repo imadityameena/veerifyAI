@@ -8,6 +8,7 @@
     "compile": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
+    "dev:simple": "NODE_ENV=development PORT=4001 MONGODB_URI=mongodb://localhost:27017/csv-sensei-dash JWT_SECRET=dev_secret_key tsx watch src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
