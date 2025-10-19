@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, FileText, AlertCircle, ArrowLeft, CheckCircle, Users, Receipt } from 'lucide-react';
+import { Upload, FileText, AlertCircle, ArrowLeft, CheckCircle, Users, Receipt, TrendingUp, DollarSign, Activity, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { generateInsights, Insight } from '@/utils/insightsGenerator';
 
 interface ComplianceFileUploadProps {
   onFilesUpload: (opBillingFile: File, doctorRosterFile: File) => void;
@@ -14,20 +15,60 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
   const [opBillingFile, setOpBillingFile] = useState<File | null>(null);
   const [doctorRosterFile, setDoctorRosterFile] = useState<File | null>(null);
   const [currentUpload, setCurrentUpload] = useState<'billing' | 'roster' | null>(null);
+  const [insights, setInsights] = useState<Insight[]>([]);
+  const [billingData, setBillingData] = useState<any[]>([]);
+  const [doctorRosterData, setDoctorRosterData] = useState<any[]>([]);
+  const [isGeneratingInsights, setIsGeneratingInsights] = useState(false);
 
-  const onDropBilling = useCallback((acceptedFiles: File[]) => {
+  // CSV parsing function
+  const parseCSV = (csvText: string): any[] => {
+    const lines = csvText.split('\n').filter(line => line.trim());
+    if (lines.length === 0) return [];
+    
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const data = lines.slice(1).map(line => {
+      const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
+      const row: any = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] || '';
+      });
+      return row;
+    });
+    
+    return data;
+  };
+
+  const onDropBilling = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file && file.type === 'text/csv') {
       setOpBillingFile(file);
       setCurrentUpload(null);
+      
+      // Parse CSV and generate insights
+      try {
+        const text = await file.text();
+        const data = parseCSV(text);
+        setBillingData(data);
+      } catch (error) {
+        console.error('Error parsing billing CSV:', error);
+      }
     }
   }, []);
 
-  const onDropRoster = useCallback((acceptedFiles: File[]) => {
+  const onDropRoster = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file && file.type === 'text/csv') {
       setDoctorRosterFile(file);
       setCurrentUpload(null);
+      
+      // Parse CSV and generate insights
+      try {
+        const text = await file.text();
+        const data = parseCSV(text);
+        setDoctorRosterData(data);
+      } catch (error) {
+        console.error('Error parsing roster CSV:', error);
+      }
     }
   }, []);
 
@@ -43,6 +84,23 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
     multiple: false
   });
 
+  // Generate insights when data changes
+  useEffect(() => {
+    if (billingData.length > 0) {
+      setIsGeneratingInsights(true);
+      
+      // Simulate processing time for better UX
+      setTimeout(() => {
+        const newInsights = generateInsights({
+          billingData,
+          doctorRosterData
+        });
+        setInsights(newInsights);
+        setIsGeneratingInsights(false);
+      }, 1000);
+    }
+  }, [billingData, doctorRosterData]);
+
   const handleAnalyze = () => {
     if (opBillingFile && doctorRosterFile) {
       onFilesUpload(opBillingFile, doctorRosterFile);
@@ -50,6 +108,27 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
   };
 
   const isReady = opBillingFile && doctorRosterFile;
+
+  // Get category icon
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'revenue': return <DollarSign className="w-4 h-4" />;
+      case 'performance': return <TrendingUp className="w-4 h-4" />;
+      case 'compliance': return <Shield className="w-4 h-4" />;
+      case 'data_quality': return <Activity className="w-4 h-4" />;
+      default: return <TrendingUp className="w-4 h-4" />;
+    }
+  };
+
+  // Get priority color
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'text-red-600 bg-red-100 dark:bg-red-900/20 dark:text-red-400';
+      case 'medium': return 'text-yellow-600 bg-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-400';
+      case 'low': return 'text-blue-600 bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400';
+      default: return 'text-gray-600 bg-gray-100 dark:bg-gray-900/20 dark:text-gray-400';
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -222,50 +301,99 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
         </Card>
       </div>
 
-      {/* Compliance Rules Info */}
+      {/* Compliance Rules / Dynamic Insights */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <AlertCircle className="w-5 h-5 mr-2 text-orange-600" />
-            Compliance Rules (R1-R10)
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center">
+              {insights.length > 0 ? (
+                <>
+                  <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+                  AI-Generated Insights
+                </>
+              ) : (
+                <>
+                  <AlertCircle className="w-5 h-5 mr-2 text-orange-600" />
+                  Compliance Rules (R1-R10)
+                </>
+              )}
+            </div>
+            {insights.length > 5 && (
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-normal">
+                Showing top 5 most important insights
+              </span>
+            )}
           </CardTitle>
           <CardDescription>
-            The system will validate your data against these compliance rules
+            {insights.length > 0 
+              ? "Real-time insights generated from your uploaded data"
+              : "The system will validate your data against these compliance rules"
+            }
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Badge variant="destructive">HIGH</Badge>
-                <span className="text-sm font-medium">R1-R8: Critical Rules</span>
-              </div>
-              <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1 ml-4">
-                <li>• Patient_ID validation & uniqueness</li>
-                <li>• Age range validation (0-120)</li>
-                <li>• Visit_Date future check</li>
-                <li>• Doctor_ID existence in roster</li>
-                <li>• License expiry validation</li>
-                <li>• Procedure code validation</li>
-                <li>• Amount range validation</li>
-                <li>• Consent flag for OP300</li>
-              </ul>
+          {isGeneratingInsights ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mr-3"></div>
+              <span className="text-green-600 font-medium">Generating insights...</span>
             </div>
+          ) : insights.length > 0 ? (
             <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Badge variant="secondary">MEDIUM</Badge>
-                <span className="text-sm font-medium">R9: Specialty Match</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Badge variant="outline">LOW</Badge>
-                <span className="text-sm font-medium">R10: Payer Type</span>
-              </div>
-              <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1 ml-4">
-                <li>• Doctor specialty vs procedure mapping</li>
-                <li>• Payer type validation (CASH/INSURANCE/GOVT)</li>
+              <ul className="space-y-2">
+                {insights.slice(0, 5).map((insight, index) => (
+                  <li key={insight.id} className="flex items-start space-x-2 text-sm">
+                    <span className="text-green-500 mt-1">•</span>
+                    <div className="flex-1">
+                      <span className="font-medium text-green-800 dark:text-green-300">
+                        {insight.title}:
+                      </span>
+                      <span className="text-green-700 dark:text-green-400 ml-1">
+                        {insight.description}
+                      </span>
+                    </div>
+                  </li>
+                ))}
               </ul>
+              <div className="text-center pt-3 border-t border-green-200 dark:border-green-800">
+                <p className="text-sm text-green-600 dark:text-green-400 font-medium">
+                  Click "Run Compliance Analysis" to see the detailed dashboard
+                </p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Badge variant="destructive">HIGH</Badge>
+                  <span className="text-sm font-medium">R1-R8: Critical Rules</span>
+                </div>
+                <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1 ml-4">
+                  <li>• Patient_ID validation & uniqueness</li>
+                  <li>• Age range validation (0-120)</li>
+                  <li>• Visit_Date future check</li>
+                  <li>• Doctor_ID existence in roster</li>
+                  <li>• License expiry validation</li>
+                  <li>• Procedure code validation</li>
+                  <li>• Amount range validation</li>
+                  <li>• Consent flag for OP300</li>
+                </ul>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Badge variant="secondary">MEDIUM</Badge>
+                  <span className="text-sm font-medium">R9: Specialty Match</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline">LOW</Badge>
+                  <span className="text-sm font-medium">R10: Payer Type</span>
+                </div>
+                <ul className="text-xs text-gray-600 dark:text-gray-300 space-y-1 ml-4">
+                  <li>• Doctor specialty vs procedure mapping</li>
+                  <li>• Payer type validation (CASH/INSURANCE/GOVT)</li>
+                </ul>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
