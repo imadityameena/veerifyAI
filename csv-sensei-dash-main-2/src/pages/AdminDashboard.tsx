@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart, Cell, Pie, LineChart, Line, AreaChart, Area } from 'recharts';
 import { 
   Users, 
   UserCheck, 
@@ -29,7 +31,9 @@ import {
   Settings,
   FileText,
   Stethoscope,
-  Brain
+  Brain,
+  BarChart3,
+  PieChart as PieChartIcon
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -109,6 +113,31 @@ interface FeatureToggle {
   updatedAt: string;
 }
 
+interface SchemaUsageStats {
+  schemaType: string;
+  totalUses: number;
+  successfulUses: number;
+  totalRows: number;
+  avgProcessingTime: number;
+  uniqueUsers: number;
+}
+
+interface UserUsageStats {
+  userId: string;
+  userEmail: string;
+  userCompany: string;
+  totalUses: number;
+  successfulUses: number;
+  schemasUsed: string[];
+  lastUsed: string;
+}
+
+interface UsageStats {
+  schemaStats: SchemaUsageStats[];
+  userStats: UserUsageStats[];
+  recentActivity: any[];
+}
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -128,6 +157,8 @@ const AdminDashboard = () => {
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [featureToggles, setFeatureToggles] = useState<FeatureToggle[]>([]);
   const [isTogglesLoading, setIsTogglesLoading] = useState(false);
+  const [usageStats, setUsageStats] = useState<UsageStats | null>(null);
+  const [isUsageLoading, setIsUsageLoading] = useState(false);
   
   // Create user form state
   const [createUserForm, setCreateUserForm] = useState({
@@ -369,6 +400,34 @@ const AdminDashboard = () => {
     if (createUserError) setCreateUserError('');
   };
 
+  // Fetch usage statistics
+  const fetchUsageStats = async () => {
+    setIsUsageLoading(true);
+    try {
+      const response = await fetch(`${getApiUrl()}/admin/usage-stats`, {
+        credentials: 'include',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setUsageStats(data.data);
+        setError(''); // Clear any previous errors
+      } else {
+        setError(data.message || 'Failed to fetch usage statistics');
+      }
+    } catch (error) {
+      console.error('Error fetching usage stats:', error);
+      setError('Failed to fetch usage statistics. Please check your connection.');
+    } finally {
+      setIsUsageLoading(false);
+    }
+  };
+
   // Fetch feature toggles
   const fetchFeatureToggles = async () => {
     setIsTogglesLoading(true);
@@ -574,7 +633,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        await Promise.all([fetchStats(), fetchUsers(), fetchFeatureToggles()]);
+        await Promise.all([fetchStats(), fetchUsers(), fetchFeatureToggles(), fetchUsageStats()]);
       } catch (error) {
         console.error('Error in initial data fetch:', error);
         setError('Failed to load admin data. Please ensure the server is running.');
@@ -782,6 +841,218 @@ const AdminDashboard = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Usage Statistics */}
+        {usageStats && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Schema Usage Chart */}
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <BarChart3 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div>
+                    <CardTitle className="text-gray-900 dark:text-white">Schema Usage Statistics</CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-300">
+                      Track which schemas are being used most frequently
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {isUsageLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <RefreshCw className="w-6 h-6 animate-spin mr-2 text-blue-600 dark:text-blue-400" />
+                    <span className="text-gray-600 dark:text-gray-300">Loading usage statistics...</span>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Schema Usage Bar Chart */}
+                    <div className="h-80">
+                      <ChartContainer
+                        config={{
+                          op_billing: {
+                            label: "OP Billing",
+                            color: "hsl(var(--chart-1))",
+                          },
+                          doctor_roster: {
+                            label: "Doctor Roster", 
+                            color: "hsl(var(--chart-2))",
+                          },
+                          compliance_ai: {
+                            label: "Compliance AI",
+                            color: "hsl(var(--chart-3))",
+                          },
+                        }}
+                        className="h-full w-full"
+                      >
+                        <BarChart data={usageStats.schemaStats}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="schemaType" 
+                            tick={{ fontSize: 12 }}
+                            tickFormatter={(value) => {
+                              const labels: { [key: string]: string } = {
+                                'op_billing': 'OP Billing',
+                                'doctor_roster': 'Doctor Roster',
+                                'compliance_ai': 'Compliance AI'
+                              };
+                              return labels[value] || value;
+                            }}
+                          />
+                          <YAxis tick={{ fontSize: 12 }} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="totalUses">
+                            {usageStats.schemaStats.map((entry, index) => {
+                              const colors = ['#10b981', '#3b82f6', '#f97316']; // Green, Blue, Orange
+                              return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
+                            })}
+                          </Bar>
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+
+                    {/* Schema Usage Summary */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {usageStats.schemaStats.map((schema) => {
+                        const getSchemaIcon = () => {
+                          switch (schema.schemaType) {
+                            case 'op_billing':
+                              return <FileText className="w-4 h-4 text-green-600 dark:text-green-400" />;
+                            case 'doctor_roster':
+                              return <Stethoscope className="w-4 h-4 text-blue-600 dark:text-blue-400" />;
+                            case 'compliance_ai':
+                              return <Brain className="w-4 h-4 text-orange-600 dark:text-orange-400" />;
+                            default:
+                              return <BarChart3 className="w-4 h-4 text-gray-500 dark:text-gray-400" />;
+                          }
+                        };
+
+                        const getSchemaName = () => {
+                          const names: { [key: string]: string } = {
+                            'op_billing': 'OP Billing',
+                            'doctor_roster': 'Doctor Roster',
+                            'compliance_ai': 'Compliance AI'
+                          };
+                          return names[schema.schemaType] || schema.schemaType;
+                        };
+
+                        return (
+                          <div key={schema.schemaType} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div className="flex items-center space-x-2 mb-2">
+                              {getSchemaIcon()}
+                              <span className="font-medium text-gray-900 dark:text-white">
+                                {getSchemaName()}
+                              </span>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600 dark:text-gray-300">Total Uses:</span>
+                                <span className="font-medium text-gray-900 dark:text-white">{schema.totalUses}</span>
+                              </div>
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600 dark:text-gray-300">Success Rate:</span>
+                                <span className="font-medium text-gray-900 dark:text-white">
+                                  {schema.totalUses > 0 ? Math.round((schema.successfulUses / schema.totalUses) * 100) : 0}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between text-sm">
+                                <span className="text-gray-600 dark:text-gray-300">Unique Users:</span>
+                                <span className="font-medium text-gray-900 dark:text-white">{schema.uniqueUsers}</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* User Usage Chart */}
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <Users className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div>
+                    <CardTitle className="text-gray-900 dark:text-white">User Activity</CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-300">
+                      Track user engagement and activity patterns
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {isUsageLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <RefreshCw className="w-6 h-6 animate-spin mr-2 text-green-600 dark:text-green-400" />
+                    <span className="text-gray-600 dark:text-gray-300">Loading user statistics...</span>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Top Users Table */}
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-gray-900 dark:text-white">Top Active Users</h4>
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {usageStats.userStats.slice(0, 5).map((user, index) => (
+                          <div key={user.userId} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                                  {index + 1}
+                                </span>
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900 dark:text-white text-sm">
+                                  {user.userEmail}
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  {user.userCompany}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                {user.totalUses} uses
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {user.schemasUsed.length} schemas
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Usage Summary */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          <span className="text-sm font-medium text-blue-800 dark:text-blue-300">Total Usage</span>
+                        </div>
+                        <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">
+                          {usageStats.schemaStats.reduce((sum, schema) => sum + schema.totalUses, 0)}
+                        </p>
+                        <p className="text-xs text-blue-600 dark:text-blue-400">All schemas combined</p>
+                      </div>
+                      <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <Users className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          <span className="text-sm font-medium text-green-800 dark:text-green-300">Active Users</span>
+                        </div>
+                        <p className="text-2xl font-bold text-green-900 dark:text-green-100">
+                          {usageStats.userStats.length}
+                        </p>
+                        <p className="text-xs text-green-600 dark:text-green-400">Users with activity</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Users Management */}
         <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">

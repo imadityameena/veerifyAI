@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { UserModel } from '../models/User';
+import { UsageTrackingModel } from '../models/UsageTracking';
 import { requireAdmin } from '../middleware/adminAuth';
 import { body, validationResult } from 'express-validator';
 
@@ -382,6 +383,74 @@ router.post('/users', [
     res.status(500).json({
       success: false,
       message: 'Failed to create user'
+    });
+  }
+});
+
+/**
+ * Get usage statistics for admin dashboard
+ */
+router.get('/usage-stats', async (req: Request, res: Response) => {
+  try {
+    const [schemaStats, userStats, recentActivity] = await Promise.all([
+      UsageTrackingModel.getUsageStats(),
+      UsageTrackingModel.getUserUsageStats(),
+      UsageTrackingModel.getRecentActivity(10)
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        schemaStats,
+        userStats,
+        recentActivity
+      }
+    });
+  } catch (error) {
+    console.error('Usage stats error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch usage statistics'
+    });
+  }
+});
+
+/**
+ * Get schema usage statistics
+ */
+router.get('/schema-usage', async (req: Request, res: Response) => {
+  try {
+    const schemaStats = await UsageTrackingModel.getUsageStats();
+    
+    res.json({
+      success: true,
+      data: schemaStats
+    });
+  } catch (error) {
+    console.error('Schema usage error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch schema usage statistics'
+    });
+  }
+});
+
+/**
+ * Get user usage statistics
+ */
+router.get('/user-usage', async (req: Request, res: Response) => {
+  try {
+    const userStats = await UsageTrackingModel.getUserUsageStats();
+    
+    res.json({
+      success: true,
+      data: userStats
+    });
+  } catch (error) {
+    console.error('User usage error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch user usage statistics'
     });
   }
 });
