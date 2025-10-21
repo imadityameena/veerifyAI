@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail, Building2, Shield } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, Shield, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 
@@ -82,81 +82,92 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-blue-200/20 to-indigo-200/20 dark:from-blue-400/10 dark:to-indigo-400/10 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-r from-indigo-200/20 to-purple-200/20 dark:from-indigo-400/10 dark:to-purple-400/10 rounded-full animate-float-delayed"></div>
+        <div className="absolute bottom-40 left-32 w-20 h-20 bg-gradient-to-r from-emerald-200/20 to-teal-200/20 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-full animate-float-slow"></div>
+        <div className="absolute bottom-20 right-20 w-28 h-28 bg-gradient-to-r from-purple-200/20 to-pink-200/20 dark:from-purple-400/10 dark:to-pink-400/10 rounded-full animate-float"></div>
+        
+        {/* Geometric patterns */}
+        <div className="absolute top-32 left-1/4 w-16 h-16 bg-gradient-to-r from-blue-300/20 to-indigo-300/20 dark:from-blue-600/20 dark:to-indigo-600/20 rotate-45 animate-spin-slow"></div>
+        <div className="absolute bottom-32 right-1/4 w-12 h-12 bg-gradient-to-r from-indigo-300/20 to-purple-300/20 dark:from-indigo-600/20 dark:to-purple-600/20 rotate-12 animate-spin-medium"></div>
+        <div className="absolute top-1/2 left-10 w-8 h-8 bg-gradient-to-r from-emerald-300/20 to-teal-300/20 dark:from-emerald-600/20 dark:to-teal-600/20 rotate-45 animate-pulse"></div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="w-full h-full auth-grid-pattern"></div>
+        </div>
+      </div>
+
       {/* Theme Toggle */}
-      <div className="absolute top-6 right-6 z-10">
+      <div className="absolute top-6 right-6 z-20">
         <ModeToggle />
       </div>
       
-      {/* Left Side - Animated Section */}
-      <div className="hidden lg:flex lg:w-3/5 relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          {/* Simple floating circles */}
-          <div className="absolute top-20 left-20 w-16 h-16 bg-blue-400/15 dark:bg-blue-500/15 rounded-full animate-pulse"></div>
-          <div className="absolute top-40 right-32 w-12 h-12 bg-purple-400/15 dark:bg-purple-500/15 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-40 left-32 w-10 h-10 bg-green-400/15 dark:bg-green-500/15 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-14 h-14 bg-pink-400/15 dark:bg-pink-500/15 rounded-full animate-pulse"></div>
-          
-          {/* Simple geometric shapes */}
-          <div className="absolute top-32 left-1/4 w-6 h-6 bg-blue-600/20 dark:bg-blue-400/20 rotate-45 animate-pulse"></div>
-          <div className="absolute bottom-32 right-1/4 w-4 h-4 bg-purple-600/20 dark:bg-purple-400/20 rotate-12 animate-pulse"></div>
-        </div>
-        
-        {/* Main Content - Centered with equal padding */}
-        <div className="relative z-10 flex flex-col justify-center items-center text-center px-12 w-full">
-          <div className="mb-8 max-w-lg">
-            <div className="w-28 h-28 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
-              <Building2 className="w-14 h-14 text-white" />
+      {/* Left Side - Brand Section */}
+      <div className="hidden lg:flex lg:w-1/2 relative z-10">
+        <div className="flex flex-col justify-center items-center text-center px-12 w-full">
+          <div className="mb-12 max-w-lg">
+            {/* Logo */}
+            <div className="w-48 h-48 flex items-center justify-center mx-auto mb-6">
+              <img src="/src/assets/logo.png" alt="VeerifyAI Logo" className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-6xl font-bold text-gray-900 dark:text-white mb-6 animate-fade-in">
-              VeerifyAI
-            </h1>
-            <p className="text-2xl text-gray-600 dark:text-gray-400 mb-10 animate-fade-in-delay">
+            
+            {/* Subtitle */}
+            <p className="text-xl text-gray-800 dark:text-gray-300 mb-8 animate-fade-in-delay">
               Healthcare Compliance Platform
             </p>
-            <div className="space-y-6 text-left">
-              <div className="flex items-center space-x-4 animate-slide-in-left">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="text-lg text-gray-700 dark:text-gray-300">Secure data processing</span>
+            
+            {/* Features List */}
+            <div className="space-y-4 text-left animate-slide-in-left">
+              <div className="flex items-center space-x-3 group">
+                <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
+                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Secure data processing</span>
               </div>
-              <div className="flex items-center space-x-4 animate-slide-in-left-delay">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span className="text-lg text-gray-700 dark:text-gray-300">Real-time compliance monitoring</span>
+              <div className="flex items-center space-x-3 group animate-slide-in-left-delay">
+                <div className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
+                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Real-time compliance monitoring</span>
               </div>
-              <div className="flex items-center space-x-4 animate-slide-in-left-delay-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="text-lg text-gray-700 dark:text-gray-300">Advanced analytics dashboard</span>
+              <div className="flex items-center space-x-3 group animate-slide-in-left-delay-2">
+                <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
+                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Advanced analytics dashboard</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Right Side - Form Section */}
-      <div className="w-full lg:w-2/5 flex items-center justify-center p-8">
+      {/* Right Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative z-10">
         <div className="w-full max-w-md">
           {/* Login Card */}
-          <Card className="shadow-2xl border-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+          <Card className="shadow-2xl border-0 bg-white/10 dark:bg-gray-900/20 backdrop-blur-xl">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="flex items-center justify-center mb-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-white" />
+                </div>
+              </div>
+              <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Welcome Back
               </CardTitle>
-              <CardDescription className="text-gray-600 dark:text-gray-400">
+              <CardDescription className="text-gray-600 dark:text-gray-300 text-base">
                 Sign in to access your dashboard
               </CardDescription>
             </CardHeader>
             
             <CardContent className="space-y-4">
               <form onSubmit={handleSubmit} className="space-y-4">
-
                 {/* Email */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Email Address
                   </Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <div className="relative group">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                     <Input
                       id="email"
                       name="email"
@@ -164,19 +175,19 @@ const Login = () => {
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="pl-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
+                      className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
                 </div>
 
                 {/* Password */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Password
                   </Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <div className="relative group">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                     <Input
                       id="password"
                       name="password"
@@ -184,13 +195,13 @@ const Login = () => {
                       placeholder="Enter your password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="pl-10 pr-10 h-11 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
+                      className="pl-10 pr-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -199,8 +210,8 @@ const Login = () => {
 
                 {/* Error Alert */}
                 {error && (
-                  <Alert variant="destructive" className="border-red-200 bg-red-50 dark:bg-red-900/20">
-                    <AlertDescription className="text-red-800 dark:text-red-200">
+                  <Alert variant="destructive" className="border-red-500/50 bg-red-500/10 backdrop-blur-sm">
+                    <AlertDescription className="text-red-200">
                       {error}
                     </AlertDescription>
                   </Alert>
@@ -209,37 +220,40 @@ const Login = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+                  className="w-full h-10 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       <span>Signing In...</span>
                     </div>
                   ) : (
-                    'Sign In'
+                    <div className="flex items-center space-x-2">
+                      <span>Sign In</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   )}
                 </Button>
               </form>
 
-              {/* Signup Link */}
+              {/* Links */}
               <div className="text-center pt-4 space-y-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-700 dark:text-gray-300">
                   Don't have an account?{' '}
                   <Link 
                     to="/signup" 
-                    className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium hover:underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline transition-colors"
                   >
                     Sign up
                   </Link>
                 </p>
-                <div className="border-t pt-4">
+                <div className="border-t border-gray-300 dark:border-gray-600/50 pt-4">
                   <Link 
                     to="/admin/login" 
-                    className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+                    className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
                   >
-                    <Shield className="w-4 h-4 mr-2" />
+                    <Shield className="w-4 h-4 mr-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
                     Admin Portal
                   </Link>
                 </div>
@@ -253,42 +267,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// Custom CSS animations for the login page
-const styles = `
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fade-in-delay {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slide-in-left {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes slide-in-left-delay {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes slide-in-left-delay-2 {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .animate-fade-in {
-    animation: fade-in 1s ease-out;
-  }
-  .animate-fade-in-delay {
-    animation: fade-in-delay 1s ease-out 0.3s both;
-  }
-  .animate-slide-in-left {
-    animation: slide-in-left 0.8s ease-out 0.6s both;
-  }
-  .animate-slide-in-left-delay {
-    animation: slide-in-left-delay 0.8s ease-out 0.9s both;
-  }
-  .animate-slide-in-left-delay-2 {
-    animation: slide-in-left-delay-2 0.8s ease-out 1.2s both;
-  }
-`;
