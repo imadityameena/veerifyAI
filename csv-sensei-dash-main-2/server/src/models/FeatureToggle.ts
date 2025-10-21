@@ -38,7 +38,7 @@ const featureToggleSchema = new Schema({
 });
 
 // Index for better query performance
-featureToggleSchema.index({ featureName: 1 });
+// Note: featureName index is automatically created by unique: true
 
 // Static method to get all feature toggles
 featureToggleSchema.statics.getAllToggles = function() {

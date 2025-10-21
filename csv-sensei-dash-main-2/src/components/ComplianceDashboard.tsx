@@ -864,31 +864,39 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {complianceResult.summaries.violationRanking.slice(0, 5).map((violation, index) => {
-                    const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' : 
-                                        violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' : 
-                                        'bg-[#F0F8FF] text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
-                    const riskPercentage = (violation.count / complianceResult.violations.length) * 100;
-                    return (
-                      <div key={index} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium">{violation.rule}</span>
-                          <Badge className={severityColor}>{violation.severity}</Badge>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div 
-                              className={`h-2 rounded-full ${
-                                violation.severity === 'HIGH' ? 'bg-red-500' : 
-                                violation.severity === 'MEDIUM' ? 'bg-yellow-500' : 'bg-blue-500'
-                              }`}
-                            />
+                  {complianceResult.summaries.violationRanking.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-8 text-center">
+                      <CheckCircle className="w-12 h-12 text-green-500 mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Risk Detected</h3>
+                      <p className="text-gray-600 dark:text-gray-400">Your data shows no compliance violations or risks.</p>
+                    </div>
+                  ) : (
+                    complianceResult.summaries.violationRanking.slice(0, 5).map((violation, index) => {
+                      const severityColor = violation.severity === 'HIGH' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' : 
+                                          violation.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' : 
+                                          'bg-[#F0F8FF] text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
+                      const riskPercentage = (violation.count / complianceResult.violations.length) * 100;
+                      return (
+                        <div key={index} className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="font-medium">{violation.rule}</span>
+                            <Badge className={severityColor}>{violation.severity}</Badge>
                           </div>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">{violation.count}</span>
+                          <div className="flex items-center space-x-2">
+                            <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                              <div 
+                                className={`h-2 rounded-full ${
+                                  violation.severity === 'HIGH' ? 'bg-red-500' : 
+                                  violation.severity === 'MEDIUM' ? 'bg-yellow-500' : 'bg-blue-500'
+                                }`}
+                              />
+                            </div>
+                            <span className="text-sm text-gray-600 dark:text-gray-400">{violation.count}</span>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  )}
                 </div>
               </CardContent>
             </Card>

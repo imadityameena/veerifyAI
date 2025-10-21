@@ -58,8 +58,8 @@ const userSchema = new Schema({
   }
 });
 
-// Index for better query performanceawait
-userSchema.index({ email: 1 });
+// Index for better query performance
+// Note: email index is automatically created by unique: true
 userSchema.index({ company: 1 });
 
 // Hash password before saving
