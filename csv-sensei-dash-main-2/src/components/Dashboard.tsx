@@ -227,7 +227,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
         )}
 
         {/* KPI Alerts */}
-        <KPIAlerts data={transformedData || data} industry={industry} />
+        <KPIAlerts 
+          data={transformedData || data} 
+          industry={industry}
+          opBillingData={opBillingData}
+          doctorRosterData={doctorRosterData}
+        />
 
         {/* AI Assistant */}
         <div className="mb-8">

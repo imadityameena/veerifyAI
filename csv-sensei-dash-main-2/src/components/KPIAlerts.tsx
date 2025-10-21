@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, TrendingUp, TrendingDown, Activity } from 'lucide-react';
+import { ViolationsDashboard } from './ViolationsDashboard';
+import { runCompliance, Violation } from '@/utils/compliance';
 
 // KPI Alert Governance Matrix
 const EXCLUDED_FIELDS = [
@@ -27,16 +29,36 @@ interface KPIAlert {
 interface KPIAlertsProps {
   data: any[];
   industry: string;
+  // Compliance props for violations dashboard
+  opBillingData?: any[];
+  doctorRosterData?: any[];
 }
 
-export const KPIAlerts: React.FC<KPIAlertsProps> = ({ data, industry }) => {
+export const KPIAlerts: React.FC<KPIAlertsProps> = ({ data, industry, opBillingData, doctorRosterData }) => {
   const [alerts, setAlerts] = useState<KPIAlert[]>([]);
+  const [complianceResult, setComplianceResult] = useState<{ violations: Violation[]; riskScore: number } | null>(null);
 
   useEffect(() => {
     if (data && data.length > 0) {
       generateKPIAlerts();
     }
   }, [data, industry]);
+
+  // Run compliance checks if we have billing and doctor data
+  useEffect(() => {
+    if (opBillingData && doctorRosterData && opBillingData.length > 0 && doctorRosterData.length > 0) {
+      try {
+        const result = runCompliance(opBillingData, doctorRosterData);
+        setComplianceResult({
+          violations: result.violations,
+          riskScore: result.riskScore
+        });
+      } catch (error) {
+        console.error('Compliance check failed:', error);
+        setComplianceResult(null);
+      }
+    }
+  }, [opBillingData, doctorRosterData]);
 
   const generateKPIAlerts = () => {
     const newAlerts: KPIAlert[] = [];
@@ -163,65 +185,78 @@ export const KPIAlerts: React.FC<KPIAlertsProps> = ({ data, industry }) => {
     }
   };
 
-  if (alerts.length === 0) {
-    return (
-      <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800 mb-6">
-        <div className="flex items-center">
-          <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-4">
-            <TrendingUp className="w-6 h-6 text-green-600" />
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
-              All KPIs Normal
-            </h3>
-            <p className="text-green-600 dark:text-green-400">
-              No significant spikes, trends, or anomalies detected in your data
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="mb-6">
-      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-        <AlertTriangle className="w-6 h-6 mr-2 text-orange-500" />
-        Smart KPI Alerts
-      </h3>
-      <div className="space-y-4">
-        {alerts.map((alert) => (
-          <div
-            key={alert.id}
-            className={`rounded-2xl p-4 border ${getSeverityColor(alert.severity)}`}
-          >
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 mt-1">
-                {getAlertIcon(alert.type)}
-              </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-gray-900 dark:text-white">
-                  {alert.title}
-                </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  {alert.message}
-                </p>
-                <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
-                  <span>Value: {alert.value.toLocaleString()}</span>
-                  <span>Threshold: {alert.threshold.toLocaleString()}</span>
-                  <span className={`px-2 py-1 rounded-full ${
-                    alert.severity === 'high' ? 'bg-red-100 text-red-800' :
-                    alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-blue-100 text-blue-800'
-                  }`}>
-                    {alert.severity.toUpperCase()}
-                  </span>
+      {/* Compliance Violations Dashboard - Now includes merged risk assessment */}
+      {complianceResult && (
+        <ViolationsDashboard 
+          violations={complianceResult.violations}
+          riskScore={complianceResult.riskScore}
+        />
+      )}
+
+      {/* KPI Alerts - Only show if there are alerts and no compliance violations */}
+      {alerts.length > 0 && (!complianceResult || complianceResult.violations.length === 0) && (
+        <>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+            <AlertTriangle className="w-6 h-6 mr-2 text-orange-500" />
+            Smart KPI Alerts
+          </h3>
+          <div className="space-y-4">
+            {alerts.map((alert) => (
+              <div
+                key={alert.id}
+                className={`rounded-2xl p-4 border ${getSeverityColor(alert.severity)}`}
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 mt-1">
+                    {getAlertIcon(alert.type)}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      {alert.title}
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                      {alert.message}
+                    </p>
+                    <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
+                      <span>Value: {alert.value.toLocaleString()}</span>
+                      <span>Threshold: {alert.threshold.toLocaleString()}</span>
+                      <span className={`px-2 py-1 rounded-full ${
+                        alert.severity === 'high' ? 'bg-red-100 text-red-800' :
+                        alert.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-blue-100 text-blue-800'
+                      }`}>
+                        {alert.severity.toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Show "All Good" message only if no alerts and no violations */}
+      {alerts.length === 0 && (!complianceResult || complianceResult.violations.length === 0) && (
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
+          <div className="flex items-center">
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-4">
+              <TrendingUp className="w-6 h-6 text-green-600" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                All Systems Normal
+              </h3>
+              <p className="text-green-600 dark:text-green-400">
+                No significant alerts or compliance violations detected
+              </p>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
