@@ -32,10 +32,10 @@ const requiredDoctorColumns = [
 ];
 
 const validProcedures = ['OP100', 'OP200', 'OP300'];
-const procToSpecialty: Record<string, string> = {
-  OP100: 'General',
-  OP200: 'Orthopedics',
-  OP300: 'Cardiology'
+const procToSpecialty: Record<string, string[]> = {
+  OP100: ['General','General Medicine'],
+  OP200: ['Orthopedics','Orthopedic Surgery'],
+  OP300: ['Cardiology','Cardiovascular Disease']
 };
 
 function toDate(value: unknown): Date | null {
@@ -130,7 +130,7 @@ export function runCompliance(opBilling: Record<string, unknown>[], doctorRoster
     const specialty = doctor?.Specialization?.toString()?.trim();
     const expected = proc ? procToSpecialty[proc] : undefined;
     if (doctor && proc && expected) {
-      pushIf(!specialty || specialty !== expected, { dataset: 'op_billing', row: rowNum, rule: 'R9', severity: 'MEDIUM', reason: `Specialization mismatch. Expected ${expected}, got ${specialty || 'N/A'}` }, violations);
+      pushIf(!specialty || !expected.includes(specialty), { dataset: 'op_billing', row: rowNum, rule: 'R9', severity: 'MEDIUM', reason: `Specialization mismatch. Expected one of ${expected.join(', ')}, got ${specialty || 'N/A'}` }, violations);
     }
 
     // R10 (LOW): Payer_Type must be CASH, INSURANCE, or GOVT.
