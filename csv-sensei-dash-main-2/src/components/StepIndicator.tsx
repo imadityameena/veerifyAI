@@ -1,25 +1,34 @@
 
 import React from 'react';
-import { Upload, CheckCircle, BarChart3, PieChart } from 'lucide-react';
+import { Building2, Upload, CheckCircle, BarChart3 } from 'lucide-react';
 
 interface StepIndicatorProps {
   currentStep: number;
   steps: string[];
 }
 
-const stepIcons = [Upload, CheckCircle, BarChart3, PieChart];
+const stepIcons = [Building2, Upload, CheckCircle, BarChart3];
 
 export const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep, steps }) => {
   return (
     <div className="relative flex items-center justify-center mb-12 px-4">
       <div className="relative flex items-center justify-between w-full max-w-4xl">
         {/* Background line */}
-        <div className="absolute top-8 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full transform -translate-y-1/2" />
+        <div 
+          className="absolute top-8 h-1 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full transform -translate-y-1/2"
+          style={{ 
+            left: '32px', // Start from center of first circle
+            right: '32px' // End at center of last circle
+          }}
+        />
         
         {/* Progress overlay */}
         <div 
-          className="absolute top-8 left-0 h-1 bg-gradient-to-r from-green-400 to-blue-500 rounded-full transform -translate-y-1/2 transition-all duration-500"
-          style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+          className="absolute top-8 h-1 bg-gradient-to-r from-green-400 to-blue-500 rounded-full transform -translate-y-1/2 transition-all duration-500"
+          style={{ 
+            left: '32px', // Start from center of first circle (half of 64px circle)
+            width: `calc(${(currentStep / (steps.length - 1)) * 100}% - 64px)` // Subtract 64px to account for the circle widths
+          }}
         />
         {steps.map((step, index) => {
           const IconComponent = stepIcons[index];
@@ -89,7 +98,19 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep, steps
                       : 'text-gray-400 dark:text-gray-500'
                   }
                 `}>
-                  {isCompleted ? 'Completed' : isCurrent ? 'In Progress' : 'Pending'}
+                  {(() => {
+                    if (isCompleted) return 'Completed';
+                    if (isCurrent) {
+                      switch (index) {
+                        case 0: return 'Select domain';
+                        case 1: return 'Upload data';
+                        case 2: return 'Validating & processing';
+                        case 3: return 'Generating analytics';
+                        default: return 'In Progress';
+                      }
+                    }
+                    return 'Pending';
+                  })()}
                 </div>
               </div>
               

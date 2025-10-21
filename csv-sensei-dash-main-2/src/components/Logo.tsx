@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImage from '@/assets/logo.svg';
+import logoImage from '@/assets/logo.png';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -15,9 +15,9 @@ export const Logo: React.FC<LogoProps> = ({
   onClick
 }) => {
   const sizeClasses = {
-    sm: 'h-12 w-12',
-    md: 'h-16 w-16',
-    lg: 'h-20 w-20'
+    sm: 'h-16 w-16',
+    md: 'h-20 w-20',
+    lg: 'h-24 w-24'
   };
 
   return (

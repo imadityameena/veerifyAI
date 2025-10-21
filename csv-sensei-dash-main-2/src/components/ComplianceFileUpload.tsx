@@ -309,7 +309,7 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
               {insights.length > 0 ? (
                 <>
                   <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
-                  AI-Generated Insights
+                  AI-Powered Analytics
                 </>
               ) : (
                 <>
@@ -326,8 +326,8 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
           </CardTitle>
           <CardDescription>
             {insights.length > 0 
-              ? "Real-time insights generated from your uploaded data"
-              : "The system will validate your data against these compliance rules"
+              ? "Advanced analytics derived from your data patterns and compliance metrics"
+              : "Automated validation against industry-standard compliance frameworks"
             }
           </CardDescription>
         </CardHeader>
