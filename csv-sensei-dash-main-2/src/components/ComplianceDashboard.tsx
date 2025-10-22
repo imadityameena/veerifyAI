@@ -1039,7 +1039,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
             <CardContent className="p-0">
               <ChartContainer config={{}} className="h-96 w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
+                  <AreaChart
                     data={[
                       { month: 'Jan', revenue: 45000 },
                       { month: 'Feb', revenue: 52000 },
@@ -1071,15 +1071,17 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
                       content={<ChartTooltipContent />}
                       formatter={(value: number) => [`₹${value.toLocaleString()}`, 'Revenue']}
                     />
-                    <Line 
+                    <Area 
                       type="monotone" 
                       dataKey="revenue" 
                       stroke="#3b82f6" 
+                      fill="#3b82f6"
+                      fillOpacity={0.3}
                       strokeWidth={3}
                       dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
                       activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
                     />
-                  </LineChart>
+                  </AreaChart>
                 </ResponsiveContainer>
               </ChartContainer>
             </CardContent>

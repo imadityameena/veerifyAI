@@ -480,7 +480,7 @@ const Index = () => {
       </nav>
 
       {/* Progress Steps - Always Visible */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-[#F0F8FF] dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-center space-x-8">
             <div className="flex items-center">
