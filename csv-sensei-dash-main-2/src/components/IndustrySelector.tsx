@@ -99,32 +99,6 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      {/* Progress Steps */}
-      <div className="mb-8">
-        <div className="flex items-center justify-center space-x-8">
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center text-white font-medium">
-              1
-            </div>
-            <span className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">Select Schema</span>
-          </div>
-          <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 font-medium">
-              2
-            </div>
-            <span className="ml-3 text-sm font-medium text-gray-500 dark:text-gray-400">Upload Data</span>
-          </div>
-          <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 font-medium">
-              3
-            </div>
-            <span className="ml-3 text-sm font-medium text-gray-500 dark:text-gray-400">Dashboard</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Choose Your Industry Schema</h2>

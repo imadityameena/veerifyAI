@@ -1021,6 +1021,71 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
           </div>
         </div>
 
+        {/* Revenue Trend Chart - Standalone */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+            <TrendingUp className="w-6 h-6 mr-2 text-blue-500" />
+            Revenue Trend Analysis
+          </h2>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
+                Revenue Trend
+              </CardTitle>
+              <CardDescription>Monthly revenue trend over the past 12 months</CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <ChartContainer config={{}} className="h-96 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={[
+                      { month: 'Jan', revenue: 45000 },
+                      { month: 'Feb', revenue: 52000 },
+                      { month: 'Mar', revenue: 58000 },
+                      { month: 'Apr', revenue: 62000 },
+                      { month: 'May', revenue: 68000 },
+                      { month: 'Jun', revenue: 75000 },
+                      { month: 'Jul', revenue: 82000 },
+                      { month: 'Aug', revenue: 88000 },
+                      { month: 'Sep', revenue: 92000 },
+                      { month: 'Oct', revenue: 98000 },
+                      { month: 'Nov', revenue: 105000 },
+                      { month: 'Dec', revenue: 112000 }
+                    ]}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis 
+                      dataKey="month" 
+                      stroke="#6b7280"
+                      fontSize={12}
+                    />
+                    <YAxis 
+                      stroke="#6b7280"
+                      fontSize={12}
+                      tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                    />
+                    <ChartTooltip 
+                      content={<ChartTooltipContent />}
+                      formatter={(value: number) => [`₹${value.toLocaleString()}`, 'Revenue']}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="revenue" 
+                      stroke="#3b82f6" 
+                      strokeWidth={3}
+                      dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+                      activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Operational Dashboards */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
