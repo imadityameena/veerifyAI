@@ -1,7 +1,8 @@
 import React from 'react';
-import { TrendingUp, PieChart, BarChart3, AlertTriangle, DollarSign, Clock, Users, Activity } from 'lucide-react';
+import { TrendingUp, PieChart, BarChart3, AlertTriangle, DollarSign, Clock, Users, Activity, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie, LineChart, Line, AreaChart, Area, ComposedChart } from 'recharts';
 import { KPIAlerts } from './KPIAlerts';
@@ -9,6 +10,7 @@ import { ComplianceDashboard } from './ComplianceDashboard';
 import { DoctorRosterDashboard } from './DoctorRosterDashboard';
 import { BillingDashboard } from './BillingDashboard';
 import { InlineChatbot } from './InlineChatbot';
+import { Logo } from './Logo';
 import FeatureToggleWrapper from './FeatureToggleWrapper';
 
 interface DashboardProps {
@@ -206,6 +208,29 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
+      {/* Header */}
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Logo size="xl" showIndicator={false} className="flex-shrink-0" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  Data Analytics Dashboard
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300 mt-1">
+                  {data.length} records • {industry} analysis
+                </p>
+              </div>
+            </div>
+            <Button onClick={onBack} variant="outline" className="flex items-center space-x-2">
+              <ArrowLeft className="w-4 h-4" />
+              <span>Go Back</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* AI Success Banner */}
         {aiMappings && (

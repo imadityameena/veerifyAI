@@ -2,7 +2,7 @@ import React from 'react';
 import logoImage from '@/assets/logo.png';
 
 interface LogoProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   showIndicator?: boolean;
   className?: string;
   onClick?: () => void;
@@ -17,7 +17,8 @@ export const Logo: React.FC<LogoProps> = ({
   const sizeClasses = {
     sm: 'h-16 w-16',
     md: 'h-20 w-20',
-    lg: 'h-24 w-24'
+    lg: 'h-24 w-24',
+    xl: 'h-32 w-32'
   };
 
   return (
