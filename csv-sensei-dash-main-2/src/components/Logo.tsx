@@ -1,5 +1,4 @@
 import React from 'react';
-import logoImage from '@/assets/logo.png';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -28,11 +27,11 @@ export const Logo: React.FC<LogoProps> = ({
         onClick={onClick}
       >
         <img
-          src={logoImage}
+          src="/logo.png"
           alt="Logo"
           className={`${sizeClasses[size]} object-contain`}
           onError={(e) => {
-            console.log('Logo image failed to load:', logoImage);
+            console.log('Logo image failed to load: /logo.png');
             e.currentTarget.style.display = 'none';
           }}
         />
