@@ -8,6 +8,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieCha
 import { buildMonthlySeries, movingAverageForecast } from '@/utils/analytics';
 import { KPIAlerts } from '@/components/KPIAlerts';
 import { InlineChatbot } from './InlineChatbot';
+import { Logo } from './Logo';
 
 interface DoctorRosterDashboardProps {
   data: any[];
@@ -377,13 +378,16 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Doctor Roster Dashboard
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">
-                {data.length} roster records • {insights?.totalDoctors || 0} doctors
-              </p>
+            <div className="flex items-center space-x-4">
+              <Logo size="xl" showIndicator={false} className="flex-shrink-0" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                  Doctor Roster Dashboard
+                </h1>
+                <p className="text-gray-600 dark:text-gray-300 mt-1">
+                  {data.length} roster records • {insights?.totalDoctors || 0} doctors
+                </p>
+              </div>
             </div>
             <Button onClick={onBack} variant="outline" className="flex items-center space-x-2">
               <ArrowLeft className="w-4 h-4" />
