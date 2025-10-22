@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Lock, Mail, Shield, ArrowLeft, AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import logoImage from '@/assets/logo.png';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -160,7 +161,7 @@ const AdminLogin = () => {
           <div className="mb-12 max-w-lg">
             {/* Logo */}
             <div className="w-48 h-48 flex items-center justify-center mx-auto mb-6">
-              <img src="/src/assets/logo.png" alt="VeerifyAI Logo" className="w-full h-full object-contain" />
+              <img src={logoImage} alt="VeerifyAI Logo" className="w-full h-full object-contain" />
             </div>
             
             {/* Subtitle */}
