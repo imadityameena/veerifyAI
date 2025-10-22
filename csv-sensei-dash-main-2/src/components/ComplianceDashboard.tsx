@@ -23,15 +23,44 @@ interface ComplianceDashboardProps {
   opBillingData: BillingRecord[];
   doctorRosterData: DoctorRecord[];
   onBack: () => void;
+  onGoHome?: () => void;
 }
 
 export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({ 
   opBillingData, 
   doctorRosterData, 
-  onBack 
+  onBack,
+  onGoHome
 }) => {
   const [complianceResult, setComplianceResult] = useState<ComplianceResult | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Export dashboard data as JSON
+  const exportDashboard = () => {
+    const dashboardData = {
+      metadata: {
+        timestamp: new Date().toISOString(),
+        industry: 'compliance',
+        opBillingDataRows: opBillingData.length,
+        doctorRosterDataRows: doctorRosterData.length
+      },
+      opBillingData: opBillingData,
+      doctorRosterData: doctorRosterData,
+      complianceResult: complianceResult
+    };
+    
+    const blob = new Blob([JSON.stringify(dashboardData, null, 2)], { 
+      type: 'application/json' 
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `compliance-dashboard-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   const runComplianceAnalysis = useCallback(() => {
     setLoading(true);
@@ -1819,6 +1848,33 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-center space-x-4 mt-12">
+          <Button
+            onClick={onGoHome}
+            className="px-10 py-4 text-white font-bold text-lg rounded-2xl shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+          >
+            <span className="flex items-center justify-center">
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Create New Dashboard
+            </span>
+          </Button>
+          <Button
+            onClick={exportDashboard}
+            variant="outline"
+            className="px-10 py-4 font-bold text-lg rounded-2xl shadow-xl border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300 hover:scale-105"
+          >
+            <span className="flex items-center justify-center">
+              <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Export Dashboard
+            </span>
+          </Button>
         </div>
       </div>
     </div>

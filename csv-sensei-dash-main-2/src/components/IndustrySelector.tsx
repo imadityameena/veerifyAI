@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useFeatureToggle } from '@/hooks/useFeatureToggle';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 interface IndustrySelectorProps {
   selectedIndustry: string;
   onIndustryChange: (industry: string) => void;
+  onContinue?: () => void;
 }
 
 const industries = [
@@ -56,6 +59,7 @@ const industries = [
 export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
   selectedIndustry,
   onIndustryChange,
+  onContinue,
 }) => {
   const { isFeatureEnabled, isLoading } = useFeatureToggle();
   const [selectedSchema, setSelectedSchema] = useState<string | null>(selectedIndustry);
@@ -99,14 +103,22 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
 
   return (
     <div className="w-full max-w-6xl mx-auto">
+      {/* Floating Background Elements */}
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+        <div className="absolute w-24 h-24 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full animate-pulse top-[10%] left-[10%]"></div>
+        <div className="absolute w-32 h-32 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full animate-pulse top-[20%] right-[15%] animation-delay-2000"></div>
+        <div className="absolute w-20 h-20 bg-gradient-to-r from-green-400/10 to-blue-400/10 rounded-full animate-pulse bottom-[30%] left-[20%] animation-delay-4000"></div>
+        <div className="absolute w-28 h-28 bg-gradient-to-r from-orange-400/10 to-red-400/10 rounded-full animate-pulse bottom-[20%] right-[10%] animation-delay-1000"></div>
+      </div>
+
       {/* Main Content */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Choose Your Industry Schema</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400">Select the industry template that best matches your data structure</p>
+      <div className="text-center mb-12 relative z-10">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">Choose Your Industry Schema</h2>
+        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Select the industry template that best matches your data structure and unlock powerful analytics</p>
       </div>
 
       {/* Schema Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 relative z-10">
         {industries.map((industry) => {
           const isSelected = selectedSchema === industry.id;
           const featureName = getFeatureName(industry.id);
@@ -117,24 +129,28 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
               key={industry.id}
               onClick={() => !isFeatureDisabled && handleSchemaSelect(industry.id)}
               className={`
-                schema-card bg-white dark:bg-gray-800 rounded-xl p-6 border-2 transition-all duration-300 cursor-pointer
+                schema-card relative overflow-hidden rounded-2xl p-8 border-2 transition-all duration-500 cursor-pointer
+                backdrop-blur-xl bg-white/80 dark:bg-gray-800/80
                 ${isFeatureDisabled 
                   ? 'border-gray-200 dark:border-gray-700 opacity-50 cursor-not-allowed' 
                   : isSelected
-                    ? 'border-blue-500 shadow-lg shadow-blue-500/20'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 hover:shadow-lg hover:-translate-y-1'
+                    ? 'border-blue-500 shadow-2xl shadow-blue-500/30 transform -translate-y-2 scale-105 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20'
+                    : 'border-white/20 dark:border-gray-700/50 hover:border-blue-300 hover:shadow-2xl hover:-translate-y-4 hover:scale-105'
                 }
               `}
             >
-              <div className="text-center">
-                <div className={`w-16 h-16 bg-gradient-to-r ${industry.gradient} rounded-full flex items-center justify-center mx-auto mb-4`}>
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-1000 hover:translate-x-full"></div>
+              
+              <div className="text-center relative z-10">
+                <div className={`w-20 h-20 bg-gradient-to-r ${industry.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg`}>
                   {industry.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{industry.name}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{industry.description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{industry.name}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed">{industry.description}</p>
                 {isFeatureDisabled && (
-                  <div className="mt-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
+                  <div className="mt-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
                       Coming Soon
                     </span>
                   </div>
@@ -144,6 +160,21 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
           );
         })}
       </div>
+
+      {/* Continue Button */}
+      {selectedSchema && (
+        <div className="text-center relative z-10">
+          <Button
+            onClick={onContinue}
+            className="px-12 py-4 text-white font-bold text-lg rounded-2xl shadow-2xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-3xl"
+          >
+            <span className="flex items-center justify-center">
+              Continue to Upload
+              <ArrowRight className="w-6 h-6 ml-3" />
+            </span>
+          </Button>
+        </div>
+      )}
 
     </div>
   );

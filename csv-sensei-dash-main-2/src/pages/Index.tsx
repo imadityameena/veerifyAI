@@ -273,6 +273,7 @@ const Index = () => {
           <IndustrySelector 
             selectedIndustry={selectedIndustry}
             onIndustryChange={handleIndustryChange}
+            onContinue={() => setCurrentStep(1)}
           />
         );
       case 1:
@@ -341,6 +342,7 @@ const Index = () => {
                 industry={selectedIndustry}
                 aiMappings={aiMappings}
                 onBack={handleBackToUpload}
+                onGoHome={handleGoHome}
                 aiCaptionEnabled={true}
                 complianceMode={true}
                 opBillingData={opBillingData}
@@ -356,6 +358,7 @@ const Index = () => {
                 industry={selectedIndustry}
                 aiMappings={aiMappings}
                 onBack={handleBackToUpload}
+                onGoHome={handleGoHome}
                 aiCaptionEnabled={true}
               />
             </FeatureToggleWrapper>
@@ -368,6 +371,7 @@ const Index = () => {
                 industry={selectedIndustry}
                 aiMappings={aiMappings}
                 onBack={handleBackToUpload}
+                onGoHome={handleGoHome}
                 aiCaptionEnabled={true}
               />
             </FeatureToggleWrapper>
@@ -379,6 +383,7 @@ const Index = () => {
               industry={selectedIndustry}
               aiMappings={aiMappings}
               onBack={handleBackToUpload}
+              onGoHome={handleGoHome}
               aiCaptionEnabled={true}
             />
           );
