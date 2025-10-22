@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StepIndicator } from '@/components/StepIndicator';
 import { IndustrySelector } from '@/components/IndustrySelector';
 import { FileUpload } from '@/components/FileUpload';
@@ -15,6 +15,9 @@ import type { ValidationError, ValidationSummary } from '@/utils/validationEngin
 import Papa from 'papaparse';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
+import { Logo } from '@/components/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const steps = ['Select Industry', 'Upload Data', 'Validate & Process', 'View Dashboard'];
 
@@ -41,8 +44,49 @@ const Index = () => {
   const [opBillingData, setOpBillingData] = useState<any[]>([]);
   const [doctorRosterData, setDoctorRosterData] = useState<any[]>([]);
   
+  // User dropdown state
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showUserDropdown) {
+        const target = event.target as Element;
+        if (!target.closest('.user-dropdown')) {
+          setShowUserDropdown(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserDropdown]);
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setShowUserDropdown(false);
+      navigate('/login');
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account.",
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast({
+        title: "Logout failed",
+        description: "There was an error logging out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Function to track usage
   const trackUsage = async (schemaType: string, fileName: string, fileSize: number, rowCount: number) => {
@@ -226,18 +270,10 @@ const Index = () => {
     switch (currentStep) {
       case 0:
         return (
-          <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Enterprise Data Analytics Platform
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
-              Transform your data into actionable insights with advanced AI-powered analytics and comprehensive visualizations
-            </p>
-            <IndustrySelector 
-              selectedIndustry={selectedIndustry}
-              onIndustryChange={handleIndustryChange}
-            />
-          </div>
+          <IndustrySelector 
+            selectedIndustry={selectedIndustry}
+            onIndustryChange={handleIndustryChange}
+          />
         );
       case 1:
         if (complianceMode) {
@@ -354,12 +390,97 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 transition-colors duration-300">
+      {/* Navigation Header */}
+      <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Logo size="md" showIndicator={false} />
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              {/* Theme Toggle */}
+              <button 
+                onClick={() => {
+                  const html = document.documentElement;
+                  const newTheme = html.classList.contains('dark') ? 'light' : 'dark';
+                  html.classList.toggle('dark');
+                  localStorage.setItem('theme', newTheme);
+                }}
+                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300"
+                aria-label="Toggle theme"
+                title="Toggle theme"
+              >
+                <svg className="w-5 h-5 text-gray-600 dark:text-gray-300 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd"></path>
+                </svg>
+                <svg className="w-5 h-5 text-gray-600 dark:text-gray-300 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+              </button>
+              
+              {/* User Profile */}
+              <div className="relative user-dropdown">
+                <button 
+                  onClick={() => setShowUserDropdown(!showUserDropdown)}
+                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {user ? (user.firstName?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase() : 'U'}
+                    </span>
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+                      {user ? `${user.firstName} ${user.lastName}`.trim() || user.email : 'Guest User'}
+                    </span>
+                    {user && (
+                      <span className="text-gray-500 dark:text-gray-400 text-xs">
+                        {user.company || user.email}
+                      </span>
+                    )}
+                  </div>
+                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                {showUserDropdown && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                    <div className="py-2">
+                      <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {user ? `${user.firstName} ${user.lastName}`.trim() || user.email : 'Guest User'}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {user?.email}
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                          </svg>
+                          <span>Sign Out</span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {currentStep < 3 && (
-          <StepIndicator currentStep={currentStep} steps={steps} />
-        )}
-        
         <div className="mt-8">
           {renderCurrentStep()}
         </div>
