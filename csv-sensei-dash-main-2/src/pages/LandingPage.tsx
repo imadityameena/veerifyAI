@@ -286,13 +286,13 @@ const LandingPage = () => {
               <Button 
                 onClick={handleSignIn}
                 variant="outline"
-                className="border-gray-300 hover:border-blue-600 hover:text-blue-600 text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+                className="border-gray-300 hover:border-primary hover:text-primary text-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:border-primary dark:hover:text-primary px-6 py-3 rounded-lg font-semibold transition-all duration-300"
               >
                 Sign In
               </Button>
               <Button 
                 onClick={handleGetStarted}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Get Started
               </Button>

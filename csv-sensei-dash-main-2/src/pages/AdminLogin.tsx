@@ -187,7 +187,7 @@ const AdminLogin = () => {
           <div className="mb-4">
             <Link 
               to="/" 
-              className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
+              className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to regular login
@@ -221,7 +221,7 @@ const AdminLogin = () => {
                     Admin Email
                   </Label>
                   <div className="relative group">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="email"
                       name="email"
@@ -230,7 +230,7 @@ const AdminLogin = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
-                      className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       disabled={isLoading}
                       autoComplete="email"
                     />
@@ -242,7 +242,7 @@ const AdminLogin = () => {
                     Password
                   </Label>
                   <div className="relative group">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="password"
                       name="password"
@@ -251,7 +251,7 @@ const AdminLogin = () => {
                       value={formData.password}
                       onChange={handleInputChange}
                       onKeyPress={handleKeyPress}
-                      className="pl-10 pr-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 pr-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       disabled={isLoading}
                       autoComplete="current-password"
                     />
@@ -268,7 +268,7 @@ const AdminLogin = () => {
 
                 <Button
                   type="submit"
-                  className="w-full h-10 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 group"
+                  className="w-full h-10 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/25 group"
                   disabled={isLoading || isValidating}
                 >
                   {isLoading ? (

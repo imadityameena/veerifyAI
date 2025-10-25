@@ -124,7 +124,7 @@ export const FloatingDashboardCards: React.FC = () => {
       icon: <BarChart3 className="w-8 h-8 text-white" />,
       title: "Analytics",
       description: "Advanced data insights and visualizations",
-      gradient: "bg-blue-600",
+      gradient: "bg-primary",
       delay: 0,
       size: 'lg' as const,
       position: { x: 15, y: 15 }

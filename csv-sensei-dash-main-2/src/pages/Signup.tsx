@@ -202,7 +202,7 @@ const Signup = () => {
                       First Name
                     </Label>
                     <div className="relative group">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                       <Input
                         id="firstName"
                         name="firstName"
@@ -210,7 +210,7 @@ const Signup = () => {
                         placeholder="John"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                         required
                       />
                     </div>
@@ -221,7 +221,7 @@ const Signup = () => {
                       Last Name
                     </Label>
                     <div className="relative group">
-                      <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                      <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                       <Input
                         id="lastName"
                         name="lastName"
@@ -229,7 +229,7 @@ const Signup = () => {
                         placeholder="Doe"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                         required
                       />
                     </div>
@@ -242,7 +242,7 @@ const Signup = () => {
                       Email Address
                     </Label>
                   <div className="relative group">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="email"
                       name="email"
@@ -250,7 +250,7 @@ const Signup = () => {
                       placeholder="john.doe@company.com"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -262,7 +262,7 @@ const Signup = () => {
                       Company Name
                     </Label>
                   <div className="relative group">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="company"
                       name="company"
@@ -270,7 +270,7 @@ const Signup = () => {
                       placeholder="Your Company Inc."
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -282,7 +282,7 @@ const Signup = () => {
                       Password
                     </Label>
                   <div className="relative group">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="password"
                       name="password"
@@ -290,7 +290,7 @@ const Signup = () => {
                       placeholder="Create a strong password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="pl-10 pr-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 pr-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                     <button
@@ -309,7 +309,7 @@ const Signup = () => {
                       Confirm Password
                     </Label>
                   <div className="relative group">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -317,7 +317,7 @@ const Signup = () => {
                       placeholder="Confirm your password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -335,7 +335,7 @@ const Signup = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-10 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/25 group"
+                  className="w-full h-10 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/25 group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -358,7 +358,7 @@ const Signup = () => {
                   Already have an account?{' '}
                   <Link 
                     to="/login" 
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline transition-colors"
+                    className="text-primary hover:text-primary/80 font-medium hover:underline transition-colors"
                   >
                     Sign in
                   </Link>

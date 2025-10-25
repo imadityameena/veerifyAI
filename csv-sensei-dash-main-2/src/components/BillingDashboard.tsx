@@ -598,7 +598,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
                 const entries = Object.entries(insights?.specialtyAgg || {}).sort((a, b) => (b[1] as any).revenue - (a[1] as any).revenue);
                 const top = entries[0];
                 return (
-                  <div className="text-2xl font-bold text-blue-600">{top ? `${top[0]}: ₹${(top[1] as any).revenue.toLocaleString()}` : 'N/A'}</div>
+                  <div className="text-2xl font-bold text-primary">{top ? `${top[0]}: ₹${(top[1] as any).revenue.toLocaleString()}` : 'N/A'}</div>
                 );
               })()}
               <p className="text-xs text-gray-500">Highest grossing specialty</p>
@@ -676,7 +676,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardTitle className="text-sm text-gray-600 dark:text-gray-300">Average Bill</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-600">₹{insights?.averageAmount?.toFixed(2) || 0}</div>
+              <div className="text-3xl font-bold text-primary">₹{insights?.averageAmount?.toFixed(2) || 0}</div>
               <p className="text-xs text-gray-500">Per transaction</p>
             </CardContent>
           </Card>
@@ -770,7 +770,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
-                <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
+                <BarChart3 className="w-5 h-5 mr-2 text-primary" />
                 Revenue Forecast
               </CardTitle>
               <CardDescription>
@@ -1183,7 +1183,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-lg">
                   <div className="w-10 h-10 bg-[#F0F8FF] dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors duration-300">
-                    <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-gray-900 dark:text-white">Billing Data</span>
                 </CardTitle>
@@ -1194,7 +1194,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
               <CardContent className="pt-0">
                 <Button 
                   onClick={exportBillingData} 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
+                  className="w-full text-white shadow-lg hover:shadow-primary/25 transition-all duration-300 group-hover:scale-105 flex items-center justify-center"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download 
@@ -1280,7 +1280,7 @@ export const BillingDashboard: React.FC<BillingDashboardProps> = ({ data, onBack
         <div className="flex justify-center space-x-4 mt-12">
           <Button
             onClick={onGoHome}
-            className="px-10 py-4 text-white font-bold text-lg rounded-2xl shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            className="px-10 py-4 text-white font-bold text-lg rounded-2xl shadow-xl bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
           >
             <span className="flex items-center justify-center">
               <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

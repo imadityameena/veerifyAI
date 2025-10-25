@@ -177,7 +177,7 @@ const Demo = () => {
               <Button
                 onClick={handleStartDemo}
                 size="lg"
-                className="w-full px-12 py-6 text-lg font-semibold bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-xl flex items-center justify-center space-x-4"
+                className="w-full px-12 py-6 text-lg font-semibold bg-gradient-to-r from-primary to-pink-600 hover:from-primary/90 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-xl flex items-center justify-center space-x-4"
               >
                 <Play className="w-5 h-5" />
                 <span> Start Compliance Demo
