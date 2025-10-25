@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail, Shield, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, ArrowRight, Sparkles, CheckCircle, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import { FloatingDashboardCards } from '@/components/FloatingDashboardCards';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -83,23 +84,44 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        {/* Floating geometric shapes */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-blue-200/20 to-indigo-200/20 dark:from-blue-400/10 dark:to-indigo-400/10 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-r from-indigo-200/20 to-purple-200/20 dark:from-indigo-400/10 dark:to-purple-400/10 rounded-full animate-float-delayed"></div>
-        <div className="absolute bottom-40 left-32 w-20 h-20 bg-gradient-to-r from-emerald-200/20 to-teal-200/20 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-full animate-float-slow"></div>
-        <div className="absolute bottom-20 right-20 w-28 h-28 bg-gradient-to-r from-purple-200/20 to-pink-200/20 dark:from-purple-400/10 dark:to-pink-400/10 rounded-full animate-float"></div>
+      {/* Enhanced Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Large floating orbs */}
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-full animate-float-orb-1 blur-xl"></div>
+        <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-gradient-to-br from-emerald-400/20 via-cyan-400/20 to-blue-400/20 rounded-full animate-float-orb-2 blur-xl"></div>
+        <div className="absolute top-1/2 -right-40 w-64 h-64 bg-gradient-to-br from-purple-400/20 via-pink-400/20 to-orange-400/20 rounded-full animate-float-orb-3 blur-xl"></div>
         
-        {/* Geometric patterns */}
-        <div className="absolute top-32 left-1/4 w-16 h-16 bg-gradient-to-r from-blue-300/20 to-indigo-300/20 dark:from-blue-600/20 dark:to-indigo-600/20 rotate-45 animate-spin-slow"></div>
-        <div className="absolute bottom-32 right-1/4 w-12 h-12 bg-gradient-to-r from-indigo-300/20 to-purple-300/20 dark:from-indigo-600/20 dark:to-purple-600/20 rotate-12 animate-spin-medium"></div>
-        <div className="absolute top-1/2 left-10 w-8 h-8 bg-gradient-to-r from-emerald-300/20 to-teal-300/20 dark:from-emerald-600/20 dark:to-teal-600/20 rotate-45 animate-pulse"></div>
+        {/* Medium floating shapes */}
+        <div className="absolute top-20 left-1/4 w-48 h-48 bg-gradient-to-r from-blue-300/15 to-indigo-300/15 dark:from-blue-500/10 dark:to-indigo-500/10 rounded-full animate-float-medium-1"></div>
+        <div className="absolute top-40 right-1/3 w-40 h-40 bg-gradient-to-r from-purple-300/15 to-pink-300/15 dark:from-purple-500/10 dark:to-pink-500/10 rounded-full animate-float-medium-2"></div>
+        <div className="absolute bottom-32 left-1/3 w-36 h-36 bg-gradient-to-r from-emerald-300/15 to-teal-300/15 dark:from-emerald-500/10 dark:to-teal-500/10 rounded-full animate-float-medium-3"></div>
         
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full auth-grid-pattern"></div>
+        {/* Small floating particles */}
+        <div className="absolute top-16 left-16 w-8 h-8 bg-blue-400/30 rounded-full animate-particle-1"></div>
+        <div className="absolute top-32 right-20 w-6 h-6 bg-purple-400/30 rounded-full animate-particle-2"></div>
+        <div className="absolute bottom-20 left-20 w-10 h-10 bg-emerald-400/30 rounded-full animate-particle-3"></div>
+        <div className="absolute bottom-32 right-16 w-7 h-7 bg-orange-400/30 rounded-full animate-particle-4"></div>
+        <div className="absolute top-1/2 left-8 w-5 h-5 bg-cyan-400/30 rounded-full animate-particle-5"></div>
+        <div className="absolute top-1/3 right-8 w-4 h-4 bg-pink-400/30 rounded-full animate-particle-6"></div>
+        
+        {/* Geometric shapes */}
+        <div className="absolute top-24 left-1/2 w-16 h-16 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rotate-45 animate-spin-geometric-1"></div>
+        <div className="absolute bottom-24 right-1/2 w-12 h-12 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rotate-12 animate-spin-geometric-2"></div>
+        <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rotate-45 animate-pulse-geometric"></div>
+        
+        {/* Animated grid pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="w-full h-full auth-grid-pattern animate-grid-move"></div>
         </div>
+        
+        {/* Light rays effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-500/5 to-transparent animate-light-rays"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-purple-500/5 to-transparent animate-light-rays-delayed"></div>
+      </div>
+
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-20">
+        <img src="/logo.png" alt="VeerifyAI Logo" className="w-24 h-24 object-contain" />
       </div>
 
       {/* Theme Toggle */}
@@ -107,50 +129,20 @@ const Login = () => {
         <ModeToggle />
       </div>
       
-      {/* Left Side - Brand Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative z-10">
-        <div className="flex flex-col justify-center items-center text-center px-12 w-full">
-          <div className="mb-12 max-w-lg">
-            {/* Logo */}
-            <div className="w-48 h-48 flex items-center justify-center mx-auto mb-6">
-              <img src="/logo.png" alt="VeerifyAI Logo" className="w-full h-full object-contain" />
-            </div>
-            
-            {/* Subtitle */}
-            <p className="text-xl text-gray-800 dark:text-gray-300 mb-8 animate-fade-in-delay">
-              Healthcare Compliance Platform
-            </p>
-            
-            {/* Features List */}
-            <div className="space-y-4 text-left animate-slide-in-left">
-              <div className="flex items-center space-x-3 group">
-                <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Secure data processing</span>
-              </div>
-              <div className="flex items-center space-x-3 group animate-slide-in-left-delay">
-                <div className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Real-time compliance monitoring</span>
-              </div>
-              <div className="flex items-center space-x-3 group animate-slide-in-left-delay-2">
-                <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Advanced analytics dashboard</span>
-              </div>
-            </div>
-          </div>
+      {/* Left Side - Floating Dashboard Cards */}
+      <div className="hidden lg:flex lg:w-3/5 relative z-10">
+        {/* Floating Dashboard Cards */}
+        <div className="absolute inset-0 pointer-events-none">
+          <FloatingDashboardCards />
         </div>
       </div>
       
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative z-10">
+      <div className="w-full lg:w-2/5 flex items-center justify-center p-6 relative z-10">
         <div className="w-full max-w-md">
           {/* Login Card */}
           <Card className="shadow-2xl border-0 bg-white/10 dark:bg-gray-900/20 backdrop-blur-xl">
-            <CardHeader className="text-center pb-4">
-              <div className="flex items-center justify-center mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-white" />
-                </div>
-              </div>
+              <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Welcome Back
               </CardTitle>

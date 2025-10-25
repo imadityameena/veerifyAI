@@ -14,10 +14,10 @@ export const Logo: React.FC<LogoProps> = ({
   onClick
 }) => {
   const sizeClasses = {
-    sm: 'h-16 w-16',
-    md: 'h-20 w-20',
-    lg: 'h-24 w-24',
-    xl: 'h-32 w-32'
+    sm: 'h-28 w-28',
+    md: 'h-32 w-32',
+    lg: 'h-36 w-36',
+    xl: 'h-44 w-44'
   };
 
   return (
