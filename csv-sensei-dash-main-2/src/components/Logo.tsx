@@ -2,6 +2,8 @@ import React from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 import ltlogo2 from '@/assets/ltlogo2.png';
 
+// added comments
+
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showIndicator?: boolean;
