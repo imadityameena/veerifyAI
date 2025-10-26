@@ -183,7 +183,7 @@ const Signup = () => {
       <div className="w-full lg:w-2/5 flex items-center justify-center p-6 relative z-10">
         <div className="w-full max-w-md">
           {/* Signup Card */}
-          <Card className="shadow-2xl border-0 bg-white/10 dark:bg-gray-900/20 backdrop-blur-xl">
+          <Card className="shadow-none border-0 bg-transparent backdrop-blur-none">
               <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Create Account

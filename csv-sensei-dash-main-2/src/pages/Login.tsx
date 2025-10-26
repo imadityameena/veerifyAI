@@ -110,8 +110,8 @@ const Login = () => {
       </div>
 
       {/* Logo */}
-      <div className="absolute top-4 left-4 z-20">
-        <img src="/logo.png" alt="VeerifyAI Logo" className="w-16 h-16 object-contain" />
+      <div className="absolute top-6 left-6 z-20">
+        <img src="/logo.png" alt="VeerifyAI Logo" className="w-24 h-24 object-contain" />
       </div>
 
       {/* Theme Toggle */}
@@ -131,7 +131,7 @@ const Login = () => {
       <div className="w-full lg:w-2/5 flex items-center justify-center p-4 relative z-10">
         <div className="w-full max-w-sm">
           {/* Login Card */}
-          <Card className="shadow-2xl border-0 bg-white/10 dark:bg-gray-900/20 backdrop-blur-xl">
+          <Card className="shadow-none border-0 bg-transparent backdrop-blur-none">
               <CardHeader className="text-center pb-2">
               <CardTitle className="text-xl font-bold text-gray-800 dark:text-white mb-1">
                 Welcome Back
