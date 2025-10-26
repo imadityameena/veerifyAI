@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StepIndicator } from '@/components/StepIndicator';
+import { ConsistentStepIndicator } from '@/components/ConsistentStepIndicator';
 import { IndustrySelector } from '@/components/IndustrySelector';
 import { FileUpload } from '@/components/FileUpload';
 import { ComplianceFileUpload } from '@/components/ComplianceFileUpload';
@@ -484,53 +484,12 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Progress Steps - Only show for non-industry selector steps */}
-      {currentStep > 0 && (
-        <div className="bg-[#F0F8FF] dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-center space-x-8">
-              <div className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium transition-all duration-300 ${
-                  currentStep >= 0 ? 'bg-gradient-to-r from-blue-600 to-blue-700' : 'bg-gray-200 dark:bg-gray-700'
-                }`}>
-                  1
-                </div>
-                <span className={`ml-3 text-sm font-medium transition-colors duration-300 ${
-                  currentStep >= 0 ? 'text-gray-700 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'
-                }`}>
-                  Select Schema
-                </span>
-              </div>
-              <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
-              <div className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium transition-all duration-300 ${
-                  currentStep >= 1 ? 'bg-gradient-to-r from-blue-600 to-blue-700' : 'bg-gray-200 dark:bg-gray-700'
-                }`}>
-                  2
-                </div>
-                <span className={`ml-3 text-sm font-medium transition-colors duration-300 ${
-                  currentStep >= 1 ? 'text-gray-700 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'
-                }`}>
-                  Upload Data
-                </span>
-              </div>
-              <div className="w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
-              <div className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium transition-all duration-300 ${
-                  currentStep >= 2 ? 'bg-gradient-to-r from-blue-600 to-blue-700' : 'bg-gray-200 dark:bg-gray-700'
-                }`}>
-                  3
-                </div>
-                <span className={`ml-3 text-sm font-medium transition-colors duration-300 ${
-                  currentStep >= 2 ? 'text-gray-700 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'
-                }`}>
-                  Dashboard
-                </span>
-              </div>
-            </div>
-          </div>
+      {/* Progress Steps - Show for all steps */}
+      <div className="bg-[#F0F8FF] dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ConsistentStepIndicator currentStep={currentStep} />
         </div>
-      )}
+      </div>
 
       {/* Main Content */}
       {currentStep === 0 ? (
