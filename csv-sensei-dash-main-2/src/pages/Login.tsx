@@ -9,6 +9,7 @@ import { Eye, EyeOff, Lock, Mail, ArrowRight, Sparkles, CheckCircle, Shield } fr
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { FloatingDashboardCards } from '@/components/FloatingDashboardCards';
+import { Logo } from '@/components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -110,8 +111,8 @@ const Login = () => {
       </div>
 
       {/* Logo */}
-      <div className="absolute top-6 left-6 z-20">
-        <img src="/logo.png" alt="VeerifyAI Logo" className="w-24 h-24 object-contain" />
+      <div className="absolute top-8 left-6 z-20">
+        <Logo size="md" showIndicator={false} />
       </div>
 
       {/* Theme Toggle */}

@@ -406,7 +406,7 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Logo size="xl" showIndicator={false} className="flex-shrink-0" />
+              <Logo size="md" showIndicator={false} className="flex-shrink-0" />
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                   Doctor Roster Dashboard

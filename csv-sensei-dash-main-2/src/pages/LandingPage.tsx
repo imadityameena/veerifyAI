@@ -209,7 +209,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Logo size="lg" showIndicator={false} onClick={() => handleNavClick('home')} />
+            <Logo size="md" showIndicator={false} onClick={() => handleNavClick('home')} />
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
@@ -403,7 +403,7 @@ const LandingPage = () => {
                 <div className="bg-white dark:bg-gray-700 rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 hover:shadow-lg hover:shadow-3xl transition-all duration-500 cursor-pointer group border border-gray-100 dark:border-gray-600 hover:border-blue-200 dark:hover:border-blue-600">
                     <div className="flex items-center gap-4 mb-6">
                     <div className=" transition-all duration-300">
-                      <Logo size="lg" showIndicator={false} className="bg-white dark:bg-gray-700" />
+                      <Logo size="md" showIndicator={false} className="bg-white dark:bg-gray-700" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white">VeerifyAI Dashboard</h3>

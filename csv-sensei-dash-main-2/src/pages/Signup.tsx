@@ -163,7 +163,7 @@ const Signup = () => {
 
       {/* Logo */}
       <div className="absolute top-6 left-6 z-20">
-        <img src="/logo.png" alt="VeerifyAI Logo" className="w-24 h-24 object-contain" />
+        <Logo size="md" showIndicator={false} />
       </div>
 
       {/* Theme Toggle */}
