@@ -9,6 +9,7 @@ import { Eye, EyeOff, Lock, Mail, ArrowRight, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Logo } from '@/components/Logo';
+import AnimatedText from '@/components/AnimatedText';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -166,30 +167,24 @@ const AdminLogin = () => {
           </div>
           
           {/* Platform Title */}
-          <div className="space-y-6 relative">
-            {/* Title background animation */}
-            <div className="absolute -top-4 -left-4 -right-4 -bottom-4 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-2xl blur-sm animate-pulse" style={{animationDuration: '8s'}}></div>
-            <h1 className="text-3xl font-bold text-gray-800 dark:text-white relative z-10">
-              Admin Control Center
-            </h1>
+          <div className="space-y-6">
+            <AnimatedText
+              lines={['Admin Control Center']}
+              delay={800}
+              className="text-3xl font-bold text-gray-800 dark:text-white"
+            />
             
             {/* Features List */}
-            <ul className="space-y-4 ml-8 relative">
-              {/* Feature list background */}
-              <div className="absolute -top-2 -left-2 -right-2 -bottom-2 bg-gradient-to-r from-green-400/3 to-blue-400/3 rounded-xl blur-sm animate-pulse" style={{animationDuration: '6s', animationDelay: '1s'}}></div>
-              <li className="flex items-center space-x-3 relative z-10">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDuration: '2s'}}></div>
-                <span className="text-gray-600 dark:text-white">Manage user accounts and permissions.</span>
-              </li>
-              <li className="flex items-center space-x-3 relative z-10">
-                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{animationDuration: '2s', animationDelay: '0.5s'}}></div>
-                <span className="text-gray-600 dark:text-white">Monitor system performance and usage.</span>
-              </li>
-              <li className="flex items-center space-x-3 relative z-10">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDuration: '2s', animationDelay: '1s'}}></div>
-                <span className="text-gray-600 dark:text-white">Access advanced admin analytics.</span>
-              </li>
-            </ul>
+            <AnimatedText
+              lines={[
+                'Manage user accounts and permissions.',
+                'Monitor system performance and usage.',
+                'Access advanced admin analytics.'
+              ]}
+              delay={600}
+              showBullets={true}
+              className="space-y-4 ml-8"
+            />
           </div>
         </div>
       </div>

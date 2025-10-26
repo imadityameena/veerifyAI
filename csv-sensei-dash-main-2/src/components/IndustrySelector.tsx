@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFeatureToggle } from '@/hooks/useFeatureToggle';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 interface IndustrySelectorProps {
   selectedIndustry: string;
@@ -73,6 +75,7 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
 }) => {
   const { isFeatureEnabled, isLoading } = useFeatureToggle();
   const [selectedSchema, setSelectedSchema] = useState<string | null>(selectedIndustry);
+  const navigate = useNavigate();
 
   const getFeatureName = (industryId: string): 'op_billing' | 'doctor_roster' | 'compliance_ai' | null => {
     switch (industryId) {
@@ -90,6 +93,10 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
   const handleSchemaSelect = (schemaId: string) => {
     setSelectedSchema(schemaId);
     onIndustryChange(schemaId);
+  };
+
+  const handleBack = () => {
+    navigate('/demo');
   };
 
   if (isLoading) {
@@ -113,28 +120,16 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
 
   return (
     <div className="w-full max-w-6xl mx-auto h-screen relative flex flex-col">
-
-      {/* Step Indicator */}
-      <div className="relative z-10 pt-6 pb-2">
-        <div className="flex items-center justify-center space-x-8">
-          <div className="flex items-center">
-            <span className="text-blue-600 dark:text-blue-400 font-medium text-sm border-b-2 border-blue-600 dark:border-blue-400 pb-1">
-              1 Select Schema
-            </span>
-          </div>
-          <div className="w-16 h-1 bg-gray-300 dark:bg-gray-700 rounded"></div>
-          <div className="flex items-center">
-            <span className="text-gray-500 dark:text-gray-400 font-medium text-sm">
-              2 Upload Data
-            </span>
-          </div>
-          <div className="w-16 h-1 bg-gray-300 dark:bg-gray-700 rounded"></div>
-          <div className="flex items-center">
-            <span className="text-gray-500 dark:text-gray-400 font-medium text-sm">
-              3 Dashboard
-            </span>
-          </div>
-        </div>
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 z-20">
+        <Button
+          variant="outline"
+          onClick={handleBack}
+          className="flex items-center space-x-2 hover:shadow-lg transition-all duration-300"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Go Back</span>
+        </Button>
       </div>
 
       {/* Main Content */}

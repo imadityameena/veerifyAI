@@ -7,7 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart as RechartsPieChart, Cell, Pie, LineChart, Line, AreaChart, Area, ScatterChart, Scatter, ZAxis, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { runCompliance, Violation, ComplianceResult } from '@/utils/compliance';
-import { topNBySum, groupBy, average, detectAnomalies } from '@/utils/analytics';
+import { topNBySum, groupBy, average, detectAnomalies, buildMonthlySeries, parseDate, formatMonth } from '@/utils/analytics';
 import { InlineChatbot } from './InlineChatbot';
 import { Logo } from './Logo';
 
@@ -60,6 +60,107 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  // Helper function to get field value with flexible mapping
+  const getFieldValue = (row: any, possibleNames: string[], fallback: any = undefined) => {
+    for (const name of possibleNames) {
+      if (row[name] !== undefined && row[name] !== null && row[name] !== '') {
+        return row[name];
+      }
+    }
+    return fallback;
+  };
+
+  // Parse amount from various formats
+  const parseAmount = (value: any): number => {
+    if (value === undefined || value === null || value === '') return 0;
+    if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
+    const str = String(value).replace(/[,\s]/g, '').replace(/[^0-9.-]/g, '');
+    const n = parseFloat(str);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  // Generate monthly revenue data from real billing data
+  const generateMonthlyRevenueData = () => {
+    if (!opBillingData || opBillingData.length === 0) {
+      // Fallback to hardcoded data if no real data available
+      return [
+        { month: 'Jan', revenue: 45000 },
+        { month: 'Feb', revenue: 52000 },
+        { month: 'Mar', revenue: 58000 },
+        { month: 'Apr', revenue: 62000 },
+        { month: 'May', revenue: 68000 },
+        { month: 'Jun', revenue: 75000 },
+        { month: 'Jul', revenue: 82000 },
+        { month: 'Aug', revenue: 88000 },
+        { month: 'Sep', revenue: 92000 },
+        { month: 'Oct', revenue: 98000 },
+        { month: 'Nov', revenue: 105000 },
+        { month: 'Dec', revenue: 112000 }
+      ];
+    }
+
+    // Process real data to create monthly revenue series
+    const monthlyRevenue: { [key: string]: number } = {};
+    
+    opBillingData.forEach((row) => {
+      // Try to find date field with flexible mapping
+      const dateValue = getFieldValue(row, [
+        'Visit_Date', 'visit_date', 'VisitDate', 'date', 'Bill_Date', 'bill_date', 
+        'Transaction_Date', 'transaction_date', 'Date', 'DATE'
+      ]);
+      
+      // Try to find amount field with flexible mapping
+      const amountValue = getFieldValue(row, [
+        'Amount', 'Total_Amount', 'TotalAmount', 'Amount_Billed', 'Bill_Amount', 
+        'Gross_Amount', 'Revenue', 'amount', 'total_amount', 'AMOUNT'
+      ]);
+
+      if (dateValue && amountValue) {
+        const date = parseDate(dateValue);
+        const amount = parseAmount(amountValue);
+        
+        if (date && amount > 0) {
+          const monthKey = formatMonth(date);
+          const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+          
+          if (!monthlyRevenue[monthName]) {
+            monthlyRevenue[monthName] = 0;
+          }
+          monthlyRevenue[monthName] += amount;
+        }
+      }
+    });
+
+    // Convert to array format expected by the chart
+    const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const revenueData = monthOrder.map(month => ({
+      month,
+      revenue: monthlyRevenue[month] || 0
+    }));
+
+    // If we have no real data, return some sample data
+    if (revenueData.every(item => item.revenue === 0)) {
+      return [
+        { month: 'Jan', revenue: 45000 },
+        { month: 'Feb', revenue: 52000 },
+        { month: 'Mar', revenue: 58000 },
+        { month: 'Apr', revenue: 62000 },
+        { month: 'May', revenue: 68000 },
+        { month: 'Jun', revenue: 75000 },
+        { month: 'Jul', revenue: 82000 },
+        { month: 'Aug', revenue: 88000 },
+        { month: 'Sep', revenue: 92000 },
+        { month: 'Oct', revenue: 98000 },
+        { month: 'Nov', revenue: 105000 },
+        { month: 'Dec', revenue: 112000 }
+      ];
+    }
+
+    return revenueData;
   };
 
   const runComplianceAnalysis = useCallback(() => {
@@ -1069,20 +1170,7 @@ export const ComplianceDashboard: React.FC<ComplianceDashboardProps> = ({
               <ChartContainer config={{}} className="h-96 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
-                    data={[
-                      { month: 'Jan', revenue: 45000 },
-                      { month: 'Feb', revenue: 52000 },
-                      { month: 'Mar', revenue: 58000 },
-                      { month: 'Apr', revenue: 62000 },
-                      { month: 'May', revenue: 68000 },
-                      { month: 'Jun', revenue: 75000 },
-                      { month: 'Jul', revenue: 82000 },
-                      { month: 'Aug', revenue: 88000 },
-                      { month: 'Sep', revenue: 92000 },
-                      { month: 'Oct', revenue: 98000 },
-                      { month: 'Nov', revenue: 105000 },
-                      { month: 'Dec', revenue: 112000 }
-                    ]}
+                    data={generateMonthlyRevenueData()}
                     margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
