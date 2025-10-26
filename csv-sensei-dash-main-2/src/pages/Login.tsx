@@ -8,7 +8,6 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Lock, Mail, ArrowRight, Sparkles, CheckCircle, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import { FloatingDashboardCards } from '@/components/FloatingDashboardCards';
 import { Logo } from '@/components/Logo';
 
 const Login = () => {
@@ -84,31 +83,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative overflow-hidden">
-      {/* Simplified Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Smaller floating orbs */}
-        <div className="absolute -top-10 -left-10 w-48 h-48 bg-gradient-to-br from-blue-400/15 via-purple-400/15 to-pink-400/15 rounded-full animate-float-orb-1 blur-xl"></div>
-        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br from-emerald-400/15 via-cyan-400/15 to-blue-400/15 rounded-full animate-float-orb-2 blur-xl"></div>
-        
-        {/* Reduced floating shapes */}
-        <div className="absolute top-10 left-1/4 w-24 h-24 bg-gradient-to-r from-blue-300/10 to-indigo-300/10 dark:from-blue-500/8 dark:to-indigo-500/8 rounded-full animate-float-medium-1"></div>
-        <div className="absolute top-20 right-1/3 w-20 h-20 bg-gradient-to-r from-purple-300/10 to-pink-300/10 dark:from-purple-500/8 dark:to-pink-500/8 rounded-full animate-float-medium-2"></div>
-        
-        {/* Fewer small particles */}
-        <div className="absolute top-8 left-8 w-4 h-4 bg-blue-400/20 rounded-full animate-particle-1"></div>
-        <div className="absolute top-16 right-10 w-3 h-3 bg-purple-400/20 rounded-full animate-particle-2"></div>
-        <div className="absolute bottom-10 left-10 w-5 h-5 bg-emerald-400/20 rounded-full animate-particle-3"></div>
-        
-        {/* Simplified geometric shapes */}
-        <div className="absolute top-12 left-1/2 w-8 h-8 bg-gradient-to-r from-blue-400/15 to-indigo-400/15 rotate-45 animate-spin-geometric-1"></div>
-        <div className="absolute bottom-12 right-1/2 w-6 h-6 bg-gradient-to-r from-purple-400/15 to-pink-400/15 rotate-12 animate-spin-geometric-2"></div>
-        
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full auth-grid-pattern animate-grid-move"></div>
-        </div>
-      </div>
+    <div className="h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative">
 
       {/* Logo */}
       <div className="absolute top-8 left-6 z-20">
@@ -120,19 +95,20 @@ const Login = () => {
         <ModeToggle />
       </div>
       
-      {/* Left Side - Floating Dashboard Cards */}
-      <div className="hidden lg:flex lg:w-3/5 relative z-10">
-        {/* Floating Dashboard Cards */}
-        <div className="absolute inset-0 pointer-events-none">
-          <FloatingDashboardCards />
-        </div>
+      {/* Left Side - Image */}
+      <div className="hidden lg:flex lg:w-3/5 relative items-center justify-center">
+        <img 
+          src="/src/assets/loginpage3.png" 
+          alt="Login" 
+          className="max-w-[100%] max-h-[100%] object-contain"
+        />
       </div>
       
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-2/5 flex items-center justify-center p-4 relative z-10">
+      <div className="w-full lg:w-2/5 flex items-center justify-start pl-8 p-4 relative z-10">
         <div className="w-full max-w-sm">
           {/* Login Card */}
-          <Card className="shadow-none border-0 bg-transparent backdrop-blur-none">
+          <Card className="shadow-2xl border-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
               <CardHeader className="text-center pb-2">
               <CardTitle className="text-xl font-bold text-gray-800 dark:text-white mb-1">
                 Welcome Back
@@ -158,7 +134,7 @@ const Login = () => {
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="pl-10 h-9 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-11 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -178,7 +154,7 @@ const Login = () => {
                       placeholder="Enter your password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="pl-10 pr-10 h-9 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 pr-10 h-11 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                       required
                     />
                     <button
@@ -203,7 +179,7 @@ const Login = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-9 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/25 group"
+                  className="w-full h-11 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/25 group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
