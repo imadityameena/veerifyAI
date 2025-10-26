@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Lock, Mail, User, UserCheck, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import { Logo } from '@/components/Logo';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -124,24 +125,11 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        {/* Floating geometric shapes */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-blue-200/20 to-indigo-200/20 dark:from-blue-400/10 dark:to-indigo-400/10 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-gradient-to-r from-indigo-200/20 to-purple-200/20 dark:from-indigo-400/10 dark:to-purple-400/10 rounded-full animate-float-delayed"></div>
-        <div className="absolute bottom-40 left-32 w-20 h-20 bg-gradient-to-r from-emerald-200/20 to-teal-200/20 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-full animate-float-slow"></div>
-        <div className="absolute bottom-20 right-20 w-28 h-28 bg-gradient-to-r from-purple-200/20 to-pink-200/20 dark:from-purple-400/10 dark:to-pink-400/10 rounded-full animate-float"></div>
-        
-        {/* Geometric patterns */}
-        <div className="absolute top-32 left-1/4 w-16 h-16 bg-gradient-to-r from-blue-300/20 to-indigo-300/20 dark:from-blue-600/20 dark:to-indigo-600/20 rotate-45 animate-spin-slow"></div>
-        <div className="absolute bottom-32 right-1/4 w-12 h-12 bg-gradient-to-r from-indigo-300/20 to-purple-300/20 dark:from-indigo-600/20 dark:to-purple-600/20 rotate-12 animate-spin-medium"></div>
-        <div className="absolute top-1/2 left-10 w-8 h-8 bg-gradient-to-r from-emerald-300/20 to-teal-300/20 dark:from-emerald-600/20 dark:to-teal-600/20 rotate-45 animate-pulse"></div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="w-full h-full auth-grid-pattern"></div>
-        </div>
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 flex relative">
+
+      {/* Logo */}
+      <div className="absolute top-6 left-6 z-20">
+        <Logo size="md" showIndicator={false} />
       </div>
 
       {/* Theme Toggle */}
@@ -149,50 +137,21 @@ const Signup = () => {
         <ModeToggle />
       </div>
       
-      {/* Left Side - Brand Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative z-10">
-        <div className="flex flex-col justify-center items-center text-center px-12 w-full">
-          <div className="mb-12 max-w-lg">
-            {/* Logo */}
-            <div className="w-48 h-48 flex items-center justify-center mx-auto mb-6">
-              <img src="/logo.png" alt="VeerifyAI Logo" className="w-full h-full object-contain" />
-            </div>
-            
-            {/* Subtitle */}
-            <p className="text-xl text-gray-800 dark:text-gray-300 mb-8 animate-fade-in-delay">
-              Healthcare Compliance Platform
-            </p>
-            
-            {/* Features List */}
-            <div className="space-y-4 text-left animate-slide-in-left">
-              <div className="flex items-center space-x-3 group">
-                <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Join thousands of healthcare professionals</span>
-              </div>
-              <div className="flex items-center space-x-3 group animate-slide-in-left-delay">
-                <div className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Streamline your compliance workflow</span>
-              </div>
-              <div className="flex items-center space-x-3 group animate-slide-in-left-delay-2">
-                <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg group-hover:scale-110 transition-transform"></div>
-                <span className="text-base text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Get started in minutes, not hours</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Left Side - Image */}
+      <div className="hidden lg:flex lg:w-3/5 relative items-center justify-center">
+        <img 
+          src="/src/assets/loginpage3.png" 
+          alt="Signup" 
+          className="max-w-[100%] max-h-[100%] object-contain"
+        />
       </div>
       
       {/* Right Side - Signup Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative z-10">
+      <div className="w-full lg:w-2/5 flex items-center justify-start pl-8 p-6 relative z-10">
         <div className="w-full max-w-md">
           {/* Signup Card */}
-          <Card className="shadow-2xl border-0 bg-white/10 dark:bg-gray-900/20 backdrop-blur-xl">
-            <CardHeader className="text-center pb-4">
-              <div className="flex items-center justify-center mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                  <UserCheck className="w-5 h-5 text-white" />
-                </div>
-              </div>
+          <Card className="shadow-2xl border-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+              <CardHeader className="text-center pb-4">
               <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Create Account
               </CardTitle>
@@ -210,7 +169,7 @@ const Signup = () => {
                       First Name
                     </Label>
                     <div className="relative group">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                       <Input
                         id="firstName"
                         name="firstName"
@@ -218,7 +177,7 @@ const Signup = () => {
                         placeholder="John"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                        className="pl-10 h-12 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                         required
                       />
                     </div>
@@ -229,7 +188,7 @@ const Signup = () => {
                       Last Name
                     </Label>
                     <div className="relative group">
-                      <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                      <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                       <Input
                         id="lastName"
                         name="lastName"
@@ -237,7 +196,7 @@ const Signup = () => {
                         placeholder="Doe"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="pl-10 h-10 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
+                        className="pl-10 h-12 bg-white/80 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white dark:focus:bg-white/20 transition-all duration-200"
                         required
                       />
                     </div>
@@ -250,7 +209,7 @@ const Signup = () => {
                       Email Address
                     </Label>
                   <div className="relative group">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="email"
                       name="email"
@@ -258,7 +217,7 @@ const Signup = () => {
                       placeholder="john.doe@company.com"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-12 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -270,7 +229,7 @@ const Signup = () => {
                       Company Name
                     </Label>
                   <div className="relative group">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="company"
                       name="company"
@@ -278,7 +237,7 @@ const Signup = () => {
                       placeholder="Your Company Inc."
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-12 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -290,7 +249,7 @@ const Signup = () => {
                       Password
                     </Label>
                   <div className="relative group">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="password"
                       name="password"
@@ -298,7 +257,7 @@ const Signup = () => {
                       placeholder="Create a strong password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="pl-10 pr-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 pr-10 h-12 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                     <button
@@ -317,7 +276,7 @@ const Signup = () => {
                       Confirm Password
                     </Label>
                   <div className="relative group">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-primary transition-colors" />
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -325,7 +284,7 @@ const Signup = () => {
                       placeholder="Confirm your password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="pl-10 h-10 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20 focus:bg-white/20 transition-all duration-200"
+                      className="pl-10 h-12 bg-white/10 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary/20 focus:bg-white/20 transition-all duration-200"
                       required
                     />
                   </div>
@@ -343,7 +302,7 @@ const Signup = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-10 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/25 group"
+                  className="w-full h-12 font-semibold rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/25 group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -366,7 +325,7 @@ const Signup = () => {
                   Already have an account?{' '}
                   <Link 
                     to="/login" 
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline transition-colors"
+                    className="text-primary hover:text-primary/80 font-medium hover:underline transition-colors"
                   >
                     Sign in
                   </Link>

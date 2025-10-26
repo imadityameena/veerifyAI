@@ -242,11 +242,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-gray-200 dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Logo size="xl" showIndicator={false} className="flex-shrink-0" />
+              <Logo size="md" showIndicator={false} className="flex-shrink-0" />
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                   Data Analytics Dashboard
@@ -330,7 +330,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <CardContent className="p-6">
                   <div className="flex items-start">
                     <div className="w-8 h-8 bg-[#F0F8FF] dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                      <Activity className="w-4 h-4 text-blue-600" />
+                      <Activity className="w-4 h-4 text-primary" />
                     </div>
                     <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                       {insight}
@@ -382,7 +382,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <Card className="bg-white dark:bg-gray-800 shadow-lg border-gray-200 dark:border-gray-700">
             <CardHeader>
               <CardTitle className="flex items-center text-gray-800 dark:text-gray-200">
-                <PieChart className="w-5 h-5 mr-2 text-blue-600" />
+                <PieChart className="w-5 h-5 mr-2 text-primary" />
                 Distribution Analysis
               </CardTitle>
               <CardDescription className="text-gray-600 dark:text-gray-400">

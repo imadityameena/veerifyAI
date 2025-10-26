@@ -396,7 +396,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 transition-colors duration-300">
       {/* Navigation Header */}
-      <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+      <nav className="bg-gray-200 dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
