@@ -140,7 +140,7 @@ const Signup = () => {
       {/* Left Side - Image */}
       <div className="hidden lg:flex lg:w-3/5 relative items-center justify-center">
         <img 
-          src="/src/assets/loginpage3.png" 
+          src="/loginpage3.png" 
           alt="Signup" 
           className="max-w-[100%] max-h-[100%] object-contain"
         />
