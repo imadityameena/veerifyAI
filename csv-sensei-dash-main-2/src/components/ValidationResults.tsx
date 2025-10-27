@@ -227,11 +227,12 @@ export const ValidationResults: React.FC<ValidationResultsProps> = ({
           
           <Button 
             onClick={onBack}
-            variant="outline"
-            className="px-6 py-3 flex items-center"
+            variant="ghost"
+            size="sm"
+            className="px-6 py-3 flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Upload
+            Back
           </Button>
           
           <Button 

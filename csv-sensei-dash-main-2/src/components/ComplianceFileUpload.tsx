@@ -137,11 +137,12 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
         <div className="mb-6">
           <Button
             onClick={onBack}
-            variant="outline"
-            className="flex items-center space-x-2 mb-4 hover:shadow-lg transition-all duration-300"
+            variant="ghost"
+            size="sm"
+            className="flex items-center space-x-2 mb-4 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Go Back</span>
+            <span>Back</span>
           </Button>
         </div>
       )}
@@ -157,7 +158,7 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* OP Billing Upload */}
-        <Card className={`transition-all duration-300 ${opBillingFile ? 'border-green-200 bg-green-50 dark:bg-green-900/20' : 'border-gray-200'}`}>
+        <Card className={`transition-all duration-300 bg-transparent border border-gray-200 dark:border-gray-700 ${opBillingFile ? 'border-green-400' : ''}`}>
           <CardHeader>
             <CardTitle className="flex items-center">
               <Receipt className="w-5 h-5 mr-2 text-blue-600" />
@@ -173,11 +174,12 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
               {...getBillingRootProps()}
               className={`
                 relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300
+                bg-[#1A1D29] border-[#6C757D] hover:border-[#8B9DC3]
                 ${isBillingDragActive 
-                  ? 'border-blue-400 bg-blue-50/50 dark:bg-blue-900/20 scale-105' 
-                  : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500'
+                  ? 'border-[#8B9DC3] scale-105' 
+                  : ''
                 }
-                ${opBillingFile ? 'bg-green-50 dark:bg-green-900/20 border-green-400' : ''}
+                ${opBillingFile ? 'border-green-400' : ''}
               `}
             >
               <input {...getBillingInputProps()} />
@@ -185,28 +187,28 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
               <div className="flex flex-col items-center space-y-4">
                 {opBillingFile ? (
                   <>
-                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-green-600" />
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-green-700 dark:text-green-400">
+                      <p className="text-sm font-semibold text-white">
                         {opBillingFile.name}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                      <p className="text-xs text-[#ADB5BD]">
                         {(opBillingFile.size / 1024).toFixed(1)} KB
                       </p>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center">
-                      <Upload className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-[#2A408C] rounded-full flex items-center justify-center">
+                      <Upload className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <p className="text-sm font-semibold text-white">
                         {isBillingDragActive ? 'Drop billing CSV here' : 'Upload Billing CSV'}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-[#ADB5BD]">
                         Drag and drop or click to browse
                       </p>
                     </div>
@@ -229,7 +231,7 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
         </Card>
 
         {/* Doctor Roster Upload */}
-        <Card className={`transition-all duration-300 ${doctorRosterFile ? 'border-green-200 bg-green-50 dark:bg-green-900/20' : 'border-gray-200'}`}>
+        <Card className={`transition-all duration-300 bg-transparent border border-gray-200 dark:border-gray-700 ${doctorRosterFile ? 'border-green-400' : ''}`}>
           <CardHeader>
             <CardTitle className="flex items-center">
               <Users className="w-5 h-5 mr-2 text-purple-600" />
@@ -245,11 +247,12 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
               {...getRosterRootProps()}
               className={`
                 relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300
+                bg-[#1A1D29] border-[#6C757D] hover:border-[#8B9DC3]
                 ${isRosterDragActive 
-                  ? 'border-purple-400 bg-purple-50/50 dark:bg-purple-900/20 scale-105' 
-                  : 'border-gray-300 dark:border-gray-600 hover:border-purple-400 dark:hover:border-purple-500'
+                  ? 'border-[#8B9DC3] scale-105' 
+                  : ''
                 }
-                ${doctorRosterFile ? 'bg-green-50 dark:bg-green-900/20 border-green-400' : ''}
+                ${doctorRosterFile ? 'border-green-400' : ''}
               `}
             >
               <input {...getRosterInputProps()} />
@@ -257,28 +260,28 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
               <div className="flex flex-col items-center space-y-4">
                 {doctorRosterFile ? (
                   <>
-                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-green-600" />
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-green-700 dark:text-green-400">
+                      <p className="text-sm font-semibold text-white">
                         {doctorRosterFile.name}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                      <p className="text-xs text-[#ADB5BD]">
                         {(doctorRosterFile.size / 1024).toFixed(1)} KB
                       </p>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                      <Upload className="w-6 h-6 text-purple-600" />
+                    <div className="w-12 h-12 bg-[#2A408C] rounded-full flex items-center justify-center">
+                      <Upload className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <p className="text-sm font-semibold text-white">
                         {isRosterDragActive ? 'Drop roster CSV here' : 'Upload Roster CSV'}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-[#ADB5BD]">
                         Drag and drop or click to browse
                       </p>
                     </div>
@@ -302,7 +305,7 @@ export const ComplianceFileUpload: React.FC<ComplianceFileUploadProps> = ({ onFi
       </div>
 
       {/* Compliance Rules / Dynamic Insights */}
-      <Card className="mb-8">
+      <Card className="mb-8 bg-transparent border border-gray-200 dark:border-gray-700">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">

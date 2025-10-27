@@ -256,9 +256,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 </p>
               </div>
             </div>
-            <Button onClick={onBack} variant="outline" className="flex items-center space-x-2">
+            <Button
+              onClick={onBack}
+              variant="ghost"
+              size="sm"
+              className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
+            >
               <ArrowLeft className="w-4 h-4" />
-              <span>Go Back</span>
+              <span>Back</span>
             </Button>
           </div>
         </div>

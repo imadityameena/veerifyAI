@@ -107,7 +107,7 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
             Choose Your Industry Schema
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            Select the industry template that best matches your data structure and unlock powerful analytics
+            Select the industry template that matches your data and unlock powerful analytics
           </p>
         </div>
         <div className="flex items-center justify-center py-8">
@@ -123,12 +123,13 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
       {/* Back Button */}
       <div className="absolute top-6 left-6 z-20">
         <Button
-          variant="outline"
+          variant="ghost"
+          size="sm"
           onClick={handleBack}
-          className="flex items-center space-x-2 hover:shadow-lg transition-all duration-300"
+          className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Go Back</span>
+          <span>Back</span>
         </Button>
       </div>
 
@@ -140,7 +141,7 @@ export const IndustrySelector: React.FC<IndustrySelectorProps> = ({
             Choose Your Industry Schema
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Select the industry template that best matches your data structure and unlock powerful analytics
+            Select the industry template that matches your data and unlock powerful analytics
           </p>
         </div>
 

@@ -396,15 +396,13 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#F0F8FF] dark:bg-gray-900 transition-colors duration-300">
       {/* Navigation Header */}
-      <nav className="bg-gray-200 dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Logo size="md" showIndicator={false} />
-              </div>
-            </div>
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-gray-200/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Logo size="md" showIndicator={false} />
             
+            {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
               {/* Theme Toggle */}
               <button 
@@ -485,15 +483,15 @@ const Index = () => {
       </nav>
 
       {/* Progress Steps - Show for all steps */}
-      <div className="bg-[#F0F8FF] dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-[#F0F8FF] dark:bg-gray-900 pt-20 pb-1">
+        <div className="max-w-7xl mx-auto px-6">
           <ConsistentStepIndicator currentStep={currentStep} />
         </div>
       </div>
 
       {/* Main Content */}
       {currentStep === 0 ? (
-        <div className="w-full">
+        <div className="w-full -mt-8">
           {renderCurrentStep()}
         </div>
       ) : (

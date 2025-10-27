@@ -122,10 +122,12 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
                 onClick={() => navigate('/demo')}
-                className="flex items-center space-x-2 flex-1"
+                variant="ghost"
+                size="sm"
+                className="flex items-center space-x-2 flex-1 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>Back to Dashboard</span>
+                <span>Back</span>
               </Button>
               
               <Button

@@ -35,11 +35,12 @@ export const BillingUpload: React.FC<BillingUploadProps> = ({ onFileUpload, onBa
         <div className="mb-6">
           <Button
             onClick={onBack}
-            variant="outline"
-            className="flex items-center space-x-2 mb-4 hover:shadow-lg transition-all duration-300"
+            variant="ghost"
+            size="sm"
+            className="flex items-center space-x-2 mb-4 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Go Back</span>
+            <span>Back</span>
           </Button>
         </div>
       )}
@@ -54,7 +55,7 @@ export const BillingUpload: React.FC<BillingUploadProps> = ({ onFileUpload, onBa
       </div>
 
       {/* Upload Area */}
-      <Card className={`transition-all duration-300 ${uploadedFile ? 'border-green-200 bg-green-50 dark:bg-green-900/20' : 'border-gray-200'}`}>
+      <Card className={`transition-all duration-300 bg-transparent border border-gray-200 dark:border-gray-700 ${uploadedFile ? 'border-green-400' : ''}`}>
         <CardHeader>
           <CardTitle className="flex items-center">
             <Receipt className="w-5 h-5 mr-2 text-purple-600" />
@@ -70,45 +71,48 @@ export const BillingUpload: React.FC<BillingUploadProps> = ({ onFileUpload, onBa
             {...getRootProps()}
             className={`
               relative border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300
+              bg-[#1A1D29] border-[#6C757D] hover:border-[#8B9DC3]
               ${isDragActive 
-                ? 'border-purple-400 bg-purple-50/50 dark:bg-purple-900/20 scale-105' 
-                : 'border-gray-300 dark:border-gray-600 hover:border-purple-400 dark:hover:border-purple-500'
+                ? 'border-[#8B9DC3] scale-105' 
+                : ''
               }
-              ${uploadedFile ? 'bg-green-50 dark:bg-green-900/20 border-green-400' : ''}
+              ${uploadedFile ? 'border-green-400' : ''}
             `}
           >
             <input {...getInputProps()} />
             
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-6">
               {uploadedFile ? (
                 <>
-                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center animate-bounce">
-                    <FileText className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center animate-bounce">
+                    <FileText className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <p className="text-lg font-semibold text-green-700 dark:text-green-400">
+                    <p className="text-xl font-semibold text-white">
                       File Uploaded Successfully!
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{uploadedFile.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">
+                    <p className="text-sm text-[#ADB5BD]">{uploadedFile.name}</p>
+                    <p className="text-xs text-[#6C757D]">
                       Size: {(uploadedFile.size / 1024).toFixed(1)} KB
                     </p>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                    <Upload className="w-8 h-8 text-purple-600" />
+                  <div className="w-16 h-16 bg-[#2A408C] rounded-full flex items-center justify-center">
+                    <Upload className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                    <p className="text-xl font-semibold text-white">
                       {isDragActive ? 'Drop your CSV file here' : 'Upload Billing CSV'}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-[#ADB5BD]">
                       Drag and drop your CSV file here, or click to browse
                     </p>
                   </div>
-                  <Button variant="outline" className="mt-4">
+                  <Button 
+                    className="mt-4 bg-[#12141C] hover:bg-[#1A1D29] text-white border-0 rounded-lg px-6 py-2 font-semibold"
+                  >
                     Select CSV File
                   </Button>
                 </>
@@ -130,7 +134,7 @@ export const BillingUpload: React.FC<BillingUploadProps> = ({ onFileUpload, onBa
       </Card>
 
       {/* Expected Fields Info */}
-      <Card className="mt-6">
+      <Card className="mt-6 bg-transparent border border-gray-200 dark:border-gray-700">
         <CardHeader>
           <CardTitle className="flex items-center">
             <Receipt className="w-5 h-5 mr-2 text-purple-600" />

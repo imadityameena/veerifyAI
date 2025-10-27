@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, Mail, User, UserCheck, ArrowRight, Sparkles, CheckCircle, Shield } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, User, UserCheck, ArrowRight, Sparkles, CheckCircle, Shield, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Logo } from '@/components/Logo';
@@ -172,6 +172,19 @@ const Signup = () => {
         <div className="absolute top-2/5 right-3/5 w-1 h-1 bg-green-400/45 rounded-full animate-bounce" style={{animationDuration: '2.0s', animationDelay: '2.6s'}}></div>
       </div>
 
+      {/* Back Button */}
+      <div className="absolute top-6 left-6 z-20">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate(-1)}
+          className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-200"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back</span>
+        </Button>
+      </div>
+
       {/* Theme Toggle */}
       <div className="absolute top-6 right-6 z-20">
         <ModeToggle />
@@ -303,7 +316,7 @@ const Signup = () => {
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="john.doe@company.com"
+                    placeholder="Your email address"
                     value={formData.email}
                     onChange={handleInputChange}
                     className="pl-10 h-12 bg-white/90 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500/50"
@@ -323,7 +336,7 @@ const Signup = () => {
                     id="company"
                     name="company"
                     type="text"
-                    placeholder="Your Company Inc."
+                    placeholder="Your Company"
                     value={formData.company}
                     onChange={handleInputChange}
                     className="pl-10 h-12 bg-white/90 dark:bg-white/10 border-gray-300 dark:border-gray-600/50 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500/50"
