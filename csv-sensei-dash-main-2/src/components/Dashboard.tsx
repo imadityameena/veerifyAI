@@ -213,12 +213,147 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const workingData = transformedData || data;
     if (!workingData || workingData.length === 0) return [];
 
+    // Calculate data quality percentage
+    const calculateDataQuality = () => {
+      if (workingData.length === 0) return 0;
+      
+      const fields = Object.keys(workingData[0] || {});
+      let totalCells = workingData.length * fields.length;
+      let emptyCells = 0;
+      
+      workingData.forEach(row => {
+        fields.forEach(field => {
+          if (row[field] === undefined || row[field] === null || row[field] === '' || row[field] === 'N/A') {
+            emptyCells++;
+          }
+        });
+      });
+      
+      return Math.round(((totalCells - emptyCells) / totalCells) * 100);
+    };
+
+    // Calculate top performing category performance
+    const calculateTopCategoryPerformance = () => {
+      if (workingData.length === 0) return 0;
+      
+      const fields = Object.keys(workingData[0] || {});
+      const categoryField = fields.find(field => 
+        field.toLowerCase().includes('category') || 
+        field.toLowerCase().includes('region') || 
+        field.toLowerCase().includes('product') || 
+        field.toLowerCase().includes('type') ||
+        field.toLowerCase().includes('department')
+      );
+      
+      if (!categoryField) return 0;
+      
+      const amountField = fields.find(field => 
+        field.toLowerCase().includes('amount') || 
+        field.toLowerCase().includes('price') || 
+        field.toLowerCase().includes('value') || 
+        field.toLowerCase().includes('total') ||
+        field.toLowerCase().includes('revenue') ||
+        field.toLowerCase().includes('cost')
+      );
+      
+      if (!amountField) return 0;
+      
+      // Group by category and calculate totals
+      const categoryData = new Map<string, { total: number; count: number }>();
+      
+      workingData.forEach(row => {
+        const category = row[categoryField]?.toString().trim() || 'Unknown';
+        const amount = parseFloat(row[amountField]) || 0;
+        
+        if (category && amount > 0) {
+          const existing = categoryData.get(category) || { total: 0, count: 0 };
+          existing.total += amount;
+          existing.count += 1;
+          categoryData.set(category, existing);
+        }
+      });
+      
+      if (categoryData.size === 0) return 0;
+      
+      const categoryTotals = Array.from(categoryData.values()).map(cat => cat.total);
+      const totalAmount = categoryTotals.reduce((sum, amount) => sum + amount, 0);
+      const averageAmount = totalAmount / categoryTotals.length;
+      const maxAmount = Math.max(...categoryTotals);
+      
+      return Math.round(((maxAmount - averageAmount) / averageAmount) * 100);
+    };
+
+    // Calculate trend growth percentage
+    const calculateTrendGrowth = () => {
+      if (workingData.length < 2) return 0;
+      
+      const fields = Object.keys(workingData[0] || {});
+      const amountField = fields.find(field => 
+        field.toLowerCase().includes('amount') || 
+        field.toLowerCase().includes('price') || 
+        field.toLowerCase().includes('value') || 
+        field.toLowerCase().includes('total') ||
+        field.toLowerCase().includes('revenue') ||
+        field.toLowerCase().includes('cost')
+      );
+      
+      if (!amountField) return 0;
+      
+      const amounts = workingData
+        .map(row => parseFloat(row[amountField]) || 0)
+        .filter(amount => amount > 0);
+      
+      if (amounts.length < 2) return 0;
+      
+      // Split data into two halves for trend analysis
+      const midPoint = Math.floor(amounts.length / 2);
+      const firstHalf = amounts.slice(0, midPoint);
+      const secondHalf = amounts.slice(midPoint);
+      
+      const firstHalfAvg = firstHalf.reduce((sum, val) => sum + val, 0) / firstHalf.length;
+      const secondHalfAvg = secondHalf.reduce((sum, val) => sum + val, 0) / secondHalf.length;
+      
+      if (firstHalfAvg === 0) return 0;
+      
+      return Math.round(((secondHalfAvg - firstHalfAvg) / firstHalfAvg) * 100);
+    };
+
+    // Calculate data distribution balance
+    const calculateDistributionBalance = () => {
+      if (workingData.length === 0) return 0;
+      
+      const fields = Object.keys(workingData[0] || {});
+      const categoryField = fields.find(field => 
+        field.toLowerCase().includes('category') || 
+        field.toLowerCase().includes('region') || 
+        field.toLowerCase().includes('product') || 
+        field.toLowerCase().includes('type') ||
+        field.toLowerCase().includes('department')
+      );
+      
+      if (!categoryField) return fields.length;
+      
+      const categoryCounts = new Map<string, number>();
+      
+      workingData.forEach(row => {
+        const category = row[categoryField]?.toString().trim() || 'Unknown';
+        categoryCounts.set(category, (categoryCounts.get(category) || 0) + 1);
+      });
+      
+      return Math.min(5, categoryCounts.size);
+    };
+
+    const dataQuality = calculateDataQuality();
+    const topCategoryPerformance = calculateTopCategoryPerformance();
+    const trendGrowth = calculateTrendGrowth();
+    const distributionCategories = calculateDistributionBalance();
+
     const insights = [
       `Dataset contains ${workingData.length} records with comprehensive data analysis`,
-      `Data quality assessment shows ${Math.round(Math.random() * 20 + 80)}% completeness across all fields`,
-      `Top performing category shows ${Math.round(Math.random() * 30 + 20)}% above average performance`,
-      `Trend analysis indicates ${Math.round(Math.random() * 15 + 5)}% growth in key metrics`,
-      `Data distribution shows balanced representation across ${Math.min(5, Object.keys(workingData[0] || {}).length)} main categories`,
+      `Data quality assessment shows ${dataQuality}% completeness across all fields`,
+      `Top performing category shows ${topCategoryPerformance}% above average performance`,
+      `Trend analysis indicates ${trendGrowth}% growth in key metrics`,
+      `Data distribution shows balanced representation across ${distributionCategories} main categories`,
       `Recommendation: Focus on top 3 categories for maximum impact and efficiency`
     ];
 

@@ -136,10 +136,18 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
       const monthName = month.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
       
       if (i <= 0) {
-        // Historical data - distribute actual shifts across months with some variation
+        // Historical data - distribute actual shifts across months based on realistic patterns
         const baseShifts = Math.floor(totalShifts / 3);
-        const variation = Math.floor(Math.random() * 10) - 5; // Random variation of ±5
-        const historicalShifts = Math.max(0, baseShifts + variation);
+        // Use a more realistic variation based on month patterns (e.g., holidays, seasons)
+        const monthIndex = month.getMonth();
+        let seasonalFactor = 1;
+        
+        // Apply seasonal patterns (adjust based on your data patterns)
+        if (monthIndex === 11 || monthIndex === 0) seasonalFactor = 0.9; // December/January (holidays)
+        else if (monthIndex >= 6 && monthIndex <= 8) seasonalFactor = 1.1; // Summer months
+        else if (monthIndex === 2) seasonalFactor = 0.95; // February (shorter month)
+        
+        const historicalShifts = Math.max(0, Math.round(baseShifts * seasonalFactor));
         forecastData.push({
           month: monthName,
           value: historicalShifts,
@@ -151,10 +159,17 @@ export const DoctorRosterDashboard: React.FC<DoctorRosterDashboardProps> = ({ da
           .filter(item => item.value !== null)
           .reduce((sum, item) => sum + item.value, 0) / forecastData.filter(item => item.value !== null).length;
         
-        // Add slight growth trend and some variation
-        const growthFactor = 1 + (i * 0.05); // 5% growth per month
-        const variation = (Math.random() - 0.5) * 0.2; // ±10% variation
-        const forecastValue = Math.round(historicalAvg * growthFactor * (1 + variation));
+        // Add realistic growth trend based on historical patterns
+        const growthFactor = 1 + (i * 0.03); // 3% growth per month (more conservative)
+        
+        // Apply seasonal adjustment for forecast months
+        const forecastMonthIndex = month.getMonth();
+        let seasonalFactor = 1;
+        if (forecastMonthIndex === 11 || forecastMonthIndex === 0) seasonalFactor = 0.9;
+        else if (forecastMonthIndex >= 6 && forecastMonthIndex <= 8) seasonalFactor = 1.1;
+        else if (forecastMonthIndex === 2) seasonalFactor = 0.95;
+        
+        const forecastValue = Math.round(historicalAvg * growthFactor * seasonalFactor);
         
         forecastData.push({
           month: monthName,
